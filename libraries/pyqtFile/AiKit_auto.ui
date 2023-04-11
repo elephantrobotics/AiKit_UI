@@ -250,7 +250,7 @@ color: rgb(255, 255, 255);</string>
          <x>0</x>
          <y>0</y>
          <width>1220</width>
-         <height>887</height>
+         <height>888</height>
         </rect>
        </property>
        <property name="minimumSize">
@@ -477,27 +477,12 @@ border-style: outset;</string>
                       </property>
                       <item>
                        <property name="text">
-                        <string>myCobot 280 for Pi</string>
+                        <string>myCobot 320 for M5</string>
                        </property>
                       </item>
                       <item>
                        <property name="text">
-                        <string>myCobot 280 for M5</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>myPalletizer 260 for M5</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>mechArm 270 for Pi</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>ultraArm P340</string>
+                        <string>myCobot 320 for Pi</string>
                        </property>
                       </item>
                      </widget>
@@ -741,7 +726,7 @@ border-style: outset;</string>
                  </item>
                  <item>
                   <widget class="QWidget" name="widget_13" native="true">
-                   <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,2">
+                   <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,4">
                     <property name="leftMargin">
                      <number>10</number>
                     </property>

@@ -79,31 +79,29 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
     # Initialize variables
     def _init_variable(self):
-        self.pump_y = 0
-        self.pump_x = 0
         # device
         # todo --> 320
-        self.M5 = ['myPalletizer 260 for M5', 'myCobot 280 for M5', 'ultraArm P340', 'myCobot 320 For M5']  # M5 robot
-        self.Pi = ['myCobot 280 for Pi', 'mechArm 270 for Pi']  # Pi robot
+        self.M5 = ['myCobot 320 for M5']  # M5 robot
+        self.Pi = ['myCobot 320 for Pi']  # Pi robot
 
-        # todo
-        # angles to move
+        self.pump_y = -55
+        # x-axis offset
+        self.pump_x = -15
+        # 初始坐标
+        self.home_coords = [0.61, 45.87, -92.37, -41.3, 89.56, 9.58]
+        # 移动角度
         self.move_angles = [
-            [-29.0, 5.88, -4.92, -76.28],  # point to grab
-            [17.4, -10.1, -87.27, 5.8],  # point to grab
-            [17.22, -5.27, -52.47, -25.75, 89.73, -0.26]
-        ]
-        # origin coords
-        self.home_coords = [166.4, -21.8, 219, 0.96]
-
-        # coords to move
+            [0.61, 45.87, -92.37, -41.3, 89.56, 9.58],  # init the point
+            [18.8, -7.91, -54.49, -23.02, 89.56, -14.76],  # point to grab
+            [17.22, -5.27, -52.47, -25.75, 89.73, -0.26], ]
+        # 移动坐标
         self.move_coords = [
-            [132.6, -155.6, 211.8, -20.9],  # D Sorting area
-            [232.5, -134.1, 197.7, -45.26],  # C Sorting area
-            [111.6, 159, 221.5, -120],  # A Sorting area
-            [-15.9, 164.6, 217.5, -119.35],  # B Sorting area
+            [154.8, -210.6, 217.4, -175.54, -3.46, -122.78],  # D Sorting area
+            [280.4, -201.0, 249.2, -157.32, -0.83, -110.8],  # C Sorting area
+            [136.3, 221.4, 244.6, -171.64, 0.48, -11.7],  # A Sorting area
+            [-13.6, 218.7, 225.3, -177.09, 0.84, 27.55],  # B Sorting area
         ]
-
+        # todo
         # The internal parameter matrix of the camera
         self.camera_matrix = np.array([
             [781.33379113, 0., 347.53500524],
@@ -404,7 +402,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             if value in self.Pi:
                 # self.comboBox_buad.clear()
                 # self.comboBox_buad.addItem('1000000')
-                self.comboBox_buad.setCurrentIndex(0)
+                self.comboBox_buad.setCurrentIndex(1)
             else:
                 # self.comboBox_buad.clear()
                 # self.comboBox_buad.addItem('115200')
@@ -417,92 +415,23 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
     def device_coord(self):
         """Get points according to the device"""
-        value = self.comboBox_device.currentText()
-        if value == 'myCobot 280 for Pi' or value == 'myCobot 280 for M5':
-            # yolov5 model file path
-            self.modelWeights = libraries_path + "/yolov5File/yolov5s.onnx"
-            # y-axis offset
-            self.pump_y = -55
-            # x-axis offset
-            self.pump_x = 15
-            self.move_angles = [
-                [0.61, 45.87, -92.37, -41.3, 2.02, 9.58],  # init the point
-                [18.8, -7.91, -54.49, -23.02, -0.79, -14.76],  # point to grab
-            ]
-            self.move_coords = [
-                [132.2, -136.9, 200.8, -178.24, -3.72, -107.17],  # D Sorting area
-                [238.8, -124.1, 204.3, -169.69, -5.52, -96.52],  # C Sorting area
-                [115.8, 177.3, 210.6, 178.06, -0.92, -6.11],  # A Sorting area
-                [-6.9, 173.2, 201.5, 179.93, 0.63, 33.83],  # B Sorting area
-            ]
-            self.home_coords = [145.0, -65.5, 280.1, 178.99, 7.67, -179.9]
-        elif value == 'myPalletizer 260 for M5':
-            self.pump_y = -45
-            self.pump_x = -30
-            self.move_angles = [
-                [-22.0, 0, 0, 7.28],  # point to grab
-                [17.4, -10.1, -87.27, 5.8],  # point to grab
-            ]
-
-            self.home_coords = [166.4, -21.8, 219, 0.96]
-
-            self.move_coords = [
-                [132.6, -155.6, 211.8, -20.9],  # D Sorting area
-                [232.5, -134.1, 197.7, -45.26],  # C Sorting area
-                [111.6, 159, 221.5, -120],  # A Sorting area
-                [-15.9, 164.6, 217.5, -119.35],  # B Sorting area
-            ]
-        elif value == 'mechArm 270 for Pi':
-            self.pump_y = -55
-            self.pump_x = 15
-            self.move_angles = [
-                [-33.31, 2.02, -10.72, -0.08, 95, -54.84],  # point to grab
-                [0, 0, 0, 0, 90, 0],  # init the point
-            ]
-
-            self.move_coords = [
-                [96.5, -101.9, 185.6, 155.25, 19.14, 75.88],  # D
-                [180.9, -99.3, 184.6, 124.4, 30.9, 80.58],  # C
-                [77.4, 122.1, 179.2, 151.66, 17.94, 178.24],  # A
-                [2.2, 128.5, 171.6, 163.27, 10.58, -147.25]  # B
-            ]
-            self.home_coords = [81.8, -52.3, 186.7, 174.48, 4.08, 92.41]
-        elif value == 'ultraArm P340':
-            self.pump_y = -30
-            # x-axis offset
-            self.pump_x = -45
-            # 移动角度
-            self.move_angles = [
-                [25.55, 0.0, 15.24, 0],
-                [0.0, 14.32, 0.0, 0],  # point to grab
-            ]
-
-            # 移动坐标
-            self.move_coords = [
-                [141.53, 148.67, 43.73, 0],  # D Sorting area
-                [248.52, 152.35, 53.45, 0],  # C Sorting area
-                [269.02, -161.65, 51.42, 0],  # A Sorting area
-                [146.8, -159.53, 50.44, 0],  # B Sorting area
-            ]
-            self.home_coords = [267.15, 0.0, 125.96]
-        elif value == "myCobot 320 For M5":
-            self.pump_y = -55
-            # x-axis offset
-            self.pump_x = -15
-            # 初始坐标
-            self.home_coords = [0.61, 45.87, -92.37, -41.3, 89.56, 9.58]
-            # 移动角度
-            self.move_angles = [
-                [0.61, 45.87, -92.37, -41.3, 89.56, 9.58],  # init the point
-                [18.8, -7.91, -54.49, -23.02, 89.56, -14.76],  # point to grab
-                [17.22, -5.27, -52.47, -25.75, 89.73, -0.26], ]
-            # 移动坐标
-            self.move_coords = [
-                [154.8, -210.6, 217.4, -175.54, -3.46, -122.78],  # D Sorting area
-                [280.4, -201.0, 249.2, -157.32, -0.83, -110.8],  # C Sorting area
-                [136.3, 221.4, 244.6, -171.64, 0.48, -11.7],  # A Sorting area
-                [-13.6, 218.7, 225.3, -177.09, 0.84, 27.55],  # B Sorting area
-            ]
+        self.pump_y = -55
+        # x-axis offset
+        self.pump_x = -15
+        # 初始坐标
+        self.home_coords = [0.61, 45.87, -92.37, -41.3, 89.56, 9.58]
+        # 移动角度
+        self.move_angles = [
+            [0.61, 45.87, -92.37, -41.3, 89.56, 9.58],  # init the point
+            [18.8, -7.91, -54.49, -23.02, 89.56, -14.76],  # point to grab
+            [17.22, -5.27, -52.47, -25.75, 89.73, -0.26], ]
+        # 移动坐标
+        self.move_coords = [
+            [154.8, -210.6, 217.4, -175.54, -3.46, -122.78],  # D Sorting area
+            [280.4, -201.0, 249.2, -157.32, -0.83, -110.8],  # C Sorting area
+            [136.3, 221.4, 244.6, -171.64, 0.48, -11.7],  # A Sorting area
+            [-13.6, 218.7, 225.3, -177.09, 0.84, 27.55],  # B Sorting area
+        ]
 
     def connect_mycobot(self):
         """Connect the arm"""
@@ -515,21 +444,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         baud = int(baud)
 
         try:
-            if device == 'myPalletizer 260 for M5':
-                self.myCobot = MyPalletizer(port, baud, timeout=0.2)
-            elif device == 'ultraArm P340':
-                self.myCobot = ultraArm(port, baud, timeout=0.2)
-                self.stop_wait(0.1)
-                zero = threading.Thread(target=self.go_zero)
-                zero.start()
-                if self.language == 1:
-                    self.prompts('Zero calibration is in progress, please wait patiently......')
-                else:
-                    self.prompts('正在进行回零校正，请耐心等待......')
-                self.btn_status(False)
-                self.connect_btn.setEnabled(False)
-            else:
-                self.myCobot = MyCobot(port, baud, timeout=0.2)
+            self.myCobot = MyCobot(port, baud, timeout=0.2)
             self.stop_wait(0.5)
             self.loger.info("connection succeeded !")
             if device != 'ultraArm P340':
@@ -1810,39 +1725,43 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
     def pump_on(self):
         """Start the suction pump"""
-        if self.comboBox_device.currentText() in self.M5:
-            if self.comboBox_device.currentText() == 'ultraArm P340':
-                self.myCobot.set_gpio_state(0)
-            else:
-                self.myCobot.set_basic_output(2, 0)
-                self.myCobot.set_basic_output(5, 0)
-        else:
-            import RPi.GPIO as GPIO
-            GPIO.setwarnings(False)
-            self.GPIO = GPIO
-            GPIO.setmode(GPIO.BCM)
-            GPIO.setup(20, GPIO.OUT)
-            GPIO.setup(21, GPIO.OUT)
-            self.GPIO.output(20, 0)
-            self.GPIO.output(21, 0)
+        self.myCobot.set_basic_output(1, 1)
+        self.myCobot.set_basic_output(2, 1)
+        # if self.comboBox_device.currentText() in self.M5:
+        #     if self.comboBox_device.currentText() == 'ultraArm P340':
+        #         self.myCobot.set_gpio_state(0)
+        #     else:
+        #         self.myCobot.set_basic_output(2, 0)
+        #         self.myCobot.set_basic_output(5, 0)
+        # else:
+        #     import RPi.GPIO as GPIO
+        #     GPIO.setwarnings(False)
+        #     self.GPIO = GPIO
+        #     GPIO.setmode(GPIO.BCM)
+        #     GPIO.setup(20, GPIO.OUT)
+        #     GPIO.setup(21, GPIO.OUT)
+        #     self.GPIO.output(20, 0)
+        #     self.GPIO.output(21, 0)
 
     def pump_off(self):
         """stop suction pump m5"""
-        if self.comboBox_device.currentText() in self.M5:
-            if self.comboBox_device.currentText() == 'ultraArm P340':
-                self.myCobot.set_gpio_state(1)
-            else:
-                self.myCobot.set_basic_output(2, 1)
-                self.myCobot.set_basic_output(5, 1)
-        else:
-            import RPi.GPIO as GPIO
-            GPIO.setwarnings(False)
-            self.GPIO = GPIO
-            GPIO.setmode(GPIO.BCM)
-            GPIO.setup(20, GPIO.OUT)
-            GPIO.setup(21, GPIO.OUT)
-            self.GPIO.output(20, 1)
-            self.GPIO.output(21, 1)
+        self.myCobot.set_basic_output(1, 1)
+        self.myCobot.set_basic_output(2, 1)
+        # if self.comboBox_device.currentText() in self.M5:
+        #     if self.comboBox_device.currentText() == 'ultraArm P340':
+        #         self.myCobot.set_gpio_state(1)
+        #     else:
+        #         self.myCobot.set_basic_output(2, 1)
+        #         self.myCobot.set_basic_output(5, 1)
+        # else:
+        #     import RPi.GPIO as GPIO
+        #     GPIO.setwarnings(False)
+        #     self.GPIO = GPIO
+        #     GPIO.setmode(GPIO.BCM)
+        #     GPIO.setup(20, GPIO.OUT)
+        #     GPIO.setup(21, GPIO.OUT)
+        #     self.GPIO.output(20, 1)
+        #     self.GPIO.output(21, 1)
 
     # The path to save the image folder
     def parse_folder(self, folder):

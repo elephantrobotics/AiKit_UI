@@ -3594,3 +3594,47 @@
 2023-04-07 14:01:35,109 main.py[line:571]INFO - Disconnected successfully !
 2023-04-07 14:02:09,960 main.py[line:364]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
 2023-04-07 14:02:09,960 main.py[line:364]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-04-11 11:37:31,380 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:31,380 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:33,215 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:33,215 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:33,905 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:33,905 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:34,636 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:34,636 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:35,755 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:35,755 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:36,765 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:36,765 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:38,599 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:38,599 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:41,383 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:41,383 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:48,728 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 11:37:48,728 main.py[line:2103]ERROR - [Errno 2] No such file or directory: 'D:/heyuxuan/Project/320套装/320_UI/AiKit_UI/libraries/offset/.txt'
+2023-04-11 13:35:56,406 main.py[line:534]INFO - connection succeeded !
+2023-04-11 13:35:56,406 main.py[line:534]INFO - connection succeeded !
+2023-04-11 13:37:55,183 main.py[line:364]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-04-11 13:37:55,183 main.py[line:364]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-04-11 13:38:21,941 main.py[line:815]INFO - Color recognition ok
+2023-04-11 13:38:21,941 main.py[line:815]INFO - Color recognition ok
+2023-04-11 13:38:35,866 main.py[line:534]INFO - connection succeeded !
+2023-04-11 13:38:35,866 main.py[line:534]INFO - connection succeeded !
+2023-04-11 13:38:50,742 main.py[line:1352]ERROR - No module named 'RPi'
+2023-04-11 13:38:50,742 main.py[line:1352]ERROR - No module named 'RPi'
+2023-04-11 13:39:04,413 main.py[line:571]INFO - Disconnected successfully !
+2023-04-11 13:39:04,413 main.py[line:571]INFO - Disconnected successfully !
+2023-04-11 13:40:56,162 main.py[line:815]INFO - Color recognition ok
+2023-04-11 13:40:56,162 main.py[line:815]INFO - Color recognition ok
+2023-04-11 13:41:06,771 main.py[line:534]INFO - connection succeeded !
+2023-04-11 13:41:06,771 main.py[line:534]INFO - connection succeeded !
+2023-04-11 13:41:09,864 main.py[line:1352]ERROR - No module named 'RPi'
+2023-04-11 13:41:09,864 main.py[line:1352]ERROR - No module named 'RPi'
+2023-04-11 13:44:35,409 main.py[line:815]INFO - Color recognition ok
+2023-04-11 13:44:35,409 main.py[line:815]INFO - Color recognition ok
+2023-04-11 13:44:39,445 main.py[line:534]INFO - connection succeeded !
+2023-04-11 13:44:39,445 main.py[line:534]INFO - connection succeeded !
+2023-04-11 13:54:19,788 main.py[line:463]INFO - connection succeeded !
+2023-04-11 13:54:19,788 main.py[line:463]INFO - connection succeeded !
+2023-04-11 13:54:34,881 main.py[line:744]INFO - Color recognition ok
+2023-04-11 13:54:34,881 main.py[line:744]INFO - Color recognition ok
