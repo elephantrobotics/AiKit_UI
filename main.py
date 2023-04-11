@@ -72,7 +72,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self.get_serial_port_list()
         self.offset_change()
         self.btn_status()
-        self.device_coord()
+        self.buad_choose()
         self.cut_yolov5_img_status()
         self._init_tooltip()
         self.combox_func_checked()
@@ -1726,7 +1726,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
     def pump_on(self):
         """Start the suction pump"""
         self.myCobot.set_basic_output(1, 1)
-        self.myCobot.set_basic_output(2, 1)
+        self.myCobot.set_basic_output(2, 0)
         # if self.comboBox_device.currentText() in self.M5:
         #     if self.comboBox_device.currentText() == 'ultraArm P340':
         #         self.myCobot.set_gpio_state(0)
@@ -1747,21 +1747,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         """stop suction pump m5"""
         self.myCobot.set_basic_output(1, 1)
         self.myCobot.set_basic_output(2, 1)
-        # if self.comboBox_device.currentText() in self.M5:
-        #     if self.comboBox_device.currentText() == 'ultraArm P340':
-        #         self.myCobot.set_gpio_state(1)
-        #     else:
-        #         self.myCobot.set_basic_output(2, 1)
-        #         self.myCobot.set_basic_output(5, 1)
-        # else:
-        #     import RPi.GPIO as GPIO
-        #     GPIO.setwarnings(False)
-        #     self.GPIO = GPIO
-        #     GPIO.setmode(GPIO.BCM)
-        #     GPIO.setup(20, GPIO.OUT)
-        #     GPIO.setup(21, GPIO.OUT)
-        #     self.GPIO.output(20, 1)
-        #     self.GPIO.output(21, 1)
+        # self.stop_wait(0.5)
+        # self.myCobot.set_basic_output(1, 0)
 
     # The path to save the image folder
     def parse_folder(self, folder):
