@@ -1661,7 +1661,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             else:
                                 self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 0)
                                 time.sleep(2.5)
-                                self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 50, 0)  #
+                                self.myCobot.send_coords([x, y, 140, -173.84, -0.14, -74.37], 50, 0)  # origin z : 100
                                 time.sleep(3)
 
                         # open pump
