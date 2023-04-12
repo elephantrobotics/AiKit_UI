@@ -87,7 +87,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         # x-axis offset
         self.pump_x = -15
         # 初始坐标
-        self.home_coords = [0.61, 45.87, -92.37, -41.3, 89.56, 9.58]
+        self.home_coords = [145.0, -65.5, 280.1, 178.99, 7.67, -179.9]
         # 移动角度
         self.move_angles = [
             [0.61, 45.87, -92.37, -41.3, 89.56, 9.58],  # init the point
@@ -1620,7 +1620,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             # Adjust the suction position of the suction pump, increase y, move to the left;
             # decrease y, move to the right; increase x, move forward; decrease x, move backward
             if self.comboBox_function.currentText() == 'QR code recognition' or self.comboBox_function.currentText() == '二维码识别':
-                _moved = threading.Thread(target=self.moved(x + 105, y + 140))
+                _moved = threading.Thread(target=self.moved(x+10, y+10 ))
                 _moved.start()
             else:
                 _moved = threading.Thread(target=self.moved(x, y))
@@ -1649,7 +1649,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 0)
                             time.sleep(2)
                             self.myCobot.send_coords(
-                                [self.home_coords[0] + x, self.home_coords[1] + y, 100.5, 178.99, -3.78, -62.9],
+                                [self.home_coords[0] + x, self.home_coords[1] + y, 80.5, 178.99, -3.78, -62.9],
                                 50, 0)
                             time.sleep(2.5)
                         else:
@@ -1927,7 +1927,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     self.cut_yolov5_img_status()
             else:
                 self.cut_yolov5_img_status()
-            if device != 'Keypoints' or device != '特征点识别':
+            if device != 'Keypoints' and device != '特征点识别':
                 # print(1)
                 self.add_img_btn.setEnabled(False)
                 self.exit_add_btn.setEnabled(False)
