@@ -35,7 +35,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self.port_list = []
         self.loger = logfile.MyLogging().logger
         self._init_main_window()
-        # self._close_max_min_icon()
+        self._close_max_min_icon()
         self._initDrag()  # Set the mouse tracking judgment trigger default value
         self.setMouseTracking(True)  # Set widget mouse tracking
         self.widget.installEventFilter(self)  # Initialize event filter
@@ -80,7 +80,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
     # Initialize variables
     def _init_variable(self):
         # device
-        # todo --> 320
         self.M5 = ['myCobot 320 for M5']  # M5 robot
         self.Pi = ['myCobot 320 for Pi']  # Pi robot
 
@@ -101,7 +100,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             [136.3, 221.4, 244.6, -171.64, 0.48, -11.7],  # A Sorting area
             [-13.6, 218.7, 225.3, -177.09, 0.84, 27.55],  # B Sorting area
         ]
-        # todo
         # The internal parameter matrix of the camera
         self.camera_matrix = np.array([
             [781.33379113, 0., 347.53500524],
@@ -447,8 +445,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.myCobot = MyCobot(port, baud, timeout=0.2)
             self.stop_wait(0.5)
             self.loger.info("connection succeeded !")
-            if device != 'ultraArm P340':
-                self.btn_status(True)
+            self.btn_status(True)
             if self.language == 1:
                 self.connect_btn.setText('DISCONNECT')
             else:
@@ -1255,9 +1252,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             """back to initial position"""
             self.is_pick = False
             self.pump_off()
-            # if self.comboBox_device.currentText() == 'ultraArm P340':
-            #     self.myCobot.set_angles(self.move_angles[0], 30)
-            # else:
             self.myCobot.send_angles(self.move_angles[0], 30)
             self.stop_wait(3)
             if self.comboBox_function.currentText() == 'yolov5':
@@ -1352,8 +1346,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         """Judging whether it is recognized normally"""
         try:
             # enlarge the image by 1.5 times
-            fx = 1.5
-            fy = 1.5
+            fx = 2.2    # 1.5 -> origin param
+            fy = 2.2    # 1.5
             frame = cv2.resize(frame, (0, 0), fx=fx, fy=fy,
                                interpolation=cv2.INTER_CUBIC)
             if self.x1 != self.x2:
@@ -1645,9 +1639,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 if self.is_crawl:
                     if self.crawl_status:
                         self.is_crawl = False
-                        # if device == 'ultraArm P340':
-                        #     self.myCobot.set_angles(self.move_angles[1], 20)
-                        # else:
                         self.myCobot.send_angles(self.move_angles[1], 20)
                         self.stop_wait(3)
                         func = self.comboBox_function.currentText()
@@ -1727,21 +1718,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         """Start the suction pump"""
         self.myCobot.set_basic_output(1, 1)
         self.myCobot.set_basic_output(2, 0)
-        # if self.comboBox_device.currentText() in self.M5:
-        #     if self.comboBox_device.currentText() == 'ultraArm P340':
-        #         self.myCobot.set_gpio_state(0)
-        #     else:
-        #         self.myCobot.set_basic_output(2, 0)
-        #         self.myCobot.set_basic_output(5, 0)
-        # else:
-        #     import RPi.GPIO as GPIO
-        #     GPIO.setwarnings(False)
-        #     self.GPIO = GPIO
-        #     GPIO.setmode(GPIO.BCM)
-        #     GPIO.setup(20, GPIO.OUT)
-        #     GPIO.setup(21, GPIO.OUT)
-        #     self.GPIO.output(20, 0)
-        #     self.GPIO.output(21, 0)
+
 
     def pump_off(self):
         """stop suction pump m5"""
@@ -1934,7 +1911,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.prompts_lab.clear()
             self.offset_change()
             device = self.comboBox_function.currentText()
-            # if device == 'myCobot 280 for Pi' or device == 'myCobot 280 for M5':
             if device == 'yolov5':
                 IS_CV_4 = cv2.__version__[0] == '4'
                 if IS_CV_4:
@@ -2417,7 +2393,6 @@ if __name__ == '__main__':
     try:
         libraries_path = resource_path('libraries')
         libraries_path = libraries_path.replace("\\", "/")
-        # print(libraries_path)
         app = QApplication(sys.argv)
         AiKit_window = AiKit_APP()
         AiKit_window.show()
