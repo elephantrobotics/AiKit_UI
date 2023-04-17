@@ -45,8 +45,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self._init_status()
 
         self._init_language()
-
-        self.cap = cv2.VideoCapture()  # video stream
+        import platform
+        if platform.system() == "Windows":
+            self.cap = cv2.VideoCapture(cv2.CAP_DSHOW)
+        elif platform.system() == "Linux":
+            self.cap = cv2.VideoCapture(cv2.CAP_V4L)
         self.min_btn.clicked.connect(self.min_clicked)  # minimize
         self.max_btn.clicked.connect(self.max_clicked)
         self.close_btn.clicked.connect(self.close_clicked)  # close
@@ -856,8 +859,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                     # self.pub_marker(self.real_sx / 5.0 / 1000.0,
                                     #                   self.real_sy / 5.0 / 1000.0)
                                     if self.crawl_status:
-                                        self.decide_move(self.real_sx / 5.0, self.real_sy / 5.0,
-                                                         self.color)
+                                        # self.decide_move(self.real_sx / 5.0, self.real_sy / 5.0,
+                                        #                  self.color)
+                                        self.decide_move(self.real_x, self.real_y, self.color)
                                         self.num = self.real_sx = self.real_sy = 0
                                 else:
                                     self.num += 1
@@ -1328,7 +1332,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
     def set_params(self, c_x, c_y, ratio):
         self.c_x = c_x
         self.c_y = c_y
-        self.ratio = 220.0 / ratio
+        # self.ratio = 220.0 / ratio
+        self.ratio = 320.0 / ratio
 
     # calculate the coords between cube and mycobot
     def get_position(self, x, y):
@@ -1357,7 +1362,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                interpolation=cv2.INTER_CUBIC)
             if self.x1 != self.x2:
                 # the cutting ratio here is adjusted according to the actual situation
-                frame = frame[int(self.y2 * 0.88):int(self.y1 * 1.06),  # 0.78 1.1
+                frame = frame[int(self.y2 * 0.86):int(self.y1 * 1.1),  # 0.78 1.1
                         int(self.x1 * 0.9):int(self.x2 * 1.05)]  # 0.84 1.08
             return frame
         except Exception as e:
@@ -1634,8 +1639,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
     # Grasping motion
     def moved(self, x, y):
         try:
-            # print('x',x)
-            # print('y',y)
+            print('x',x)
+            print('y',y)
             self.is_crawl = True
             while self.is_pick:
                 QApplication.processEvents()
@@ -1644,7 +1649,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 if self.is_crawl:
                     if self.crawl_status:
                         self.is_crawl = False
-                        self.myCobot.send_angles(self.move_angles[1], 20)
+                        self.myCobot.send_angles(self.move_angles[2], 20)
                         self.stop_wait(3)
                         func = self.comboBox_function.currentText()
                         # send coordinates to move mycobot
@@ -1659,9 +1664,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             time.sleep(2.5)
                         else:
                             if func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
-                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 0)
+                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 1)
                                 time.sleep(2.5)
-                                self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 50, 0)  #
+                                self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 50, 1)  #
                                 time.sleep(3)
                             else:
                                 self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 0)
@@ -1940,6 +1945,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 # print(2)
                 self.add_img_btn.setEnabled(True)
                 self.exit_add_btn.setEnabled(True)
+            import platform
+            if platform.system() == "Windows":
+                self.cap = cv2.VideoCapture(cv2.CAP_DSHOW)
+            elif platform.system() == "Linux":
+                self.cap = cv2.VideoCapture(cv2.CAP_V4L)
             # print(device)
 
             self.yolov5_count = False
