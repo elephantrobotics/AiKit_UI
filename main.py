@@ -46,10 +46,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
         self._init_language()
         import platform
-        if platform.system() == "Windows":
-            self.cap = cv2.VideoCapture(cv2.CAP_DSHOW)
-        elif platform.system() == "Linux":
-            self.cap = cv2.VideoCapture(cv2.CAP_V4L)
+        self.cap = cv2.VideoCapture()
+        # if platform.system() == "Windows":
+        #     self.cap = cv2.VideoCapture(cv2.CAP_DSHOW)
+        # elif platform.system() == "Linux":
+        #     self.cap = cv2.VideoCapture(cv2.CAP_V4L)
         self.min_btn.clicked.connect(self.min_clicked)  # minimize
         self.max_btn.clicked.connect(self.max_clicked)
         self.close_btn.clicked.connect(self.close_clicked)  # close
@@ -1945,11 +1946,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 # print(2)
                 self.add_img_btn.setEnabled(True)
                 self.exit_add_btn.setEnabled(True)
-            import platform
-            if platform.system() == "Windows":
-                self.cap = cv2.VideoCapture(cv2.CAP_DSHOW)
-            elif platform.system() == "Linux":
-                self.cap = cv2.VideoCapture(cv2.CAP_V4L)
+            # import platform
+            # if platform.system() == "Windows":
+            #     self.cap = cv2.VideoCapture(cv2.CAP_DSHOW)
+            # elif platform.system() == "Linux":
+            #     self.cap = cv2.VideoCapture(cv2.CAP_V4L)
             # print(device)
 
             self.yolov5_count = False
@@ -2168,6 +2169,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.comboBox_function.setItemText(1, _translate("AiKit_UI", "shape recognition"))
             self.comboBox_function.setItemText(2, _translate("AiKit_UI", "QR code recognition"))
             self.comboBox_function.setItemText(3, _translate("AiKit_UI", "Keypoints"))
+            self.comboBox_function.setItemText(4, _translate("AiKit_UI", "object recognition"))
             self.func_lab_11.setText(_translate("AiKit_UI", "Add New Pictures"))
             if self.add_img_btn.text() == '添加':
                 self.add_img_btn.setText(_translate("AiKit_UI", "Add"))
@@ -2221,6 +2223,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.comboBox_function.setItemText(1, _translate("AiKit_UI", "形状识别"))
             self.comboBox_function.setItemText(2, _translate("AiKit_UI", "二维码识别"))
             self.comboBox_function.setItemText(3, _translate("AiKit_UI", "特征点识别"))
+            self.comboBox_function.setItemText(4, _translate("AiKit_UI", "物体识别"))
             self.func_lab_11.setText(_translate("AiKit_UI", "添加新图片"))
             if self.is_language_btn_click:
                 if self.add_img_btn.text() == 'Add':

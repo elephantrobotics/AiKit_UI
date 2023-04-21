@@ -1298,6 +1298,11 @@ border-style: outset;</string>
                    </item>
                    <item>
                     <property name="text">
+                     <string>object recognition</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
                      <string>yolov5</string>
                     </property>
                    </item>
