@@ -97,7 +97,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
         # 移动角度
         self.move_angles = [
-            [0.61, 45.87, -92.37, -41.3, 89.56, 9.58],  # init the point
+            [0.61, 45.87, -92.37, -41.3, 89.56, 0],  # init the point
             [18.8, -7.91, -54.49, -23.02, 89.56, -14.76],  # point to grab
             [17.22, -5.27, -52.47, -25.75, 89.73, -0.26], ]
         # 移动坐标
@@ -424,10 +424,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         # x-axis offset
         self.pump_x = -15
         # 初始坐标
-        self.home_coords = [0.61, 45.87, -92.37, -41.3, 89.56, 9.58]
+        self.home_coords = [0.61, 45.87, -92.37, -41.3, 89.56, 0]
         # 移动角度
         self.move_angles = [
-            [0.61, 45.87, -92.37, -41.3, 89.56, 9.58],  # init the point
+            [0.61, 45.87, -92.37, -41.3, 89.56, 0],  # init the point
             [18.8, -7.91, -54.49, -23.02, 89.56, -14.76],  # point to grab
             [17.22, -5.27, -52.47, -25.75, 89.73, -0.26], ]
         # 移动坐标
@@ -1262,6 +1262,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.pump_off()
             self.myCobot.send_angles(self.move_angles[0], 30)
             self.stop_wait(3)
+            if self.comboBox_function.currentText() == 'object recognition' or self.comboBox_function.currentText() == '物体识别':
+                self.myCobot.set_gripper_mode(0)
+                time.sleep(1)
+                self.myCobot.set_gripper_state(1, 100)
+                time.sleep(1.5)
             if self.comboBox_function.currentText() == 'yolov5':
                 self.yolov5_is_not_pick = False
                 self.is_yolov5_cut_btn_clicked = False
@@ -1663,17 +1668,23 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 50, 0)
                             time.sleep(2.5)
                         elif func == 'object recognition' or func == '物体识别':
-                            self.myCobot.set_gripper_mode(0)
+                            # 移动坐标
+                            self.move_coords = [
+                                [133.0, -197.1, 314.9, -159.33, -3.11, -124.1],  # D Sorting area
+                                [251.5, -187.6, 317.7, -150.47, -0.59, -110.22],  # C Sorting area
+                                [130.5, 197.5, 303.6, -164.79, 0.13, -11.28],  # A Sorting area
+                                [-2.7, 195.5, 291.4, -164.34, 0.72, 27.81],  # B Sorting area
+                            ]
                             # open gripper
                             self.myCobot.set_gripper_state(0, 100)
-                            time.sleep(0.05)
-                            self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 1)
+                            time.sleep(1.5)
+                            self.myCobot.send_coords([x, y, 250, -173.84, -0.14, -74.37], 50, 1)
                             time.sleep(2.5)
-                            self.myCobot.send_coords([x, y, 190, -173.84, -0.14, -74.37], 50, 1)  #
+                            self.myCobot.send_coords([x, y, 203, -173.84, -0.14, -74.37], 50, 1)  #
                             time.sleep(3)
                             # close gripper
                             self.myCobot.set_gripper_state(1, 100)
-                            time.sleep(0.05)
+                            time.sleep(1.5)
                         else:
                             if func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
                                 self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 1)
@@ -1719,15 +1730,21 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     self.myCobot.send_coords(self.move_coords[color], 40, 0)
                     self.stop_wait(4)
 
-                    if func != 'object recognition' or func != '物体识别':
+                    if func == 'object recognition' or func == '物体识别':
+                        # open gripper
+                        self.myCobot.set_gripper_state(0, 100)
+                        time.sleep(1.5)
+                    else:
                         # close pump
                         self.pump_off()
-                    else:
-                        # open gripper
-                        self.myCobot.set_gripper_state(1, 100)
 
                     self.stop_wait(4)
-                    self.myCobot.send_angles(self.move_angles[0], 25)
+                    if func == 'object recognition' or func == '物体识别':
+                        self.myCobot.send_angles(self.move_angles[0], 25)
+                        self.myCobot.set_gripper_state(1, 100)
+                        time.sleep(1.5)
+                    else:
+                        self.myCobot.send_angles(self.move_angles[0], 25)
                     if not self.auto_mode_status:
                         self.place_status = False
                         self.btn_color(self.place_btn, 'blue')
