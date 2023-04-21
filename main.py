@@ -95,8 +95,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         # self.home_coords = [80, .5, 280.1, 178.99, 7.67, -179.9]
         # self.home_coords = [145.0, -65.5, 280.1, 178.99, 7.67, -179.9]  # 初始化点 init point
 
-
-
         # 移动角度
         self.move_angles = [
             [0.61, 45.87, -92.37, -41.3, 89.56, 9.58],  # init the point
@@ -214,9 +212,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
     # Close, minimize button display text
     def _close_max_min_icon(self):
-        self.min_btn.setStyleSheet("border-image: url({}/AiKit_UI_img/min.png);".format(libraries_path))
-        self.max_btn.setStyleSheet("border-image: url({}/AiKit_UI_img/max.png);".format(libraries_path))
-        self.close_btn.setStyleSheet("border-image: url({}/AiKit_UI_img/close.png);".format(libraries_path))
+        self.min_btn.setStyleSheet("border-image: url({}/AiKit_UI_img/min.ico);".format(libraries_path))
+        self.max_btn.setStyleSheet("border-image: url({}/AiKit_UI_img/max.ico);".format(libraries_path))
+        self.close_btn.setStyleSheet("border-image: url({}/AiKit_UI_img/close.ico);".format(libraries_path))
 
     def _init_tooltip(self):
         if self.language == 1:
@@ -766,7 +764,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         showImage = QtGui.QImage(show.data, show.shape[1], show.shape[0], show.shape[1] * 3,
                                                  QtGui.QImage.Format_RGB888)
                         self.show_camera_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
-                elif func == 'Keypoints' or func == '特征点识别':
+                elif func == 'Keypoints' or func == '特征点识别' or func == 'object recognition' or func == '物体识别':
                     try:
                         res_queue = [[], [], [], []]
                         res_queue[0] = self.parse_folder('res/D')
@@ -1357,8 +1355,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         """Judging whether it is recognized normally"""
         try:
             # enlarge the image by 1.5 times
-            fx = 2.2    # 1.5 -> origin param
-            fy = 2.2    # 1.5
+            fx = 2.2  # 1.5 -> origin param
+            fy = 2.2  # 1.5
             frame = cv2.resize(frame, (0, 0), fx=fx, fy=fy,
                                interpolation=cv2.INTER_CUBIC)
             if self.x1 != self.x2:
@@ -1631,7 +1629,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             # Adjust the suction position of the suction pump, increase y, move to the left;
             # decrease y, move to the right; increase x, move forward; decrease x, move backward
             if self.comboBox_function.currentText() == 'QR code recognition' or self.comboBox_function.currentText() == '二维码识别':
-                _moved = threading.Thread(target=self.moved(x+265, y+5))
+                _moved = threading.Thread(target=self.moved(x + 265, y + 5))
                 _moved.start()
             else:
                 _moved = threading.Thread(target=self.moved(x, y))
@@ -1639,9 +1637,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
     # Grasping motion
     def moved(self, x, y):
+        global func
         try:
-            print('x',x)
-            print('y',y)
+            print('x', x)
+            print('y', y)
             self.is_crawl = True
             while self.is_pick:
                 QApplication.processEvents()
@@ -1663,6 +1662,18 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [self.home_coords[0] + x, self.home_coords[1] + y, 80.5, 178.99, -3.78, -62.9],
                                 50, 0)
                             time.sleep(2.5)
+                        elif func == 'object recognition' or func == '物体识别':
+                            self.myCobot.set_gripper_mode(0)
+                            # open gripper
+                            self.myCobot.set_gripper_state(0, 100)
+                            time.sleep(0.05)
+                            self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 1)
+                            time.sleep(2.5)
+                            self.myCobot.send_coords([x, y, 190, -173.84, -0.14, -74.37], 50, 1)  #
+                            time.sleep(3)
+                            # close gripper
+                            self.myCobot.set_gripper_state(1, 100)
+                            time.sleep(0.05)
                         else:
                             if func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
                                 self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 1)
@@ -1676,7 +1687,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 time.sleep(3)
 
                         # open pump
-                        self.pump_on()
+                        if func != 'object recognition' or func != '物体识别':
+                            self.pump_on()
                         self.stop_wait(2)
                         tmp = []
                         while True:
@@ -1707,8 +1719,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     self.myCobot.send_coords(self.move_coords[color], 40, 0)
                     self.stop_wait(4)
 
-                    # close pump
-                    self.pump_off()
+                    if func != 'object recognition' or func != '物体识别':
+                        # close pump
+                        self.pump_off()
+                    else:
+                        # open gripper
+                        self.myCobot.set_gripper_state(1, 100)
 
                     self.stop_wait(4)
                     self.myCobot.send_angles(self.move_angles[0], 25)
@@ -1729,7 +1745,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         """Start the suction pump"""
         self.myCobot.set_basic_output(1, 1)
         self.myCobot.set_basic_output(2, 0)
-
 
     def pump_off(self):
         """stop suction pump m5"""
@@ -1938,7 +1953,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     self.cut_yolov5_img_status()
             else:
                 self.cut_yolov5_img_status()
-            if device != 'Keypoints' and device != '特征点识别':
+            if device != 'Keypoints' and device != '特征点识别' and device != 'object recognition' and device != '物体识别':
                 # print(1)
                 self.add_img_btn.setEnabled(False)
                 self.exit_add_btn.setEnabled(False)
