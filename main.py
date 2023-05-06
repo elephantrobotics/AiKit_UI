@@ -651,7 +651,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             is_release = False
             while self.camera_status:
                 func = self.comboBox_function.currentText()
-                if func == 'Color recognition' or func == '颜色识别':
+                if func == 'Color recognition' or func == '颜色识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
                     # read camera
                     _, frame = self.cap.read()
                     # deal img
@@ -1667,7 +1667,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [self.home_coords[0] + x, self.home_coords[1] + y, 80.5, 178.99, -3.78, -62.9],
                                 50, 0)
                             time.sleep(2.5)
-                        elif func == 'object recognition' or func == '物体识别':
+                        elif func == 'object recognition' or func == '物体识别' or func == 'color recognition grip' or func == '颜色识别 夹爪':
                             # 移动坐标
                             self.move_coords = [
                                 [133.0, -197.1, 314.9, -159.33, -3.11, -124.1],  # D Sorting area
@@ -1730,7 +1730,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     self.myCobot.send_coords(self.move_coords[color], 40, 0)
                     self.stop_wait(4)
 
-                    if func == 'object recognition' or func == '物体识别':
+                    if func == 'object recognition' or func == '物体识别' or func == 'color recognition grip' or func == '颜色识别 夹爪':
                         # open gripper
                         self.myCobot.set_gripper_state(0, 100)
                         time.sleep(1.5)
@@ -1739,7 +1739,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         self.pump_off()
 
                     self.stop_wait(4)
-                    if func == 'object recognition' or func == '物体识别':
+                    if func == 'object recognition' or func == '物体识别' or func == 'color recognition grip' or func == '颜色识别 夹爪':
                         self.myCobot.send_angles(self.move_angles[0], 25)
                         self.myCobot.set_gripper_state(1, 100)
                         time.sleep(1.5)
@@ -2198,10 +2198,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.func_lab_9.setText(_translate("AiKit_UI", "Algorithm"))
             self.func_lab_10.setText(_translate("AiKit_UI", "Select"))
             self.comboBox_function.setItemText(0, _translate("AiKit_UI", "Color recognition"))
-            self.comboBox_function.setItemText(1, _translate("AiKit_UI", "shape recognition"))
-            self.comboBox_function.setItemText(2, _translate("AiKit_UI", "QR code recognition"))
-            self.comboBox_function.setItemText(3, _translate("AiKit_UI", "Keypoints"))
-            self.comboBox_function.setItemText(4, _translate("AiKit_UI", "object recognition"))
+            self.comboBox_function.setItemText(1, _translate("AiKit_UI", "Color recognition grip"))
+            self.comboBox_function.setItemText(2, _translate("AiKit_UI", "shape recognition"))
+            self.comboBox_function.setItemText(3, _translate("AiKit_UI", "QR code recognition"))
+            self.comboBox_function.setItemText(4, _translate("AiKit_UI", "Keypoints"))
+            self.comboBox_function.setItemText(5, _translate("AiKit_UI", "object recognition"))
+            self.comboBox_function.setItemText(6, _translate("AiKit_UI", "yolov5"))
             self.func_lab_11.setText(_translate("AiKit_UI", "Add New Pictures"))
             if self.add_img_btn.text() == '添加':
                 self.add_img_btn.setText(_translate("AiKit_UI", "Add"))
@@ -2252,10 +2254,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.func_lab_9.setText(_translate("AiKit_UI", "算法"))
             self.func_lab_10.setText(_translate("AiKit_UI", "选择"))
             self.comboBox_function.setItemText(0, _translate("AiKit_UI", "颜色识别"))
-            self.comboBox_function.setItemText(1, _translate("AiKit_UI", "形状识别"))
-            self.comboBox_function.setItemText(2, _translate("AiKit_UI", "二维码识别"))
-            self.comboBox_function.setItemText(3, _translate("AiKit_UI", "特征点识别"))
-            self.comboBox_function.setItemText(4, _translate("AiKit_UI", "物体识别"))
+            self.comboBox_function.setItemText(1, _translate("AiKit_UI", "颜色识别 夹爪"))
+            self.comboBox_function.setItemText(2, _translate("AiKit_UI", "形状识别"))
+            self.comboBox_function.setItemText(3, _translate("AiKit_UI", "二维码识别"))
+            self.comboBox_function.setItemText(4, _translate("AiKit_UI", "特征点识别"))
+            self.comboBox_function.setItemText(5, _translate("AiKit_UI", "物体识别"))
+            self.comboBox_function.setItemText(6, _translate("AiKit_UI", "yolov5"))
             self.func_lab_11.setText(_translate("AiKit_UI", "添加新图片"))
             if self.is_language_btn_click:
                 if self.add_img_btn.text() == 'Add':
