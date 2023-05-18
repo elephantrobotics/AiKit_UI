@@ -89,7 +89,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         # 初始坐标
         self.home_coords = [180, -10.5, 280.1, 178.99, 7.67, -179.9]
         # self.home_coords = [80, .5, 280.1, 178.99, 7.67, -179.9]
-        self.home_coords = [145.0, -65.5, 280.1, 178.99, 7.67, -179.9]  # 初始化点 init point
+        # self.home_coords = [145.0, -65.5, 280.1, 178.99, 7.67, -179.9]  # 初始化点 init point
 
 
 
@@ -1328,7 +1328,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
     def set_params(self, c_x, c_y, ratio):
         self.c_x = c_x
         self.c_y = c_y
-        self.ratio = 220.0 / ratio
+        self.ratio = 320.0 / ratio
 
     # calculate the coords between cube and mycobot
     def get_position(self, x, y):
@@ -1625,7 +1625,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             # Adjust the suction position of the suction pump, increase y, move to the left;
             # decrease y, move to the right; increase x, move forward; decrease x, move backward
             if self.comboBox_function.currentText() == 'QR code recognition' or self.comboBox_function.currentText() == '二维码识别':
-                _moved = threading.Thread(target=self.moved(x+15, y+17))
+                # _moved = threading.Thread(target=self.moved(x+15, y+17))
+                _moved = threading.Thread(target=self.moved(x+265, y+5))
                 _moved.start()
             else:
                 _moved = threading.Thread(target=self.moved(x, y))
@@ -1664,9 +1665,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 50, 0)  #
                                 time.sleep(3)
                             else:
-                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 0)
+                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 1)
                                 time.sleep(2.5)
-                                self.myCobot.send_coords([x, y, 140, -173.84, -0.14, -74.37], 50, 0)  # origin z : 100
+                                self.myCobot.send_coords([x, y, 140, -173.84, -0.14, -74.37], 50, 1)  # origin z : 100
                                 time.sleep(3)
 
                         # open pump

@@ -3666,3 +3666,369 @@
 2023-04-11 14:31:38,078 main.py[line:449]INFO - connection succeeded !
 2023-04-11 14:31:44,923 main.py[line:730]INFO - Color recognition ok
 2023-04-11 14:31:44,923 main.py[line:730]INFO - Color recognition ok
+2023-05-18 10:10:54,787 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 10:10:54,787 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 10:37:05,353 main.py[line:732]INFO - Color recognition ok
+2023-05-18 10:37:05,353 main.py[line:732]INFO - Color recognition ok
+2023-05-18 10:37:56,637 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 10:37:56,637 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 10:40:24,599 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 10:40:24,599 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 10:58:27,161 main.py[line:732]INFO - Color recognition ok
+2023-05-18 10:58:27,161 main.py[line:732]INFO - Color recognition ok
+2023-05-18 10:58:33,097 main.py[line:452]INFO - connection succeeded !
+2023-05-18 10:58:33,097 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:01:50,920 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:01:50,920 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:04:02,913 main.py[line:488]INFO - Disconnected successfully !
+2023-05-18 11:04:02,913 main.py[line:488]INFO - Disconnected successfully !
+2023-05-18 11:04:12,938 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:04:12,938 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:04:28,551 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:04:28,551 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:04:52,337 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:04:52,337 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:05:06,311 main.py[line:488]INFO - Disconnected successfully !
+2023-05-18 11:05:06,311 main.py[line:488]INFO - Disconnected successfully !
+2023-05-18 11:05:08,589 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:05:08,589 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:05:21,235 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:05:21,235 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:05:33,278 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:05:33,278 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:06:20,560 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:06:20,560 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:06:22,673 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:06:22,673 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:07:04,775 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:07:04,775 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:11:18,323 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:11:18,323 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:11:22,378 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:11:22,378 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:12:02,602 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:12:02,602 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:12:13,679 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:12:13,679 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:12:36,648 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:12:36,648 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:12:49,601 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:12:49,601 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:13:09,548 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:13:09,548 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:14:08,903 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:14:08,903 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:15:54,298 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:15:54,298 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:16:05,457 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:16:05,457 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:16:51,629 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:16:51,629 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:17:24,789 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:17:24,789 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:17:35,575 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:17:35,575 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:17:55,499 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:17:55,499 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:18:08,134 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:18:08,134 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:18:12,845 main.py[line:488]INFO - Disconnected successfully !
+2023-05-18 11:18:12,845 main.py[line:488]INFO - Disconnected successfully !
+2023-05-18 11:18:14,597 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:18:14,597 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:18:17,272 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:18:17,272 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:18:39,113 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:18:39,113 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:18:42,412 main.py[line:488]INFO - Disconnected successfully !
+2023-05-18 11:18:42,412 main.py[line:488]INFO - Disconnected successfully !
+2023-05-18 11:18:59,750 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:18:59,750 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:20:21,637 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:20:21,637 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:20:31,657 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:20:31,657 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:20:34,491 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:20:34,491 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:20:44,016 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:20:44,016 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:21:22,342 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:21:22,342 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:21:35,002 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:21:35,002 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:21:56,619 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:21:56,619 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:22:02,129 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:22:02,129 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:22:12,202 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:22:12,202 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:23:49,067 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:23:49,067 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:25:08,372 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:25:08,372 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:25:31,371 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:25:31,371 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:25:55,350 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:25:55,350 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:26:05,467 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:26:05,467 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:26:25,672 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:26:25,672 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:26:38,448 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:26:38,448 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:27:18,892 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:27:18,892 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:28:05,644 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:28:05,644 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:28:25,651 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:28:25,651 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:28:45,363 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:28:45,363 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:29:36,662 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:29:36,662 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:30:07,447 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:30:07,447 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:32:48,370 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:32:48,370 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:33:39,284 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:33:39,284 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:34:08,355 main.py[line:479]ERROR -                 Connection failed !!!
+                =================================================
+                could not open port 'COM13': PermissionError(13, '¾Ü¾ø·ÃÎÊ¡£', None, 5)
+                =================================================
+            
+2023-05-18 11:34:08,355 main.py[line:479]ERROR -                 Connection failed !!!
+                =================================================
+                could not open port 'COM13': PermissionError(13, '¾Ü¾ø·ÃÎÊ¡£', None, 5)
+                =================================================
+            
+2023-05-18 11:34:08,468 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:34:08,468 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:34:12,424 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:12,424 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:15,395 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:15,395 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:16,193 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:16,193 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:20,417 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:20,417 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:22,931 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:22,931 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:23,651 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:23,651 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:24,082 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:24,082 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:24,255 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:24,255 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:24,457 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:34:24,457 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:35:04,053 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:35:04,053 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:35:17,744 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:35:17,744 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:36:27,485 main.py[line:488]INFO - Disconnected successfully !
+2023-05-18 11:36:27,485 main.py[line:488]INFO - Disconnected successfully !
+2023-05-18 11:37:35,758 main.py[line:479]ERROR -                 Connection failed !!!
+                =================================================
+                could not open port 'COM13': PermissionError(13, '¾Ü¾ø·ÃÎÊ¡£', None, 5)
+                =================================================
+            
+2023-05-18 11:37:35,758 main.py[line:479]ERROR -                 Connection failed !!!
+                =================================================
+                could not open port 'COM13': PermissionError(13, '¾Ü¾ø·ÃÎÊ¡£', None, 5)
+                =================================================
+            
+2023-05-18 11:37:36,306 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:37:36,306 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:37:36,312 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:37:36,312 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:37:51,902 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:37:51,902 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:38:09,980 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:38:09,980 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:38:22,036 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:38:22,036 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:38:24,660 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:38:24,660 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:38:26,406 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:38:26,406 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:39:13,641 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:39:13,641 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:39:25,722 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:39:25,722 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:40:53,057 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:40:53,057 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:40:55,232 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:40:55,232 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:40:57,628 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:40:57,628 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:41:16,998 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:41:16,998 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:41:43,795 main.py[line:872]ERROR - Abnormal image recognition£ºOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\features2d\src\sift.dispatch.cpp:477: error: (-5:Bad argument) image is empty or has incorrect depth (!=CV_8U) in function 'cv::SIFT_Impl::detectAndCompute'
+
+2023-05-18 11:41:43,795 main.py[line:872]ERROR - Abnormal image recognition£ºOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\features2d\src\sift.dispatch.cpp:477: error: (-5:Bad argument) image is empty or has incorrect depth (!=CV_8U) in function 'cv::SIFT_Impl::detectAndCompute'
+
+2023-05-18 11:41:53,816 main.py[line:872]ERROR - Abnormal image recognition£ºOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\features2d\src\sift.dispatch.cpp:477: error: (-5:Bad argument) image is empty or has incorrect depth (!=CV_8U) in function 'cv::SIFT_Impl::detectAndCompute'
+
+2023-05-18 11:41:53,816 main.py[line:872]ERROR - Abnormal image recognition£ºOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\features2d\src\sift.dispatch.cpp:477: error: (-5:Bad argument) image is empty or has incorrect depth (!=CV_8U) in function 'cv::SIFT_Impl::detectAndCompute'
+
+2023-05-18 11:43:10,964 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:43:10,964 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:43:18,728 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:43:18,728 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:43:29,730 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:43:29,730 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:43:45,599 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:43:45,599 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:43:48,815 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:43:48,815 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:44:48,880 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:44:48,880 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:45:00,953 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:45:00,953 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:45:30,684 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:45:30,684 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:52:12,116 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:52:12,116 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:52:18,244 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:52:18,244 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:53:34,654 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:53:34,654 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:54:40,728 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:54:40,728 main.py[line:732]INFO - Color recognition ok
+2023-05-18 11:54:43,890 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:54:43,890 main.py[line:452]INFO - connection succeeded !
+2023-05-18 11:56:38,431 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:56:38,431 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:56:48,442 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:56:48,442 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:56:58,449 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:56:58,449 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:57:08,456 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:57:08,456 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:57:18,474 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:57:18,474 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:57:47,502 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:57:47,502 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:57:57,467 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:57:57,467 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:58:15,177 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:58:15,177 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:58:15,179 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:58:15,179 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:58:46,640 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:58:46,640 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 11:58:50,810 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 11:58:50,810 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 13:44:18,977 main.py[line:732]INFO - Color recognition ok
+2023-05-18 13:44:18,977 main.py[line:732]INFO - Color recognition ok
+2023-05-18 13:44:27,221 main.py[line:452]INFO - connection succeeded !
+2023-05-18 13:44:27,221 main.py[line:452]INFO - connection succeeded !
+2023-05-18 13:46:45,438 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:46:45,438 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:46:55,441 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:46:55,441 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:47:28,145 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:47:28,145 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:47:48,790 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 13:47:48,790 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 13:48:06,789 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:48:06,789 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:48:16,800 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:48:16,800 main.py[line:1207]ERROR - Abnormal shape recognitionOpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:48:34,473 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:48:34,473 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:48:49,434 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 13:48:49,434 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 13:48:59,694 main.py[line:732]INFO - Color recognition ok
+2023-05-18 13:48:59,694 main.py[line:732]INFO - Color recognition ok
+2023-05-18 13:49:11,206 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:49:11,206 main.py[line:1209]ERROR - OpenCV(4.6.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2023-05-18 13:50:54,070 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-05-18 13:50:54,070 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
