@@ -4032,3 +4032,119 @@
 
 2023-05-18 13:50:54,070 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
 2023-05-18 13:50:54,070 main.py[line:365]INFO - Mycobot is not connected yet! ! ! Please connect to myCobot first! ! !
+2023-03-14 16:21:30,525 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-03-14 16:21:30,525 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-03-14 16:21:30,533 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-03-14 16:21:30,533 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-03-14 16:21:30,542 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-03-14 16:21:30,542 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:22:38,866 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:22:38,866 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:22:38,869 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:22:38,869 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:22:38,870 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:22:38,870 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:23:59,307 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:23:59,307 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:23:59,310 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:23:59,310 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:23:59,311 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:23:59,311 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:24:22,219 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for Pi.txt'
+2023-05-25 12:24:22,219 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for Pi.txt'
+2023-05-25 12:24:23,698 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:24:23,698 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:24:51,361 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:24:51,361 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:24:51,364 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:24:51,364 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:24:51,365 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:24:51,365 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:25:18,839 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for Pi.txt'
+2023-05-25 12:25:18,839 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for Pi.txt'
+2023-05-25 12:25:20,254 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:25:20,254 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:25:47,518 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:25:47,518 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:25:50,620 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:25:50,620 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:25:52,222 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:25:52,222 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:26:06,353 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:26:06,353 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:26:07,750 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for Pi.txt'
+2023-05-25 12:26:07,750 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for Pi.txt'
+2023-05-25 12:26:09,781 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:26:09,781 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:26:20,163 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:26:20,163 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:26:21,000 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:26:21,000 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:26:42,149 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:26:42,149 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:26:43,088 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:26:43,088 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:26:51,857 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:26:51,857 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:27:01,698 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:27:01,698 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:27:01,701 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:27:01,701 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:27:01,702 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:27:01,702 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:27:05,185 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for Pi.txt'
+2023-05-25 12:27:05,185 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for Pi.txt'
+2023-05-25 12:27:06,303 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:27:06,303 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:28:32,196 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:28:32,196 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:28:32,199 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:28:32,199 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:28:32,200 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:28:32,200 main.py[line:1991]ERROR - [Errno 2] No such file or directory: '/home/er/AiKit_UI/libraries/offset/myCobot 320 for M5.txt'
+2023-05-25 12:30:23,318 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:30:23,318 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:30:30,054 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:30:30,054 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 12:23:33,852 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:23:33,852 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:24:14,931 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:24:14,931 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:25:04,673 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:25:04,673 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:30:08,078 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:30:08,078 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:30:35,668 main.py[line:572]ERROR - Failed to open camera
+2023-05-25 12:30:35,668 main.py[line:572]ERROR - Failed to open camera
+2023-05-25 12:30:37,489 main.py[line:572]ERROR - Failed to open camera
+2023-05-25 12:30:37,489 main.py[line:572]ERROR - Failed to open camera
+2023-05-25 12:30:51,426 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:30:51,426 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:31:43,242 main.py[line:1209]ERROR - OpenCV(4.6.0) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2023-05-25 12:31:43,242 main.py[line:1209]ERROR - OpenCV(4.6.0) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2023-05-25 12:35:53,018 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:35:53,018 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:35:55,390 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:35:55,390 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:38:39,946 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:38:39,946 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:38:59,432 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:38:59,432 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:40:46,243 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:40:46,243 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:44:14,328 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:44:14,328 main.py[line:452]INFO - connection succeeded !
+2023-05-25 12:44:14,544 main.py[line:732]INFO - Color recognition ok
+2023-05-25 12:44:14,544 main.py[line:732]INFO - Color recognition ok
+2023-05-25 13:15:15,503 main.py[line:452]INFO - connection succeeded !
+2023-05-25 13:15:15,503 main.py[line:452]INFO - connection succeeded !
+2023-05-25 13:15:19,954 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 13:15:19,954 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 13:15:21,241 main.py[line:452]INFO - connection succeeded !
+2023-05-25 13:15:21,241 main.py[line:452]INFO - connection succeeded !
+2023-05-25 13:15:23,939 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 13:15:23,939 main.py[line:488]INFO - Disconnected successfully !
+2023-05-25 13:15:27,375 main.py[line:452]INFO - connection succeeded !
+2023-05-25 13:15:27,375 main.py[line:452]INFO - connection succeeded !

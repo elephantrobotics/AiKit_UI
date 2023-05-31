@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon=/usr/share/icons/mate/scalable/categories/preferences-system-symbolic.svg
+Icon[en_US]=/usr/share/icons/mate/scalable/categories/preferences-system-symbolic.svg
+Name[en_US]=AiKit_UI
+Exec=/home/er/AiKit_UI/AiKit_UI.sh
+Name=myCobot Test Tool

@@ -925,7 +925,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             self.connect_btn.setEnabled(True)
                             is_release = False
                         # yolov5 img path
-                        path_img = libraries_path + '/res/yolov5_detect.png'
+                        path_img = libraries_path + '/res/yolov5_detect.ico'
                         QApplication.processEvents()
                         # read camera
                         ret, frame = self.cap.read()
@@ -1655,7 +1655,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 0)
                             time.sleep(2)
                             self.myCobot.send_coords(
-                                [self.home_coords[0] + x + 8, self.home_coords[1] + y, 100.5, 178.99, -3.78, -62.9],
+                                [self.home_coords[0] + x + 8, self.home_coords[1] + y, 80.5, 178.99, -3.78, -62.9],
                                 50, 0)
                             time.sleep(2.5)
                         else:
@@ -1737,9 +1737,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         if device in self.M5:
             self.myCobot.set_basic_output(2, 0)
             self.myCobot.set_basic_output(5, 1)
+            self.stop_wait(0.5)
+            self.myCobot.set_basic_output(2, 1)
         else:
             self.myCobot.set_basic_output(1, 0)
             self.myCobot.set_basic_output(2, 1)
+            self.stop_wait(0.5)
+            self.myCobot.set_basic_output(1, 1)
         # self.stop_wait(0.5)
         # self.myCobot.set_basic_output(1, 0)
 
