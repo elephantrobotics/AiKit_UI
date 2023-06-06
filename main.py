@@ -874,9 +874,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                         # 提取yaw角度（绕Z轴旋转角度）
                                         yaw_degrees = euler_angles[2]
                                         # 输出ArUco码的旋转角
-                                        print("Rotation (Yaw):", yaw_degrees)
+                                        # print("Rotation (Yaw):", yaw_degrees)
                                         self.yaw_degrees = round(yaw_degrees[0], 2)
-                                        print("Rotation angle:", self.yaw_degrees)
+
                                     # cv.putText(img, 'coords' + str(xyz), (0, 64), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv.LINE_AA)
                                     for i in range(rvec.shape[0]):
                                         # draw the aruco on img
@@ -898,8 +898,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         self.loger.error('abnormal' + str(e))
                 elif func == 'yolov5':
                     try:
-                        print(self.yolov5_count)
-                        print(is_release)
+                        # print(self.yolov5_count)
+                        # print(is_release)
                         if self.yolov5_count and is_release:
                             self.open_camera()
                             self.comboBox_function.setEnabled(True)
@@ -1333,8 +1333,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                interpolation=cv2.INTER_CUBIC)
             if self.x1 != self.x2:
                 # the cutting ratio here is adjusted according to the actual situation
-                frame = frame[int(self.y2 * 0.84):int(self.y1 * 1.1),  # 0.78 1.1
-                        int(self.x1 * 0.9):int(self.x2 * 1.1)]  # 0.84 1.08
+                frame = frame[int(self.y2 * 0.77):int(self.y1 * 1.14),  # 0.78 1.1
+                        int(self.x1 * 0.88):int(self.x2 * 1.08)]  # 0.84 1.08
             return frame
         except Exception as e:
             # self.loger.error('Interception failed' + str(e))
@@ -1596,8 +1596,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         try:
             print('x', x)
             print('y', y)
-            print('rotation angles:', self.yaw_degrees)
-            yaw_degrees_opt = self.yaw_degrees + 8
             self.is_crawl = True
             while self.is_pick:
                 QApplication.processEvents()
@@ -1611,14 +1609,16 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         # send coordinates to move mycobot
                         if func == 'QR code recognition' or func == '二维码识别':
                             self.myCobot.send_coords(
-                                [self.home_coords[0] + x, self.home_coords[1] + y, 240, 178.99, -3.78, -62.9], 50,
-                                0)
+                                [self.home_coords[0] + x, self.home_coords[1] + y, 240, 178.99, -3.78, -62.9], 100,
+                                1)
                             time.sleep(2)
                             self.myCobot.send_coords(
                                 [self.home_coords[0] + x, self.home_coords[1] + y, 80.5, 178.99, -3.78, -62.9],
-                                50, 0)
+                                100, 1)
                             time.sleep(2.5)
                         elif func == 'Intelligent gripping' or func == '智能夹取':
+                            print('rotation angle:', self.yaw_degrees)
+                            yaw_degrees_opt = self.yaw_degrees + 5
                             # 移动坐标
                             self.move_coords = [
                                 [37.6, -223.4, 326.3, -173.29, -14.23, -92.43],  # D Sorting area
@@ -1638,14 +1638,14 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 else:
                                     break
                             time.sleep(0.1)
-                            self.myCobot.send_coords([x, y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 50, 1)
+                            self.myCobot.send_coords([x, y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
                             time.sleep(2.5)
-                            self.myCobot.send_coords([x, y, 203, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 50, 1)
+                            self.myCobot.send_coords([x, y, 203, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
                             time.sleep(3)
                             # close gripper
                             self.gripper_off()
 
-                        elif func == 'object recognition' or func == '物体识别' or func == 'color recognition grip' or func == '颜色识别 夹爪':
+                        elif func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
                             # 移动坐标
                             self.move_coords = [
                                 [37.6, -223.4, 326.3, -173.29, -14.23, -92.43],  # D Sorting area
@@ -1655,26 +1655,26 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             ]
                             # open gripper
                             self.gripper_on()
-                            self.myCobot.send_coords([x, y, 250, -173.84, -0.14, -74.37], 50, 1)
+                            self.myCobot.send_coords([x, y, 250, -173.84, -0.14, -74.37], 100, 1)
                             time.sleep(2.5)
-                            self.myCobot.send_coords([x, y, 203, -173.84, -0.14, -74.37], 50, 1)  #
+                            self.myCobot.send_coords([x, y, 203, -173.84, -0.14, -74.37], 100, 1)  #
                             time.sleep(3)
                             # close gripper
                             self.gripper_off()
                         else:
                             if func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
-                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 1)
+                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
                                 time.sleep(2.5)
-                                self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 50, 1)  #
+                                self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 100, 1)  #
                                 time.sleep(3)
                             else:
-                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 0)
+                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 0)
                                 time.sleep(2.5)
-                                self.myCobot.send_coords([x, y, 140, -173.84, -0.14, -74.37], 50, 0)  # origin z : 100
+                                self.myCobot.send_coords([x, y, 140, -173.84, -0.14, -74.37], 100, 0)  # origin z : 100
                                 time.sleep(3)
 
                         # open pump
-                        if func != 'object recognition' or func != '物体识别' or func != 'color recognition grip' or func != '颜色识别 夹爪' or func != 'Intelligent gripping' or func != '智能夹取':
+                        if func != 'object recognition' or func != '物体识别' or func != 'Color recognition grip' or func != '颜色识别 夹爪' or func != 'Intelligent gripping' or func != '智能夹取':
                             self.pump_on()
                         self.stop_wait(2)
                         tmp = []
@@ -1703,10 +1703,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         color = 1
                     else:
                         color = 0
-                    self.myCobot.send_coords(self.move_coords[color], 40, 0)
+                    self.myCobot.send_coords(self.move_coords[color], 100, 1)
                     self.stop_wait(4)
 
-                    if func == 'object recognition' or func == '物体识别' or func == 'color recognition grip' or func == '颜色识别 夹爪':
+                    if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
                         # open gripper
                         self.gripper_on()
                     else:
@@ -1714,7 +1714,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         self.pump_off()
 
                     self.stop_wait(4)
-                    if func == 'object recognition' or func == '物体识别' or func == 'color recognition grip' or func == '颜色识别 夹爪':
+                    if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
                         self.myCobot.send_angles(self.move_angles[0], 25)
                         self.gripper_off()
                     else:
@@ -1990,7 +1990,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             """Get the offset according to the device"""
 
             func = self.comboBox_function.currentText()
-            if func == 'QR code recognition' or func == '二维码识别':
+            if func == 'QR code recognition' or func == '二维码识别' or func == 'Intelligent gripping' or func == '智能夹取':
                 with open(libraries_path + f'/offset/{self.comboBox_device.currentText()}_encode.txt', "r",
                           encoding="utf-8") as f:
                     offset = f.read().splitlines()
@@ -2015,7 +2015,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             if x is not None and (x.startswith('-') and x[1:] or x).isdigit() and y is not None and (
                     y.startswith('-') and y[1:] or y).isdigit():
                 offset = [x, y]
-                if func == 'QR code recognition' or func == '二维码识别':
+                if func == 'QR code recognition' or func == '二维码识别' or func == 'Intelligent gripping' or func == '智能夹取':
                     with open(rf'{libraries_path}/offset/{self.comboBox_device.currentText()}_encode.txt', "w",
                               encoding="utf-8") as file:
                         file.write(str(offset))
