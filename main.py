@@ -870,7 +870,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                         # 从旋转向量（rvec）计算旋转矩阵
                                         rotation_matrix, _ = cv2.Rodrigues(rvec)
                                         # 从旋转矩阵提取欧拉角（yaw、pitch、roll）
-                                        euler_angles = cv2.decomposeProjectionMatrix(np.hstack((rotation_matrix, tvec.reshape(3, 1))))[6]
+                                        euler_angles = \
+                                            cv2.decomposeProjectionMatrix(
+                                                np.hstack((rotation_matrix, tvec.reshape(3, 1))))[
+                                                6]
                                         # 提取yaw角度（绕Z轴旋转角度）
                                         yaw_degrees = euler_angles[2]
                                         # 输出ArUco码的旋转角
@@ -1580,12 +1583,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.cache_x = self.cache_y = 0
             # Adjust the suction position of the suction pump, increase y, move to the left;
             # decrease y, move to the right; increase x, move forward; decrease x, move backward
-            if self.comboBox_function.currentText() == 'QR code recognition' or self.comboBox_function.currentText() == '二维码识别':
+            if self.comboBox_function.currentText() == 'QR code recognition' or self.comboBox_function.currentText() == '二维码识别' or self.comboBox_function.currentText() == 'Intelligent gripping' or self.comboBox_function.currentText() == '智能夹取':
                 _moved = threading.Thread(target=self.moved(x + 265, y + 5))
                 _moved.start()
-            elif self.comboBox_function.currentText() == 'Intelligent gripping' or self.comboBox_function.currentText() == '智能夹取':
-                _moved = threading.Thread(target=self.moved(x + 100, y + 140))
-                _moved.start()
+
             else:
                 _moved = threading.Thread(target=self.moved(x, y))
                 _moved.start()
@@ -1613,7 +1614,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 1)
                             time.sleep(2)
                             self.myCobot.send_coords(
-                                [self.home_coords[0] + x, self.home_coords[1] + y, 80.5, 178.99, -3.78, -62.9],
+                                [self.home_coords[0] + x, self.home_coords[1] + y, 100.5, 178.99, -3.78, -62.9],
                                 100, 1)
                             time.sleep(2.5)
                         elif func == 'Intelligent gripping' or func == '智能夹取':
@@ -1638,9 +1639,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 else:
                                     break
                             time.sleep(0.1)
-                            self.myCobot.send_coords([x, y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
+                            self.myCobot.send_coords([self.home_coords[0] + x, self.home_coords[1] + y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
                             time.sleep(2.5)
-                            self.myCobot.send_coords([x, y, 203, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
+                            self.myCobot.send_coords([self.home_coords[0] + x, self.home_coords[1] + y, 203, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
                             time.sleep(3)
                             # close gripper
                             self.gripper_off()
