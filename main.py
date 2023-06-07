@@ -5,6 +5,7 @@ import os
 import sys
 import threading
 import time
+import traceback
 
 import cv2
 import numpy as np
@@ -98,7 +99,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self.move_angles = [
             [0.61, 45.87, -92.37, -41.3, 89.56, 0],  # init the point
             [18.8, -7.91, -54.49, -23.02, 89.56, -14.76],  # point to grab
-            [17.22, -5.27, -52.47, -25.75, 89.73, -0.26], ]
+            [17.22, -5.27, -52.47, -25.75, 89.73, -0.26],
+            [16.96, -6.85, -54.93, -19.68, 89.47, 12.83],  # color gripper init point
+        ]
         # 移动坐标
         self.move_coords = [
             [28.9, -226, 246, -171.13, -3.94, -92.37],  # D Sorting area
@@ -387,6 +390,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.offset_change()  # Get the corresponding offset of the device
             self.device_coord()  # Initialize the point of the corresponding device
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def device_coord(self):
@@ -400,7 +404,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self.move_angles = [
             [0.61, 45.87, -92.37, -41.3, 89.56, 0],  # init the point
             [18.8, -7.91, -54.49, -23.02, 89.56, -14.76],  # point to grab
-            [17.22, -5.27, -52.47, -25.75, 89.73, -0.26], ]
+            [17.22, -5.27, -52.47, -25.75, 89.73, -0.26],
+            [16.96, -6.85, -54.93, -19.68, 89.47, 12.83],  # color gripper init point
+        ]
         # 移动坐标
         self.move_coords = [
             [28.9, -226, 246, -171.13, -3.94, -92.37],  # D Sorting area
@@ -429,6 +435,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.btn_color(self.connect_btn, 'red')
 
         except Exception as e:
+            e = traceback.format_exc()
             err_log = """\
                 \rConnection failed !!!
                 \r=================================================
@@ -552,6 +559,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 self.open_camera_btn.setText('关闭')
             self.btn_color(self.open_camera_btn, 'red')
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error('Unable to open camera' + str(e))
             self.camera_status = False
             self.camera_edit.setEnabled(True)
@@ -584,6 +592,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.buad_choose()
             self.prompts_lab.clear()
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error('camera off exception' + str(e))
 
     def camera_checked(self):
@@ -840,6 +849,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                                      QtGui.QImage.Format_RGB888)
                             self.show_camera_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
                     except Exception as e:
+                        e = traceback.format_exc()
                         self.loger.error('Abnormal image recognition：' + str(e))
                 elif func == 'QR code recognition' or func == '二维码识别' or func == 'Intelligent gripping' or func == '智能夹取':
                     try:
@@ -898,6 +908,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                                      QtGui.QImage.Format_RGB888)
                             self.show_camera_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
                     except Exception as e:
+                        e = traceback.format_exc()
                         self.loger.error('abnormal' + str(e))
                 elif func == 'yolov5':
                     try:
@@ -1066,9 +1077,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
                                             self.num = self.real_sx = self.real_sy = 0
                                 except Exception as e:
+                                    e = traceback.format_exc()
                                     self.loger.error('yolov5 Exception:' + str(e))
                             # is_release = False
                     except Exception as e:
+                        e = traceback.format_exc()
                         self.loger.error('yolov5 Exception:' + str(e))
                 else:
                     try:
@@ -1180,8 +1193,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                                      QtGui.QImage.Format_RGB888)
                             self.show_camera_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
                     except Exception as e:
+                        e = traceback.format_exc()
                         self.loger.error('Abnormal shape recognition' + str(e))
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def discern_func(self):
@@ -1198,6 +1213,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 self.btn_color(self.discern_btn, 'red')
 
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error('identify anomalies' + str(e))
 
     def crawl_func(self):
@@ -1243,6 +1259,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 self.yolov5_is_not_pick = False
                 self.is_yolov5_cut_btn_clicked = False
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def stop_wait(self, t):
@@ -1604,9 +1621,14 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 if self.is_crawl:
                     if self.crawl_status:
                         self.is_crawl = False
-                        self.myCobot.send_angles(self.move_angles[2], 20)
-                        self.stop_wait(3)
                         func = self.comboBox_function.currentText()
+                        if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
+                            self.myCobot.send_angles(self.move_angles[3], 25)
+                            self.stop_wait(3)
+                        else:
+                            self.myCobot.send_angles(self.move_angles[2], 25)
+                            self.stop_wait(3)
+
                         # send coordinates to move mycobot
                         if func == 'QR code recognition' or func == '二维码识别':
                             self.myCobot.send_coords(
@@ -1619,14 +1641,23 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             time.sleep(2.5)
                         elif func == 'Intelligent gripping' or func == '智能夹取':
                             print('rotation angle:', self.yaw_degrees)
+                            if self.yaw_degrees > 169:
+                                self.yaw_degrees = 169
+                            elif self.yaw_degrees < -169:
+                                self.yaw_degrees = -169
                             yaw_degrees_opt = self.yaw_degrees + 5
                             # 移动坐标
                             self.move_coords = [
-                                [37.6, -223.4, 326.3, -173.29, -14.23, -92.43],  # D Sorting area
+                                [30.3, -214.9, 302.3, -169.77, -8.64, -91.55],  # D Sorting area
                                 [240.3, -202.2, 317.1, -152.12, -10.15, -95.73],  # C Sorting area
                                 [244.5, 193.2, 330.3, -160.54, 17.35, -74.59],  # A Sorting area
-                                [26.1, 235.9, 329.0, -175.56, -15.21, 90.98],  # B Sorting area
+                                [33.2, 205.3, 322.5, -170.22, -13.93, 92.28],  # B Sorting area
                             ]
+                            if yaw_degrees_opt > 173:
+                                yaw_degrees_opt = 173
+                            elif yaw_degrees_opt < 173:
+                                yaw_degrees_opt = -173
+                            print('yaw_degrees_opt:', yaw_degrees_opt)
                             self.myCobot.send_angle(6, yaw_degrees_opt, 80)
                             time.sleep(3)
                             # open gripper
@@ -1639,9 +1670,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 else:
                                     break
                             time.sleep(0.1)
-                            self.myCobot.send_coords([self.home_coords[0] + x, self.home_coords[1] + y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
+                            self.myCobot.send_coords(
+                                [self.home_coords[0] + x, self.home_coords[1] + y, 250, tmp_coords[3], tmp_coords[4],
+                                 tmp_coords[5]], 100, 1)
                             time.sleep(2.5)
-                            self.myCobot.send_coords([self.home_coords[0] + x, self.home_coords[1] + y, 203, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
+                            self.myCobot.send_coords(
+                                [self.home_coords[0] + x, self.home_coords[1] + y, 203, tmp_coords[3], tmp_coords[4],
+                                 tmp_coords[5]], 100, 1)
                             time.sleep(3)
                             # close gripper
                             self.gripper_off()
@@ -1649,16 +1684,16 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         elif func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
                             # 移动坐标
                             self.move_coords = [
-                                [37.6, -223.4, 326.3, -173.29, -14.23, -92.43],  # D Sorting area
+                                [30.3, -214.9, 302.3, -169.77, -8.64, -91.55],  # D Sorting area
                                 [240.3, -202.2, 317.1, -152.12, -10.15, -95.73],  # C Sorting area
                                 [244.5, 193.2, 330.3, -160.54, 17.35, -74.59],  # A Sorting area
-                                [26.1, 235.9, 329.0, -175.56, -15.21, 90.98],  # B Sorting area
+                                [33.2, 205.3, 322.5, -170.22, -13.93, 92.28],  # B Sorting area
                             ]
                             # open gripper
                             self.gripper_on()
-                            self.myCobot.send_coords([x, y, 250, -173.84, -0.14, -74.37], 100, 1)
+                            self.myCobot.send_coords([x, y, 250, -174.51, 0.86, -85.93], 100, 1)
                             time.sleep(2.5)
-                            self.myCobot.send_coords([x, y, 203, -173.84, -0.14, -74.37], 100, 1)  #
+                            self.myCobot.send_coords([x, y, 203, -174.51, 0.86, -85.93], 100, 1)
                             time.sleep(3)
                             # close gripper
                             self.gripper_off()
@@ -1705,17 +1740,17 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     else:
                         color = 0
                     self.myCobot.send_coords(self.move_coords[color], 100, 1)
-                    self.stop_wait(4)
+                    self.stop_wait(5.5)
 
-                    if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
+                    if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪' or func == 'Intelligent gripping' or func == '智能夹取':
                         # open gripper
                         self.gripper_on()
                     else:
                         # close pump
                         self.pump_off()
 
-                    self.stop_wait(4)
-                    if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
+                    self.stop_wait(5.5)
+                    if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪' or func == 'Intelligent gripping' or func == '智能夹取':
                         self.myCobot.send_angles(self.move_angles[0], 25)
                         self.gripper_off()
                     else:
@@ -1729,6 +1764,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             if self.auto_mode_status:
                 self.is_pick = True
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.info(e)
 
     def pump_on(self):
@@ -1763,6 +1799,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     restore.append(cv2.imread(path + '/{}'.format(l)))
             return restore
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def add_img(self):
@@ -1861,6 +1898,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         showImage = showImage.scaled(new_width, new_height, Qt.KeepAspectRatio)
                         self.show_cutimg_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
                     except Exception as e:
+                        e = traceback.format_exc()
                         self.loger.info(e)
 
                     x, y, w, h = roi
@@ -1907,6 +1945,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         cv2.destroyAllWindows()
 
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error('Abnormal image interception：' + str(e))
             self.exit_add()
 
@@ -1962,6 +2001,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
             self.yolov5_count = False
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def auto_mode(self):
@@ -2005,6 +2045,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.xoffset_edit.insert(f'{eval(offset[0])[0]}')
             self.yoffset_edit.insert(f'{eval(offset[0])[1]}')
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def insert_offsets(self):
@@ -2038,6 +2079,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     msg_box = QMessageBox(QMessageBox.Warning, '警告', '偏移量只允许输入整数！')
                 msg_box.exec_()
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.info(str(e))
 
     def open_file(self):
@@ -2051,6 +2093,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             # self.file_window = fileWindow()
             # self.file_window.show()
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.info(str(e))
 
     def get_img_coord(self):
@@ -2319,6 +2362,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             # 绘制类real_sx, real_sy, detect.color)
                             self.draw_label(input_image, label, left, top)
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(e)
 
         if cx + cy > 0:
@@ -2366,6 +2410,7 @@ if __name__ == '__main__':
         AiKit_window = AiKit_APP()
         AiKit_window.show()
     except Exception as e:
+        e = traceback.format_exc()
         with open("error.txt", "w") as f:
             f.write(str(e))
     sys.exit(app.exec_())
