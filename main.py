@@ -32,7 +32,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self.loger = logfile.MyLogging().logger
         self.path = os.path.split(os.path.abspath(__file__))
         self.port_list = []
-        self.yaw_degrees = 0  # aruco code rotation angle
         self.loger = logfile.MyLogging().logger
         self._init_main_window()
         self._close_max_min_icon()
@@ -102,12 +101,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             [17.22, -5.27, -52.47, -25.75, 89.73, -0.26],
             [16.96, -6.85, -54.93, -19.68, 89.47, 12.83],  # color gripper init point
         ]
-        # 移动坐标
+        # 移动坐标（形状、特征点、yolvo5、二维码）
         self.move_coords = [
-            [28.9, -226, 246, -171.13, -3.94, -92.37],  # D Sorting area
-            [253.3, -216.1, 257, -163.12, -6.12, -95.27],  # C Sorting area
-            [241.8, 219.5, 270.6, -168.47, 10.42, -76.84],  # A Sorting area
-            [37.8, 233, 251.4, -170.6, -6.75, 88.53],  # B Sorting area
+            [32, -228.3, 201.6, -168.07, -7.17, -92.56],  # D Sorting area
+            [266.5, -219.7, 209.3, -170, -3.64, -94.62],  # C Sorting area
+            [253.8, 236.8, 224.6, -170, 6.87, -77.91],  # A Sorting area
+            [35.9, 235.4, 211.8, -169.33, -9.27, 88.3],  # B Sorting area
         ]
         # The internal parameter matrix of the camera
         self.camera_matrix = np.array([
@@ -130,7 +129,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             # "yellow": [np.array([22, 93, 0]), np.array([45, 255, 245])],
             "red": [np.array([0, 43, 46]), np.array([8, 255, 255])],
             "green": [np.array([35, 43, 35]), np.array([90, 255, 255])],
-            "blue": [np.array([100, 43, 46]), np.array([124, 255, 255])],
+            "blue": [np.array([78, 43, 46]), np.array([110, 255, 255])],
             "cyan": [np.array([78, 43, 46]), np.array([99, 255, 255])],
         }
         # Used to calculate the coordinates between the cube and mycobot
@@ -407,12 +406,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             [17.22, -5.27, -52.47, -25.75, 89.73, -0.26],
             [16.96, -6.85, -54.93, -19.68, 89.47, 12.83],  # color gripper init point
         ]
-        # 移动坐标
+        # 移动坐标（形状、特征点、yolvo5、二维码）
         self.move_coords = [
-            [28.9, -226, 246, -171.13, -3.94, -92.37],  # D Sorting area
-            [253.3, -216.1, 257, -163.12, -6.12, -95.27],  # C Sorting area
-            [241.8, 219.5, 270.6, -168.47, 10.42, -76.84],  # A Sorting area
-            [37.8, 233, 251.4, -170.6, -6.75, 88.53],  # B Sorting area
+            [32, -228.3, 201.6, -168.07, -7.17, -92.56],  # D Sorting area
+            [266.5, -219.7, 209.3, -170, -3.64, -94.62],  # C Sorting area
+            [253.8, 236.8, 224.6, -170, 6.87, -77.91],  # A Sorting area
+            [35.9, 235.4, 211.8, -169.33, -9.27, 88.3],  # B Sorting area
         ]
 
     def connect_mycobot(self):
@@ -1634,6 +1633,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
                         # send coordinates to move mycobot
                         if func == 'QR code recognition' or func == '二维码识别':
+                            self.move_coords = [
+                                [32, -228.3, 201.6, -168.07, -7.17, -92.56],  # D Sorting area
+                                [266.5, -219.7, 209.3, -170, -3.64, -94.62],  # C Sorting area
+                                [253.8, 236.8, 224.6, -170, 6.87, -77.91],  # A Sorting area
+                                [35.9, 235.4, 211.8, -169.33, -9.27, 88.3],  # B Sorting area
+                            ]
                             self.myCobot.send_coords(
                                 [self.home_coords[0] + x, self.home_coords[1] + y, 240, 178.99, -3.78, -62.9], 100,
                                 1)
@@ -1704,17 +1709,28 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             time.sleep(3)
                             # close gripper
                             self.gripper_off()
+                        elif func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
+                            self.move_coords = [
+                                [32, -228.3, 201.6, -168.07, -7.17, -92.56],  # D Sorting area
+                                [266.5, -219.7, 209.3, -170, -3.64, -94.62],  # C Sorting area
+                                [253.8, 236.8, 224.6, -170, 6.87, -77.91],  # A Sorting area
+                                [35.9, 235.4, 211.8, -169.33, -9.27, 88.3],  # B Sorting area
+                            ]
+                            self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
+                            time.sleep(2.5)
+                            self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 100, 1)  #
+                            time.sleep(3)
                         else:
-                            if func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
-                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
-                                time.sleep(2.5)
-                                self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 100, 1)  #
-                                time.sleep(3)
-                            else:
-                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 0)
-                                time.sleep(2.5)
-                                self.myCobot.send_coords([x, y, 140, -173.84, -0.14, -74.37], 100, 0)  # origin z : 100
-                                time.sleep(3)
+                            self.move_coords = [
+                                [28.9, -226, 246, -171.13, -3.94, -92.37],  # D Sorting area
+                                [253.3, -216.1, 257, -163.12, -6.12, -95.27],  # C Sorting area
+                                [241.8, 219.5, 270.6, -168.47, 10.42, -76.84],  # A Sorting area
+                                [37.8, 233, 251.4, -170.6, -6.75, 88.53],  # B Sorting area
+                            ]
+                            self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
+                            time.sleep(2.5)
+                            self.myCobot.send_coords([x, y, 150, -173.84, -0.14, -74.37], 100, 1)  # origin z : 100
+                            time.sleep(3)
 
                         # open pump
                         if func != 'object recognition' or func != '物体识别' or func != 'Color recognition grip' or func != '颜色识别 夹爪' or func != 'Intelligent gripping' or func != '智能夹取':
@@ -1747,7 +1763,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     else:
                         color = 0
                     self.myCobot.send_coords(self.move_coords[color], 100, 1)
-                    self.stop_wait(5.5)
+                    self.stop_wait(6.5)
 
                     if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪' or func == 'Intelligent gripping' or func == '智能夹取':
                         # open gripper
@@ -1756,7 +1772,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         # close pump
                         self.pump_off()
 
-                    self.stop_wait(5.5)
+                    self.stop_wait(6.5)
                     if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪' or func == 'Intelligent gripping' or func == '智能夹取':
                         self.myCobot.send_angles(self.move_angles[0], 25)
                         self.gripper_off()
@@ -1776,12 +1792,14 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
     def pump_on(self):
         """Start the suction pump"""
-        self.myCobot.set_basic_output(1, 1)
-        self.myCobot.set_basic_output(2, 0)
+        self.myCobot.set_basic_output(1, 0)
+        self.myCobot.set_basic_output(2, 1)
 
     def pump_off(self):
         """stop suction pump m5"""
         self.myCobot.set_basic_output(1, 1)
+        self.myCobot.set_basic_output(2, 0)
+        time.sleep(1)
         self.myCobot.set_basic_output(2, 1)
 
     # open gripper
