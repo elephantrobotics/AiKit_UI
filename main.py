@@ -1250,7 +1250,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.pump_off()
             self.myCobot.send_angles(self.move_angles[0], 30)
             self.stop_wait(3)
-            if self.comboBox_function.currentText() == 'object recognition' or self.comboBox_function.currentText() == '物体识别':
+            func_ = self.comboBox_function.currentText()
+            if func_ == 'object recognition' or func_ == '物体识别' or func_ == 'Color recognition grip' or func_ == '颜色识别 夹爪' or func_ == 'Intelligent gripping' or func_ == '智能夹取':
                 self.myCobot.set_gripper_mode(0)
                 time.sleep(1)
                 self.myCobot.set_gripper_state(1, 100)
