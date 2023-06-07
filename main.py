@@ -852,6 +852,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         e = traceback.format_exc()
                         self.loger.error('Abnormal image recognition：' + str(e))
                 elif func == 'QR code recognition' or func == '二维码识别' or func == 'Intelligent gripping' or func == '智能夹取':
+                    yaw_degrees = 0
                     try:
                         QApplication.processEvents()
                         success, img = self.cap.read()
@@ -885,10 +886,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                                 np.hstack((rotation_matrix, tvec.reshape(3, 1))))[
                                                 6]
                                         # 提取yaw角度（绕Z轴旋转角度）
-                                        yaw_degrees = euler_angles[2]
+                                        yaw_degrees_pre = euler_angles[2]
                                         # 输出ArUco码的旋转角
                                         # print("Rotation (Yaw):", yaw_degrees)
-                                        self.yaw_degrees = round(yaw_degrees[0], 2)
+                                        yaw_degrees = round(yaw_degrees_pre[0], 2)
 
                                     # cv.putText(img, 'coords' + str(xyz), (0, 64), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv.LINE_AA)
                                     for i in range(rvec.shape[0]):
@@ -900,7 +901,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                             num += 1
                                         elif num == 40:
                                             if self.crawl_status:
-                                                self.decide_move(sum_x / 40.0, sum_y / 40.0, 0)
+                                                self.decide_move(sum_x / 40.0, sum_y / 40.0, yaw_degrees)
                                                 num = sum_x = sum_y = 0
                         if self.camera_status:
                             show = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -1586,11 +1587,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         else:
             return None
 
-    def decide_move(self, x, y, color):
+    def decide_move(self, x, y, yaw_degrees):
+        # print('yaw-degrees:', yaw_degrees)
         device = self.comboBox_device.currentText()
         if device == 'yolov5':
             self.cache_x = self.cache_y = 0
-            _moved = threading.Thread(target=self.moved(x, y))
+            _moved = threading.Thread(target=self.moved(x, y, 0))
             _moved.start()
             return
         # detect the cube status move or run
@@ -1602,15 +1604,15 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             # Adjust the suction position of the suction pump, increase y, move to the left;
             # decrease y, move to the right; increase x, move forward; decrease x, move backward
             if self.comboBox_function.currentText() == 'QR code recognition' or self.comboBox_function.currentText() == '二维码识别' or self.comboBox_function.currentText() == 'Intelligent gripping' or self.comboBox_function.currentText() == '智能夹取':
-                _moved = threading.Thread(target=self.moved(x + 265, y + 5))
+                _moved = threading.Thread(target=self.moved(x + 265, y + 5, yaw_degrees))
                 _moved.start()
 
             else:
-                _moved = threading.Thread(target=self.moved(x, y))
+                _moved = threading.Thread(target=self.moved(x, y, yaw_degrees))
                 _moved.start()
 
     # Grasping motion
-    def moved(self, x, y):
+    def moved(self, x, y, yaw_degrees):
         global func
         try:
             print('x', x)
@@ -1641,12 +1643,14 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 100, 1)
                             time.sleep(2.5)
                         elif func == 'Intelligent gripping' or func == '智能夹取':
-                            print('rotation angle:', self.yaw_degrees)
-                            if self.yaw_degrees > 169:
-                                self.yaw_degrees = 169
-                            elif self.yaw_degrees < -169:
-                                self.yaw_degrees = -169
-                            yaw_degrees_opt = self.yaw_degrees + 5
+                            print('rotation angle:', yaw_degrees)
+                            if yaw_degrees > 169:
+                                yaw_degrees = 169
+                            elif yaw_degrees < -169:
+                                yaw_degrees = -169
+                            else:
+                                yaw_degrees = yaw_degrees
+                            yaw_degrees_opt = yaw_degrees + 5
                             # 移动坐标
                             self.move_coords = [
                                 [30.3, -214.9, 302.3, -169.77, -8.64, -91.55],  # D Sorting area
@@ -1654,10 +1658,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [244.5, 193.2, 330.3, -160.54, 17.35, -74.59],  # A Sorting area
                                 [33.2, 205.3, 322.5, -170.22, -13.93, 92.28],  # B Sorting area
                             ]
-                            if yaw_degrees_opt > 173:
-                                yaw_degrees_opt = 173
-                            elif yaw_degrees_opt < 173:
+                            if yaw_degrees_opt > 170:
+                                yaw_degrees_opt = 170
+                            elif yaw_degrees_opt < -173:
                                 yaw_degrees_opt = -173
+                            else:
+                                yaw_degrees_opt = yaw_degrees_opt
                             print('yaw_degrees_opt:', yaw_degrees_opt)
                             self.myCobot.send_angle(6, yaw_degrees_opt, 80)
                             time.sleep(3)
