@@ -1656,7 +1656,7 @@ border-style: outset;</string>
                   <widget class="QLabel" name="show_camera_lab">
                    <property name="maximumSize">
                     <size>
-                     <width>900</width>
+                     <width>644</width>
                      <height>500</height>
                     </size>
                    </property>

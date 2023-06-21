@@ -2,6 +2,7 @@
 # encoding:utf-8
 import math
 import os
+import platform
 import sys
 import threading
 import time
@@ -46,6 +47,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self._init_language()
         import platform
         self.cap = cv2.VideoCapture()
+        self.cap.set(3, 640)
+        self.cap.set(4, 480)
         # if platform.system() == "Windows":
         #     self.cap = cv2.VideoCapture(cv2.CAP_DSHOW)
         # elif platform.system() == "Linux":
@@ -79,6 +82,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self.cut_yolov5_img_status()
         self._init_tooltip()
         self.combox_func_checked()
+        self.camera_index_value()
+
+    def camera_index_value(self):
+        if platform.system() == 'Windows':
+            self.camera_edit.setText('1')
+        elif platform.system() == 'Linux':
+            self.camera_edit.setText('0')
 
     # Initialize variables
     def _init_variable(self):
@@ -538,7 +548,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             QApplication.processEvents()
             self.camera_status = True
             self.camera_edit.setEnabled(False)
-            flag = self.cap.open(int(self.camera_edit.text()))  # Get the serial number of the camera to open
+            # 获取摄像头序号
+            camera_index = int(self.camera_edit.text())
+            print('index:', camera_index)
+            flag = self.cap.open(camera_index)  # Get the serial number of the camera to open
+            print('flag:', flag)
             if not flag:  # Flag indicates whether the camera is successfully opened
                 if self.language == 1:
                     self.prompts(
@@ -615,8 +629,18 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     self.add_img_btn.setText('添加')
             self.close_camera()
 
+    def process_frame(self, frame):
+        # The video color is converted back to RGB, so that it is the realistic color
+        show = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # Convert the read video data into QImage format
+        showImage = QtGui.QImage(show.data, show.shape[1], show.shape[0], show.shape[1] * 3,
+                                 QtGui.QImage.Format_RGB888)
+        # Display the QImage in the Label that displays the video
+        self.show_camera_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
+
     def show_camera(self):
         """matching algorithm for identification"""
+        print('status:', self.camera_status)
         try:
             if not self.camera_status:  #
                 self.open_camera()
@@ -630,19 +654,16 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 if func == 'Color recognition' or func == '颜色识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
                     # read camera
                     _, frame = self.cap.read()
+                    print('frame1-frame:', frame)
+                    if frame is None:
+                        continue
                     # deal img
                     frame = self.transform_frame(frame)
                     QApplication.processEvents()
                     if self._init_ > 0:
                         self._init_ -= 1
                         if self.camera_status:
-                            # The video color is converted back to RGB, so that it is the realistic color
-                            show = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                            # Convert the read video data into QImage format
-                            showImage = QtGui.QImage(show.data, show.shape[1], show.shape[0], show.shape[1] * 3,
-                                                     QtGui.QImage.Format_RGB888)
-                            # Display the QImage in the Label that displays the video
-                            self.show_camera_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
+                            self.process_frame(frame)
                             continue
 
                     # calculate the parameters of camera clipping
@@ -650,11 +671,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     if self.init_num < 20:
                         if self.get_calculate_params(frame) is None:
                             if self.camera_status:
-                                show = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                                showImage = QtGui.QImage(show.data, show.shape[1], show.shape[0], show.shape[1] * 3,
-                                                         QtGui.QImage.Format_RGB888)
-                                self.show_camera_lab.setPixmap(
-                                    QtGui.QPixmap.fromImage(showImage))
+                                self.process_frame(frame)
                             continue
                         else:
                             x1, x2, y1, y2 = self.get_calculate_params(frame)
@@ -1354,7 +1371,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                interpolation=cv2.INTER_CUBIC)
             if self.x1 != self.x2:
                 # the cutting ratio here is adjusted according to the actual situation
-                frame = frame[int(self.y2 * 0.77):int(self.y1 * 1.14),  # 0.78 1.1
+                frame = frame[int(self.y2 * 0.66):int(self.y1 * 1.14),  # 0.78 1.1
                         int(self.x1 * 0.88):int(self.x2 * 1.08)]  # 0.84 1.08
             return frame
         except Exception as e:
@@ -1366,9 +1383,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         """color recognition"""
         # set the arrangement of color'HSV
         x = y = 0
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         for mycolor, item in self.HSV.items():
             # transfrom the img to model of gray
-            hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+            # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
             # wipe off all color expect color in range
             mask = cv2.inRange(hsv, item[0], item[1])
             # a etching operation on a picture to remove edge roughness
@@ -1989,7 +2007,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self.prompts_lab.clear()
         if msg is not None:
             if self.language == 1:
-                self.prompts_lab.setText('Prmpt:\n' + msg)
+                self.prompts_lab.setText('Prompt:\n' + msg)
             else:
                 self.prompts_lab.setText('提示:\n' + msg)
 

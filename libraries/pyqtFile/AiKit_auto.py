@@ -775,7 +775,7 @@ class Ui_AiKit_UI(object):
         self.widget_29.setObjectName("widget_29")
         self.horizontalLayout_20.addWidget(self.widget_29)
         self.show_camera_lab = QtWidgets.QLabel(self.widget_28)
-        self.show_camera_lab.setMaximumSize(QtCore.QSize(900, 500))
+        self.show_camera_lab.setMaximumSize(QtCore.QSize(644, 500))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
