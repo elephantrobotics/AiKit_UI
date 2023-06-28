@@ -1792,10 +1792,14 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
                     self.stop_wait(6.5)
                     if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪' or func == 'Intelligent gripping' or func == '智能夹取':
-                        self.myCobot.send_angles(self.move_angles[0], 25)
                         self.gripper_off()
+                        time.sleep(1)
+                        self.myCobot.send_angles(self.move_angles[0], 25)
+                        time.sleep(4.5)
+
                     else:
                         self.myCobot.send_angles(self.move_angles[0], 25)
+                        time.sleep(4.5)
                     if not self.auto_mode_status:
                         self.place_status = False
                         self.btn_color(self.place_btn, 'blue')
