@@ -1651,23 +1651,23 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         # send coordinates to move mycobot
                         if func == 'QR code recognition' or func == '二维码识别':
                             self.myCobot.send_coords(
-                                [self.home_coords[0] + x, self.home_coords[1] + y, 240, 178.99, -3.78, -62.9], 50,
-                                0)
+                                [self.home_coords[0] + x, self.home_coords[1] + y, 240, 178.99, -3.78, -62.9], 100,
+                                1)
                             time.sleep(2)
                             self.myCobot.send_coords(
                                 [self.home_coords[0] + x + 8, self.home_coords[1] + y, 100.5, 178.99, -3.78, -62.9],
-                                50, 0)
+                                100, 1)
                             time.sleep(2.5)
                         else:
                             if func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
-                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 0)
+                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
                                 time.sleep(2.5)
-                                self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 50, 0)  #
+                                self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 100, 1)  #
                                 time.sleep(3)
                             else:
-                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 50, 1)
+                                self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
                                 time.sleep(2.5)
-                                self.myCobot.send_coords([x, y, 140, -173.84, -0.14, -74.37], 50, 1)  # origin z : 100
+                                self.myCobot.send_coords([x, y, 140, -173.84, -0.14, -74.37], 100, 1)  # origin z : 100
                                 time.sleep(3)
 
                         # open pump
