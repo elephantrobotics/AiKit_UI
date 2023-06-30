@@ -564,13 +564,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.camera_edit.setEnabled(False)
             flag = self.cap.open(int(self.camera_edit.text()))  # Get the serial number of the camera to open
             if not flag:  # Flag indicates whether the camera is successfully opened
+                self.close_camera()
+                self.loger.error('Failed to open camera')
                 if self.language == 1:
                     self.prompts(
                         'The camera failed to open, please check whether the serial number is correct or the camera is connected.')
                 else:
                     self.prompts('相机打开失败，请检查序号是否正确或摄像头已连接.')
-                self.loger.error('Failed to open camera')
-                self.close_camera()
                 return
             self.prompts_lab.clear()
             self.yolov5_count = False
