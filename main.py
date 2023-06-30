@@ -1625,8 +1625,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             # Adjust the suction position of the suction pump, increase y, move to the left;
             # decrease y, move to the right; increase x, move forward; decrease x, move backward
             if self.comboBox_function.currentText() == 'QR code recognition' or self.comboBox_function.currentText() == '二维码识别':
-                # _moved = threading.Thread(target=self.moved(x+15, y+17))
-                _moved = threading.Thread(target=self.moved(x+265, y+5))
+                _moved = threading.Thread(target=self.moved(x+15, y+17))
+                # _moved = threading.Thread(target=self.moved(x+265, y+5))
                 _moved.start()
             else:
                 _moved = threading.Thread(target=self.moved(x, y))
@@ -1653,11 +1653,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             self.myCobot.send_coords(
                                 [self.home_coords[0] + x, self.home_coords[1] + y, 240, 178.99, -3.78, -62.9], 100,
                                 1)
-                            time.sleep(2)
+                            time.sleep(3)
                             self.myCobot.send_coords(
                                 [self.home_coords[0] + x + 8, self.home_coords[1] + y, 100.5, 178.99, -3.78, -62.9],
                                 100, 1)
-                            time.sleep(2.5)
+                            time.sleep(4)
                         else:
                             if func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
                                 self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
