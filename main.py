@@ -1815,13 +1815,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
     def pump_on(self):
         """Start the suction pump"""
         self.myCobot.set_basic_output(1, 0)
-        self.myCobot.set_basic_output(2, 1)
+        self.myCobot.set_basic_output(2, 0)
 
     def pump_off(self):
         """stop suction pump m5"""
         self.myCobot.set_basic_output(1, 1)
-        self.myCobot.set_basic_output(2, 0)
-        time.sleep(1)
         self.myCobot.set_basic_output(2, 1)
 
     # open gripper
