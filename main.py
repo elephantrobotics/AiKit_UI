@@ -1722,26 +1722,14 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
     def pump_on(self):
         """Start the suction pump"""
-        device = self.comboBox_device.currentText()
-        if device in self.M5:
-            self.myCobot.set_basic_output(2, 1)
-            self.myCobot.set_basic_output(5, 0)
-        else:
-            self.myCobot.set_basic_output(1, 1)
-            self.myCobot.set_basic_output(2, 0)
+        self.myCobot.set_basic_output(1, 0)
+        self.myCobot.set_basic_output(2, 0)
 
 
     def pump_off(self):
         """stop suction pump m5"""
-        device = self.comboBox_device.currentText()
-        if device in self.M5:
-            self.myCobot.set_basic_output(2, 0)
-            self.myCobot.set_basic_output(5, 1)
-        else:
-            self.myCobot.set_basic_output(1, 0)
-            self.myCobot.set_basic_output(2, 1)
-        # self.stop_wait(0.5)
-        # self.myCobot.set_basic_output(1, 0)
+        self.myCobot.set_basic_output(1, 1)
+        self.myCobot.set_basic_output(2, 1)
 
     # The path to save the image folder
     def parse_folder(self, folder):
