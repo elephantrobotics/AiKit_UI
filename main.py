@@ -19,6 +19,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QInputDialog, QWidget, QM
 from pymycobot.mycobot import MyCobot
 from pymycobot.mypalletizer import MyPalletizer
 from pymycobot.ultraArm import ultraArm
+from pymycobot.myarm import MyArm
 
 from libraries.log import logfile
 from libraries.pyqtFile.AiKit_auto import Ui_AiKit_UI as AiKit_window
@@ -83,23 +84,26 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self.pump_y = 0
         self.pump_x = 0
         # device
-        self.M5 = ['myPalletizer 260 for M5', 'myCobot 280 for M5', 'ultraArm P340']  # M5 robot
-        self.Pi = ['myCobot 280 for Pi', 'mechArm 270 for Pi', 'myCobot 280 for JN']  # Pi robot
+        self.Pi = ['myArm 300 for Pi']  # Pi robot
 
         # angles to move
         self.move_angles = [
-            [-29.0, 5.88, -4.92, -76.28],  # point to grab
-            [17.4, -10.1, -87.27, 5.8],  # point to grab
+            [-60, 0, 0, -90, 0, -83, 0],  # init the point
+            [0, 0, 0, -90, 0, -83, 0],  # point to grab
         ]
         # origin coords
-        self.home_coords = [166.4, -21.8, 219, 0.96]
+        self.home_coords = [126.1, 0.7, 217.0, 179.64, -1.14, -179.64]  # [0, 0, 0, -90, 0, -83, 0]
 
         # coords to move
         self.move_coords = [
-            [132.6, -155.6, 211.8, -20.9],  # D Sorting area
-            [232.5, -134.1, 197.7, -45.26],  # C Sorting area
-            [111.6, 159, 221.5, -120],  # A Sorting area
-            [-15.9, 164.6, 217.5, -119.35],  # B Sorting area
+            [122.4, -143.5, 181.8, 179.92, 6.5, 130.23],
+            # D Sorting area [-49.74, 28.74, 0.26, -71.8, 0.0, -72.94, 0.26]
+            [209.4, -127.7, 186.1, 179.49, 25.39, 148.18],
+            # C Sorting area [-31.64, 50.62, 0.43, -38.05, 0.0, -65.91, 0.26]
+            [116.6, 154.6, 177.8, 179.51, 11.59, -127.46],
+            # A Sorting area [52.47, 28.82, 0.52, -73.91, 0.17, -65.65, 0.26]
+            [6.6, 164.3, 179.7, 179.69, 8.43, -92.74],
+            # B Sorting area [87.27, 16.08, 0.35, -90.0, 0.17, -65.47, 0.26]
         ]
 
         # The internal parameter matrix of the camera
@@ -120,17 +124,20 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         # set color HSV
         self.HSV = {
             "yellow": [np.array([11, 85, 70]), np.array([59, 255, 245])],
-            #"yellow": [np.array([22, 93, 0]), np.array([45, 255, 245])],
+            # "yellow": [np.array([22, 93, 0]), np.array([45, 255, 245])],
             "red": [np.array([0, 43, 46]), np.array([8, 255, 255])],
+            "blue": [np.array([85, 43, 46]), np.array([100, 255, 255])],
+            "cyan": [np.array([85, 43, 46]), np.array([100, 255, 255])],
             "green": [np.array([35, 43, 35]), np.array([90, 255, 255])],
-            "blue": [np.array([100, 43, 46]), np.array([124, 255, 255])],
-            "cyan": [np.array([78, 43, 46]), np.array([99, 255, 255])],
+            # "blue": [np.array([100, 43, 46]), np.array([124, 255, 255])],
+            # "cyan": [np.array([85, 43, 46]), np.array([100, 255, 255])],
         }
-        # Used to calculate the coordinates between the cube and mycobot
+        # Used to calculate the coordinates between the cube and myarm
         self.sum_x1 = self.sum_x2 = self.sum_y2 = self.sum_y1 = 0
-        # Grab the coordinates of the center point relative to mycobot
+        # Grab the coordinates of the center point relative to myarm
         self.camera_x, self.camera_y = 165, 5
-        # The coordinates of the cube relative to mycobot
+        self.camera_z = 110
+        # The coordinates of the cube relative to myarm
         self.c_x, self.c_y = 0, 0
         # The ratio of pixels to actual values
         self.ratio = 0
@@ -215,10 +222,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         if self.language == 1:
             self.func_lab_6.setToolTip(
                 'Adjust the suction position of the end, add X forward,'
-                ' subtract X backward, add Y to the left, and subtract Y to the right.')
+                ' subtract X backward, add Y to the left, and subtract Y to the right, and Upward Z increases, downward Z decreases')
         else:
             self.func_lab_6.setToolTip(
-                '调整末端吸取位置，向前X加，向后X减，向左Y加，向右Y减。')
+                '调整末端吸取位置，向前X加，向后X减，向左Y加，向右Y减，向上Z加，向下Z减')
 
     @pyqtSlot()
     def min_clicked(self):
@@ -267,27 +274,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.setCursor(Qt.ArrowCursor)
         return super(AiKit_APP, self).eventFilter(obj, event)  # Note that MyWindow is the name of the class
         # return QWidget.eventFilter(self, obj, event)  # You can also use this, but pay attention to modifying the window type
-
-    # def mousePressEvent(self, event):
-    #     # Rewrite mouse click event
-    #     if (event.button() == Qt.LeftButton) and (event.y() < self.widget.height()):
-    #         # Click the left mouse button on the title bar area
-    #         self._move_drag = True
-    #         self.move_DragPosition = event.globalPos() - self.pos()
-    #         event.accept()
-    #
-    # def mouseMoveEvent(self, QMouseEvent):
-    #     try:
-    #         if Qt.LeftButton and self._move_drag:
-    #             # title bar drag and drop window position
-    #             self.move(QMouseEvent.globalPos() - self.move_DragPosition)
-    #             QMouseEvent.accept()
-    #     except Exception as e:
-    #         self.loger.info(e)
-    #
-    # def mouseReleaseEvent(self, QMouseEvent):
-    #     # After the mouse is released, each trigger resets
-    #     self._move_drag = False
 
     def resizeEvent(self, QResizeEvent):
         # 自定义窗口调整大小事件
@@ -365,28 +351,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
     def get_serial_port_list(self):
         """Get the current serial port and map it to the serial port drop-down box"""
-        device = self.comboBox_device.currentText()
-        if device == 'myCobot 280 for JN':
-            if self.comboBox_port.currentText() != '/dev/ttyTHS1':
-                self.comboBox_port.addItem('/dev/ttyTHS1')
-                self.comboBox_port.setCurrentText('/dev/ttyTHS1')
-                self.port_list = None
-                self.connect_btn.setEnabled(True)
-                self.connect_btn.setStyleSheet("background-color: rgb(39, 174, 96);\n"
-                                               "color: rgb(255, 255, 255);\n"
-                                               "border-radius: 10px;\n"
-                                               "border: 2px groove gray;\n"
-                                               "border-style: outset;")
-                self.HSV = {
-                    "yellow": [np.array([15, 50, 50]), np.array([50, 255, 255])],
-                    # "yellow": [np.array([22, 93, 0]), np.array([45, 255, 245])],
-                    "red": [np.array([0, 43, 46]), np.array([8, 255, 255])],
-                    "green": [np.array([35, 43, 35]), np.array([90, 255, 255])],
-                    "blue": [np.array([78, 43, 46]), np.array([110, 255, 255])],
-                    "cyan": [np.array([78, 43, 46]), np.array([99, 255, 255])],
-                }
-            return
-
         plist = [
             str(x).split(" - ")[0].strip() for x in serial.tools.list_ports.comports()
         ]
@@ -425,105 +389,46 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 # self.comboBox_buad.clear()
                 # self.comboBox_buad.addItem('1000000')
                 self.comboBox_buad.setCurrentIndex(0)
-            else:
-                # self.comboBox_buad.clear()
-                # self.comboBox_buad.addItem('115200')
-                self.comboBox_buad.setCurrentIndex(1)
+            # else:
+            #     # self.comboBox_buad.clear()
+            #     # self.comboBox_buad.addItem('115200')
+            #     self.comboBox_buad.setCurrentIndex(0)
 
             self.get_serial_port_list()
             self.offset_change()  # Get the corresponding offset of the device
             self.device_coord()  # Initialize the point of the corresponding device
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def device_coord(self):
         """Get points according to the device"""
         value = self.comboBox_device.currentText()
-        if value == 'myCobot 280 for Pi' or value == 'myCobot 280 for M5':
+        if value == 'myArm 300 for Pi':
             # yolov5 model file path
             self.modelWeights = libraries_path + "/yolov5File/yolov5s.onnx"
             # y-axis offset
             self.pump_y = -55
             # x-axis offset
             self.pump_x = 15
-            self.move_angles = [
-                [0.61, 45.87, -92.37, -41.3, 2.02, 9.58],  # init the point
-                [18.8, -7.91, -54.49, -23.02, -0.79, -14.76],  # point to grab
-            ]
-            self.move_coords = [
-                [132.2, -136.9, 200.8, -178.24, -3.72, -107.17],  # D Sorting area
-                [238.8, -124.1, 204.3, -169.69, -5.52, -96.52],  # C Sorting area
-                [115.8, 177.3, 210.6, 178.06, -0.92, -6.11],  # A Sorting area
-                [-6.9, 173.2, 201.5, 179.93, 0.63, 33.83],  # B Sorting area
-            ]
-            self.home_coords = [145.0, -65.5, 280.1, 178.99, 7.67, -179.9]
-        elif value == 'myCobot 280 for JN':
-            # yolov5 model file path
-            self.modelWeights = libraries_path + "/yolov5File/yolov5s.onnx"
-            # y-axis offset
-            self.pump_y = -55
-            # x-axis offset
-            self.pump_x = 15
-            self.move_angles = [
-                [0.61, 45.87, -92.37, -41.3, 2.02, 9.58],  # init the point
-                [18.63, 5.39, -83.49, -10.37, -0.08, -13.44],  # point to grab
-            ]
-            self.move_coords = [
-                [133.5, -149.5, 153.0, -178.91, -1.27, -112.78],  # D Sorting area
-                [242.5, -143.1, 164.3, -172.38, -4.38, -100.28],  # C Sorting area
-                [133.5, 168.0, 172.2, -175.89, -1.86, -13.65],  # A Sorting area
-                [21.6, 176.3, 171.4, -178.53, -1.69, 21.75],   # B Sorting area
-            ]
-            self.home_coords = [145.0, -65.5, 280.1, 178.99, 7.67, -179.9]
-        elif value == 'myPalletizer 260 for M5':
-            self.pump_y = -45
-            self.pump_x = -30
-            self.move_angles = [
-                [-22.0, 0, 0, 7.28],  # point to grab
-                [17.4, -10.1, -87.27, 5.8],  # point to grab
-            ]
 
-            self.home_coords = [166.4, -21.8, 219, 0.96]
-
-            self.move_coords = [
-                [132.6, -155.6, 211.8, -20.9],  # D Sorting area
-                [232.5, -134.1, 197.7, -45.26],  # C Sorting area
-                [111.6, 159, 221.5, -120],  # A Sorting area
-                [-15.9, 164.6, 217.5, -119.35],  # B Sorting area
-            ]
-        elif value == 'mechArm 270 for Pi':
-            self.pump_y = -55
-            self.pump_x = 15
             self.move_angles = [
-                [-33.31, 2.02, -10.72, -0.08, 95, -54.84],  # point to grab
-                [0, 0, 0, 0, 90, 0],  # init the point
-            ]
-
-            self.move_coords = [
-                [96.5, -101.9, 185.6, 155.25, 19.14, 75.88],  # D
-                [180.9, -99.3, 184.6, 124.4, 30.9, 80.58],  # C
-                [77.4, 122.1, 179.2, 151.66, 17.94, 178.24],  # A
-                [2.2, 128.5, 171.6, 163.27, 10.58, -147.25]  # B
-            ]
-            self.home_coords = [81.8, -52.3, 186.7, 174.48, 4.08, 92.41]
-        elif value == 'ultraArm P340':
-            self.pump_y = -30
-            # x-axis offset
-            self.pump_x = -45
-            # 移动角度
-            self.move_angles = [
-                [25.55, 0.0, 15.24, 0],
-                [0.0, 14.32, 0.0, 0],  # point to grab
+                [-60, 0, 0, -90, 0, -83, 0],  # init the point
+                [0, 0, 0, -90, 0, -83, 0],  # point to grab
             ]
 
             # 移动坐标
             self.move_coords = [
-                [141.53, 148.67, 43.73, 0],  # D Sorting area
-                [248.52, 152.35, 53.45, 0],  # C Sorting area
-                [269.02, -161.65, 51.42, 0],  # A Sorting area
-                [146.8, -159.53, 50.44, 0],  # B Sorting area
+                [122.4, -143.5, 181.8, 179.92, 6.5, 130.23],
+                # D Sorting area [-49.74, 28.74, 0.26, -71.8, 0.0, -72.94, 0.26]
+                [209.4, -127.7, 186.1, 179.49, 25.39, 148.18],
+                # C Sorting area [-31.64, 50.62, 0.43, -38.05, 0.0, -65.91, 0.26]
+                [116.6, 154.6, 177.8, 179.51, 11.59, -127.46],
+                # A Sorting area [52.47, 28.82, 0.52, -73.91, 0.17, -65.65, 0.26]
+                [6.6, 164.3, 179.7, 179.69, 8.43, -92.74],
+                # B Sorting area [87.27, 16.08, 0.35, -90.0, 0.17, -65.47, 0.26]
             ]
-            self.home_coords = [267.15, 0.0, 125.96]
+            self.home_coords = [126.1, 0.7, 217.0, 179.64, -1.14, -179.64]
 
     def connect_mycobot(self):
         """Connect the arm"""
@@ -536,21 +441,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         baud = int(baud)
 
         try:
-            if device == 'myPalletizer 260 for M5':
-                self.myCobot = MyPalletizer(port, baud, timeout=0.2)
-            elif device == 'ultraArm P340':
-                self.myCobot = ultraArm(port, baud, timeout=0.2)
-                self.stop_wait(0.1)
-                zero = threading.Thread(target=self.go_zero)
-                zero.start()
-                if self.language == 1:
-                    self.prompts('Zero calibration is in progress, please wait patiently......')
-                else:
-                    self.prompts('正在进行回零校正，请耐心等待......')
-                self.btn_status(False)
-                self.connect_btn.setEnabled(False)
-            else:
-                self.myCobot = MyCobot(port, baud, timeout=0.2)
+            if device == 'myArm 300 for Pi':
+                self.myCobot = MyArm(port, baud, timeout=0.2)
             self.stop_wait(0.5)
             self.loger.info("connection succeeded !")
             if device != 'ultraArm P340':
@@ -562,6 +454,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.btn_color(self.connect_btn, 'red')
 
         except Exception as e:
+            e = traceback.format_exc()
             err_log = """\
                 \rConnection failed !!!
                 \r=================================================
@@ -607,8 +500,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.img_coord_status = False
             self.current_coord_status = False
             self.is_pick = False
-        except AttributeError:
-            self.loger.info("Not yet connected to mycobot！！！")
+        except AttributeError as e:
+            e = traceback.format_exc()
+            self.loger.info("Not yet connected to mycobot！！！:{}".format(str(e)))
 
     def connect_checked(self):
         """State toggle for the connect button"""
@@ -1308,8 +1202,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                                      QtGui.QImage.Format_RGB888)
                             self.show_camera_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
                     except Exception as e:
+                        e = traceback.format_exc()
                         self.loger.error('Abnormal shape recognition' + str(e))
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def discern_func(self):
@@ -1325,9 +1221,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 self.discern_status = True
                 self.btn_color(self.discern_btn, 'red')
 
-
         except Exception as e:
-            self.loger.error('identify anomalies' + str(e))
+            e = traceback.format_exc()
+            self.loger.error('identify anomalies:' + str(e))
 
     def crawl_func(self):
         """Turn crawling on/off"""
@@ -1361,15 +1257,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             """back to initial position"""
             self.is_pick = False
             self.pump_off()
-            if self.comboBox_device.currentText() == 'ultraArm P340':
-                self.myCobot.set_angles(self.move_angles[0], 30)
-            else:
-                self.myCobot.send_angles(self.move_angles[0], 30)
+            self.myCobot.send_angles(self.move_angles[0], 30)
             self.stop_wait(3)
             if self.comboBox_function.currentText() == 'yolov5':
                 self.yolov5_is_not_pick = False
                 self.is_yolov5_cut_btn_clicked = False
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def stop_wait(self, t):
@@ -1477,9 +1371,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         # set the arrangement of color'HSV
         x = y = 0
         for mycolor, item in self.HSV.items():
-            redLower = np.array(item[0])
-            redUpper = np.array(item[1])
-
             # transfrom the img to model of gray
             hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -1732,21 +1623,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             # Adjust the suction position of the suction pump, increase y, move to the left;
             # decrease y, move to the right; increase x, move forward; decrease x, move backward
             if self.comboBox_function.currentText() == 'QR code recognition' or self.comboBox_function.currentText() == '二维码识别':
-                if device == 'myPalletizer 260 for M5':
-                    _moved = threading.Thread(target=self.moved(x + 28, y + 98))
-                    _moved.start()
-                elif device == 'mechArm 270 for Pi':
-                    _moved = threading.Thread(target=self.moved(x + 38, y + 138))
-                    _moved.start()
-                elif device == 'myCobot 280 for Pi' or device == 'myCobot 280 for M5':
-                    _moved = threading.Thread(target=self.moved(x - 5, y + 145))
-                    _moved.start()
-                elif device == 'myCobot 280 for JN':
-                    _moved = threading.Thread(target=self.moved(x - 5, y + 130))
-                    _moved.start()
-                elif device == 'ultraArm P340':
-                    _moved = threading.Thread(target=self.moved(x + 50, y + 60))
-                    _moved.start()
+                # if device == 'myArm 300 for Pi':
+                _moved = threading.Thread(target=self.moved(x + 30, y + 70))
+                _moved.start()
             else:
                 _moved = threading.Thread(target=self.moved(x, y))
                 _moved.start()
@@ -1759,146 +1638,51 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.is_crawl = True
             while self.is_pick:
                 QApplication.processEvents()
-                # send Angle to move mycobot
+                # send Angle to move myarm
                 device = self.comboBox_device.currentText()
                 if self.is_crawl:
                     if self.crawl_status:
                         self.is_crawl = False
-                        if device == 'ultraArm P340':
-                            self.myCobot.set_angles(self.move_angles[1], 20)
-                        else:
-                            self.myCobot.send_angles(self.move_angles[1], 20)
+                        if device == 'myArm 300 for Pi':
+                            self.myCobot.send_angles(self.move_angles[1], 35)
                         self.stop_wait(3)
                         func = self.comboBox_function.currentText()
-                        # send coordinates to move mycobot
+                        # send coordinates to move myarm
                         if func == 'QR code recognition' or func == '二维码识别':
-                            if device == 'myPalletizer 260 for M5':
-                                self.myCobot.send_coords([self.home_coords[0] + x, self.home_coords[1] + y, 103, 0], 20,
-                                                         0)
+                            if device == 'myArm 300 for Pi':
+                                self.myCobot.send_coords(
+                                    [self.home_coords[0] + x, self.home_coords[1] + y, 190.5, -179.72, 6.5, -179.43],
+                                    40, 1)
                                 self.stop_wait(2.5)
-                                self.myCobot.send_coords([self.home_coords[0] + x, self.home_coords[1] + y, 62, 0], 20,
-                                                         0)
+                                self.myCobot.send_coords(
+                                    [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, -179.72, 6.5, -179.43], 40,
+                                    1)
                                 self.stop_wait(2.5)
-                            elif device == 'mechArm 270 for Pi':
-                                self.myCobot.send_coords(
-                                    [self.home_coords[0] + x, self.home_coords[1] + y, 150, 172.36, 5.36, 125.58], 30,
-                                    0)
-                                self.stop_wait(3.5)
-                                self.myCobot.send_coords(
-                                    [self.home_coords[0] + x, self.home_coords[1] + y, 93, 172.36, 5.36, 125.58], 30, 0)
-                                self.stop_wait(3.5)
-                                self.myCobot.send_coords(
-                                    [self.home_coords[0] + x, self.home_coords[1] + y, 65, 172.36, 5.36, 125.58], 30, 0)
-                                self.stop_wait(3.5)
-                            elif device == 'myCobot 280 for Pi' or device == 'myCobot 280 for M5':
-                                self.myCobot.send_coords(
-                                    [self.home_coords[0] + x, self.home_coords[1] + y, 108, 178.99, -3.78, -62.9], 25,
-                                    0)
-                                self.stop_wait(2)
-                                self.myCobot.send_coords(
-                                    [self.home_coords[0] + x, self.home_coords[1] + y, 65, 178.99, -3.78, -62.9], 25, 0)
-                                self.stop_wait(3.5)
-                            elif device == 'myCobot 280 for JN':
-                                self.myCobot.send_coords(
-                                    [self.home_coords[0] + x, self.home_coords[1] + y, 160, 178.99, -3.78, -62.9], 25,
-                                    0)
-                                self.stop_wait(2)
-                                self.myCobot.send_coords(
-                                    [self.home_coords[0] + x, self.home_coords[1] + y, 30, 178.99, -3.78, -62.9], 25, 0)
-                                self.stop_wait(3.5)
-                            elif device == 'ultraArm P340':
-                                self.myCobot.set_coords([self.home_coords[0] + x, self.home_coords[1] - y, 65.51, 0],
-                                                        50)
-                                time.sleep(2)
-                                self.myCobot.set_coords([self.home_coords[0] + x, self.home_coords[1] - y, -55, 0], 50)
-                                time.sleep(3)
-
+                        elif func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
+                            if device == 'myArm 300 for Pi':
+                                self.myCobot.send_coords([x, y, 190.5, -179.72, 6.5, -179.43], 40, 1)
+                                self.stop_wait(2.5)
+                                self.myCobot.send_coords([x, y, self.camera_z, -179.72, 6.5, -179.43], 40, 1)
+                                self.stop_wait(2.5)
                         else:
-                            if func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
-                                if device == 'myPalletizer 260 for M5':
-                                    self.myCobot.send_coords([x, y, 103, 0], 20, 0)
-                                    self.stop_wait(2.5)
-                                    self.myCobot.send_coords([x, y, 62, 0], 20, 0)
-                                    self.stop_wait(1.5)
-                                elif device == 'mechArm 270 for Pi':
-                                    self.myCobot.send_coords([x, y, 110, -176.1, 2.4, -125.1], 25,
-                                                             0)  # usb :rx,ry,rz -173.3, -5.48, -57.9
-                                    self.stop_wait(3)
-                                    self.myCobot.send_coords([x, y, 65, -176.1, 2.4, -125.1], 25, 0)
-                                    self.stop_wait(3)
-                                elif device == 'myCobot 280 for Pi' or device == 'myCobot 280 for M5':
-                                    self.myCobot.send_coords([x, y, 170.6, 179.87, -3.78, -62.75], 25,
-                                                             0)  # usb :rx,ry,rz -173.3, -5.48, -57.9
-                                    self.stop_wait(3)
-                                    self.myCobot.send_coords([x, y, 65.5, 179.87, -3.78, -62.75], 25, 0)
-                                    self.stop_wait(4)
-                                elif device == 'myCobot 280 for JN':
-                                    self.myCobot.send_coords([x, y, 160, 179.87, -3.78, -62.75], 25,
-                                                             0)  # usb :rx,ry,rz -173.3, -5.48, -57.9
-                                    self.stop_wait(3)
-                                    self.myCobot.send_coords([x, y, 30, 179.87, -3.78, -62.75], 25, 0)
-                                    self.stop_wait(4)
-                                elif device == 'ultraArm P340':
-                                    self.myCobot.set_coords([x, -y, 65.51, 0], 50)
-                                    time.sleep(1.5)
-                                    self.myCobot.set_coords([x, -y, -55, 0], 50)
-                                    time.sleep(2)
-                            else:
-                                if device == 'myPalletizer 260 for M5':
-                                    self.myCobot.send_coords([x, y, 160, 0], 20, 0)
-                                    self.stop_wait(1.5)
-                                    self.myCobot.send_coords([x, y, 103, 0], 20, 0)
-                                    self.stop_wait(1.5)
-                                elif device == 'mechArm 270 for Pi':
-                                    self.myCobot.send_coords([x, y, 150, -176.1, 2.4, -125.1], 25,
-                                                             0)  # usb :rx,ry,rz -173.3, -5.48, -57.9
-                                    self.stop_wait(3)
-                                    self.myCobot.send_coords([x, y, 108, -176.1, 2.4, -125.1], 25, 0)
-                                    self.stop_wait(3)
-                                elif device == 'myCobot 280 for Pi' or device == 'myCobot 280 for M5':
-                                    self.myCobot.send_coords([x, y, 170.6, 179.87, -3.78, -62.75], 25,
-                                                             0)  # usb :rx,ry,rz -173.3, -5.48, -57.9
-                                    self.stop_wait(3)
-                                    self.myCobot.send_coords([x, y, 103, 179.87, -3.78, -62.75], 25, 0)
-                                    self.stop_wait(4)
-                                elif device == 'myCobot 280 for JN':
-                                    self.myCobot.send_coords([x, y, 160, 179.87, -3.78, -62.75], 25,
-                                                             0)  # usb :rx,ry,rz -173.3, -5.48, -57.9
-                                    self.stop_wait(3)
-                                    self.myCobot.send_coords([x, y, 70, 179.87, -3.78, -62.75], 25, 0)
-                                    self.stop_wait(4)
-                                elif device == 'ultraArm P340':
-                                    self.myCobot.set_coords([x, -y, 65.51, 0], 50)
-                                    time.sleep(1.5)
-                                    self.myCobot.set_coords([x, -y, -18, 0], 50)
-                                    time.sleep(2)
+                            if device == 'myArm 300 for Pi':
+                                self.myCobot.send_coords([x, y, 190.5, -179.72, 6.5, -179.43], 40, 1)
+                                self.stop_wait(2.5)
+                                self.myCobot.send_coords([x, y, self.camera_z, -179.72, 6.5, -179.43], 40, 1)
+                                self.stop_wait(2.5)
 
                         # open pump
                         self.pump_on()
-                        self.stop_wait(2)
-                        if device == 'myPalletizer 260 for M5':
-                            self.myCobot.send_angle(2, 0, 20)
-                            self.stop_wait(0.3)
-                            self.myCobot.send_angle(3, -20, 20)
-                            self.stop_wait(2)
-                        elif device == 'ultraArm P340':
-                            self.myCobot.set_angles([0, 0, 0, 0], 50)
-                        else:
-                            tmp = []
-                            while True:
-                                if not tmp:
-                                    tmp = self.myCobot.get_angles()
-                                else:
-                                    break
-                            if device == 'mechArm 270 for Pi':
-                                self.myCobot.send_angles([tmp[0], 17.22, -32.51, tmp[3], 97, tmp[5]], 30)
-                                self.stop_wait(3.5)
-                            elif device == 'myCobot 280 for Pi' or device == 'myCobot 280 for M5':
-                                self.myCobot.send_angles([tmp[0], -0.71, -54.49, -23.02, -0.79, tmp[5]], 25)
-                                self.stop_wait(3)
-                            elif device == 'myCobot 280 for JN':
-                                self.myCobot.send_angles([tmp[0], 5.39, -83.49, -10.37, -0.08, tmp[5]], 25)
-                                self.stop_wait(3)
+                        self.stop_wait(1.5)
+                        tmp = []
+                        while True:
+                            if not tmp:
+                                tmp = self.myCobot.get_angles()
+                            else:
+                                break
+                        if device == 'mechArm 270 for Pi':
+                            self.myCobot.send_angles([tmp[0], 0, 0, -90, -0.79, -83, tmp[6]], 35)
+                            self.stop_wait(3)
 
                         if not self.auto_mode_status:
                             self.crawl_status = False
@@ -1917,23 +1701,16 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         color = 1
                     else:
                         color = 0
-                    if device == 'ultraArm P340':
-                        self.myCobot.set_coords(self.move_coords[color], 40)
-                    else:
-                        self.myCobot.send_coords(self.move_coords[color], 40, 0)
-                    # self.pub_marker(self.move_coords[color][0]/1000.0, self.move_coords[color]
-                    #                 [1]/1000.0, self.move_coords[color][2]/1000.0)
-                    self.stop_wait(4)
+
+                    self.myCobot.send_coords(self.move_coords[color], 40, 1)
+                    self.stop_wait(3)
 
                     # close pump
-
                     self.pump_off()
+                    self.stop_wait(5)
 
-                    self.stop_wait(4)
-                    if device == 'ultraArm P340':
-                        self.myCobot.set_angles(self.move_angles[0], 25)
-                    else:
-                        self.myCobot.send_angles(self.move_angles[0], 25)
+                    self.myCobot.send_angles(self.move_angles[0], 50)
+                    self.stop_wait(3)
                     if not self.auto_mode_status:
                         self.place_status = False
                         self.btn_color(self.place_btn, 'blue')
@@ -1945,17 +1722,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             if self.auto_mode_status:
                 self.is_pick = True
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.info(e)
 
     def pump_on(self):
         """Start the suction pump"""
-        if self.comboBox_device.currentText() in self.M5:
-            if self.comboBox_device.currentText() == 'ultraArm P340':
-                self.myCobot.set_gpio_state(0)
-            else:
-                self.myCobot.set_basic_output(2, 0)
-                self.myCobot.set_basic_output(5, 0)
-        else:
+        if self.comboBox_device.currentText() in self.Pi:
             import RPi.GPIO as GPIO
             GPIO.setwarnings(False)
             self.GPIO = GPIO
@@ -1966,14 +1738,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.GPIO.output(21, 0)
 
     def pump_off(self):
-        """stop suction pump m5"""
-        if self.comboBox_device.currentText() in self.M5:
-            if self.comboBox_device.currentText() == 'ultraArm P340':
-                self.myCobot.set_gpio_state(1)
-            else:
-                self.myCobot.set_basic_output(2, 1)
-                self.myCobot.set_basic_output(5, 1)
-        else:
+        """stop suction pump"""
+        if self.comboBox_device.currentText() in self.Pi:
             import RPi.GPIO as GPIO
             GPIO.setwarnings(False)
             self.GPIO = GPIO
@@ -2139,6 +1905,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         cv2.destroyAllWindows()
 
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error('Abnormal image interception：' + str(e))
             self.exit_add()
 
@@ -2167,7 +1934,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.prompts_lab.clear()
             self.offset_change()
             device = self.comboBox_function.currentText()
-            # if device == 'myCobot 280 for Pi' or device == 'myCobot 280 for M5':
             if device == 'yolov5':
                 IS_CV_4 = cv2.__version__[0] == '4'
                 if IS_CV_4:
@@ -2193,9 +1959,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 self.add_img_btn.setEnabled(True)
                 self.exit_add_btn.setEnabled(True)
             # print(device)
-
             self.yolov5_count = False
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def auto_mode(self):
@@ -2225,41 +1991,62 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             """Get the offset according to the device"""
 
             func = self.comboBox_function.currentText()
-            if func == 'QR code recognition' or func == '二维码识别':
-                with open(libraries_path + f'/offset/{self.comboBox_device.currentText()}_encode.txt', "r",
-                          encoding="utf-8") as f:
+            device = self.comboBox_device.currentText()
+            mapping = {
+                'QR code recognition': 'encode',
+                '二维码识别': 'encode',
+                'shape recognition': 'shape',
+                '形状识别': 'shape',
+                'Color recognition': 'color',
+                '颜色识别': 'color',
+                'Keypoints': 'feature',
+                '特征点识别': 'feature',
+                'yolov5': 'yolov5'
+            }
+            if func in mapping:
+                offset_file = f'/offset/{device}_{mapping[func]}.txt'
+                with open(libraries_path + offset_file, "r", encoding="utf-8") as f:
                     offset = f.read().splitlines()
-            else:
-                with open(libraries_path + f'/offset/{self.comboBox_device.currentText()}.txt', "r",
-                          encoding="utf-8") as f:
-                    offset = f.read().splitlines()
-                self.camera_x, self.camera_y = int(eval(offset[0])[0]), int(eval(offset[0])[1])
+                # self.loger.info(offset)
+                self.camera_x, self.camera_y, self.camera_z = int(eval(offset[0])[0]), int(eval(offset[0])[1]), int(
+                    eval(offset[0][2]))
+
             self.xoffset_edit.clear()
             self.yoffset_edit.clear()
+            self.zoffset_edit.clear()
             self.xoffset_edit.insert(f'{eval(offset[0])[0]}')
             self.yoffset_edit.insert(f'{eval(offset[0])[1]}')
+            self.zoffset_edit.insert(f'{eval(offset[0])[2]}')
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def insert_offsets(self):
         """write offset"""
         try:
             func = self.comboBox_function.currentText()
+            device = self.comboBox_device.currentText()
             x = self.xoffset_edit.text()
             y = self.yoffset_edit.text()
-            if x is not None and (x.startswith('-') and x[1:] or x).isdigit() and y is not None and (
-                    y.startswith('-') and y[1:] or y).isdigit():
-                offset = [x, y]
-                if func == 'QR code recognition' or func == '二维码识别':
-                    with open(rf'{libraries_path}/offset/{self.comboBox_device.currentText()}_encode.txt', "w",
-                              encoding="utf-8") as file:
+            z = self.zoffset_edit.text()
+            mapping = {
+                'QR code recognition': 'encode',
+                '二维码识别': 'encode',
+                'shape recognition': 'shape',
+                '形状识别': 'shape',
+                'Color recognition': 'color',
+                '颜色识别': 'color',
+                'Keypoints': 'feature',
+                '特征点识别': 'feature',
+                'yolov5': 'yolov5'
+            }
+            if x and x.lstrip('-').isdigit() and y and y.lstrip('-').isdigit() and z and z.lstrip('-').isdigit():
+                offset = [x, y, z]
+                if func in mapping:
+                    offset_file = f'/offset/{device}_{mapping[func]}.txt'
+                    with open(libraries_path + offset_file, "w", encoding="utf-8") as file:
                         file.write(str(offset))
-                else:
-                    with open(rf'{libraries_path}/offset/{self.comboBox_device.currentText()}.txt', "w",
-                              encoding="utf-8") as file:
-                        file.write(str(offset))
-                    self.camera_x = int(x)
-                    self.camera_y = int(y)
+                    self.camera_x, self.camera_y, self.camera_z = int(x), int(y), int(z)
                 if self.language == 1:
                     msg_box = QMessageBox(QMessageBox.Information, 'prompt', 'Successfully saved！')
                 else:
@@ -2272,15 +2059,16 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     msg_box = QMessageBox(QMessageBox.Warning, '警告', '偏移量只允许输入整数！')
                 msg_box.exec_()
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.info(str(e))
 
     def open_file(self):
         """Open the folder where the file is located"""
         try:
             value = self.comboBox_device.currentText()
-            if value in self.M5:
-                os.startfile(libraries_path)
-            else:
+            if value in self.Pi:
+            #     os.startfile(libraries_path)
+            # else:
                 os.system('xdg-open ' + libraries_path)
             # self.file_window = fileWindow()
             # self.file_window.show()
@@ -2314,14 +2102,14 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             QApplication.processEvents()
             try:
                 coord = self.myCobot.get_coords()
-            except:
+            except Exception as e:
+                e = traceback.format_exc()
                 coord = []
+                self.loger.error(str(e))
                 pass
             if coord != [] and coord is not None:
                 if len(coord) == 6:
                     coord = f'X:{coord[0]} Y:{coord[1]} Z:{coord[2]} Rx:{coord[3]} Ry:{coord[4]} Rz:{coord[5]}'
-                else:
-                    coord = f'X:{coord[0]} Y:{coord[1]} Z:{coord[2]} Θ:{coord[3]}'
                 self.cuttent_coord_lab.clear()
                 if self.current_coord_status:
                     self.cuttent_coord_lab.setText(str(coord))
@@ -2416,10 +2204,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             else:
                 self.add_img_btn.setText(_translate("AiKit_UI", "Cut"))
             self.exit_add_btn.setText(_translate("AiKit_UI", "Exit"))
-            self.func_lab_6.setText(_translate("AiKit_UI", "XY Offsets"))
+            self.func_lab_6.setText(_translate("AiKit_UI", "XYZ Offsets"))
             self.offset_save_btn.setText(_translate("AiKit_UI", "Save"))
-            self.func_lab_12.setText(_translate("AiKit_UI", "X offset:"))
-            self.func_lab_13.setText(_translate("AiKit_UI", " Y offset:"))
+            self.func_lab_12.setText(_translate("AiKit_UI", "X:"))
+            self.func_lab_13.setText(_translate("AiKit_UI", "Z:"))
+            self.func_lab_14.setText(_translate("AiKit_UI", "Y:"))
             self.connect_lab_3.setText(_translate("AiKit_UI", "Display"))
             self.current_coord_btn.setText(_translate("AiKit_UI", "  current coordinates"))
             self.image_coord_btn.setText(_translate("AiKit_UI", "  image coordinates"))
@@ -2472,27 +2261,18 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             else:
                 self.add_img_btn.setText(_translate("AiKit_UI", "添加"))
             self.exit_add_btn.setText(_translate("AiKit_UI", "退出"))
-            self.func_lab_6.setText(_translate("AiKit_UI", "XY 坐标偏移"))
+            self.func_lab_6.setText(_translate("AiKit_UI", "XYZ 坐标偏移"))
             self.offset_save_btn.setText(_translate("AiKit_UI", "保存"))
-            self.func_lab_12.setText(_translate("AiKit_UI", "X 偏移量:"))
-            self.func_lab_13.setText(_translate("AiKit_UI", " Y 偏移量:"))
+            self.func_lab_12.setText(_translate("AiKit_UI", "X:"))
+            self.func_lab_13.setText(_translate("AiKit_UI", "Z:"))
+            self.func_lab_14.setText(_translate("AiKit_UI", "Y:"))
             self.connect_lab_3.setText(_translate("AiKit_UI", "坐标显示"))
             self.current_coord_btn.setText(_translate("AiKit_UI", "  实时坐标"))
             self.image_coord_btn.setText(_translate("AiKit_UI", "  定位坐标"))
             self.language_btn.setText(_translate("AiKit_UI", "English"))
             self.yolov5_cut_btn.setText(_translate("AiKit_UI", "剪切"))
 
-    def go_zero(self):
-        self.myCobot.go_zero()
-        if self.language == 1:
-            self.prompts('Zero calibration completed')
-        else:
-            self.prompts('回零校正已完成')
-        self.btn_status(True)
-        self.connect_btn.setEnabled(True)
-
-        '''绘制类别'''
-
+    '''绘制类别'''
     def draw_label(self, img, label, x, y):
         text_size = cv2.getTextSize(label, self.FONT_FACE, self.FONT_SCALE, self.THICKNESS)
         dim, baseline = text_size[0], text_size[1]
@@ -2606,57 +2386,16 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
-# File loading window displayed
-# class fileWindow(file_window,QMainWindow,QWidget):
-#     def __init__(self):
-#         try:
-#             super(fileWindow,self).__init__()
-#             self.setupUi(self)
-#             self.setWindowTitle('File')
-#             self.save_file_btn.clicked.connect(self.save)
-#             self.cancel_btn.clicked.connect(self.cancel)
-#             self.path = os.path.split(os.path.abspath(__file__))
-#             with open(libraries_path + f'/main.py', "r", encoding="utf-8") as f:
-#                 offset = f.read()
-#             self.change_file_lineEdit.setPlainText(offset)
-#         except Exception as e:
-#             print(str(e))
-#
-#     def save(self):
-#         try:
-#             with open(rf'{libraries_path}/main.py', "w", encoding="utf-8") as file:
-#                 file.write(self.change_file_lineEdit.toPlainText())
-#             msg_box = QMessageBox(QMessageBox.Information, 'prompt', 'Successfully saved！')
-#             msg_box.exec_()
-#             self.cancel()
-#         except Exception as e:
-#             print(str(e))
-#
-#     def cancel(self):
-#         self.close()
-
-# class GetCoordThread(QThread):
-#     trigger = pyqtSignal(str)
-#     def __init__(self):
-#         super(GetCoordThread,self).__init__()
-
-# def start(self):
-#     status = True
-#     while status:
-#         pass
-
-
 if __name__ == '__main__':
     try:
         libraries_path = resource_path('libraries')
         libraries_path = libraries_path.replace("\\", "/")
-        # print(libraries_path)
+        print(libraries_path)
         app = QApplication(sys.argv)
         AiKit_window = AiKit_APP()
         AiKit_window.show()
     except Exception as e:
-        print(e)
         e = traceback.format_exc()
-        with open("error.txt", "w") as f:
+        with open(libraries_path + '/log/logtimestr.txt', "a+", encoding='utf-8') as f:
             f.write(str(e))
     sys.exit(app.exec_())

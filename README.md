@@ -1,16 +1,50 @@
-# **Ai Kit UI Instructions**
+# **AiKit UI Instructions**
 
-#### **start method**
+- **Applicable models and devices:** myArm 300 Pi
 
-path
+## Requires environment
+
+Raspberry Pi Ubuntu20.04 system
+
+## python dependency package
+
+使用前需确保系统已经安装以下第三方库，其中 `opencv-python`和 `opencv-contrib-python`必须指定安装 **4.6.0.66** 的版本，其他库原则上无需指定版本号。
+
+```bash
+opencv-python==4.6.0.66
+opencv-contrib-python==4.6.0.66
+pymycobot==3.2.7
+PyQt5==5.15.10
+```
+
+如若未安装，请参考下面命令进行安装：
+
+```angular2html
+pip install pymycobot
+pip install opencv-python==4.6.0.66
+pip install opencv-contrib-python==4.6.0.66
+pip install pyqt5
+
+```
+
+## Install
+
+```angular2html
+git clone -b myArm-300 https://github.com/elephantrobotics/AiKit_UI.git
+```
+
+### **start method**
+
+path: Project file path
 
 ```python
-python3 <path>/main.py
+cd AiKit_UI
+python main.py
 ```
 
 After the startup is successful, as shown in the figure below:<br>
 
-![img](../libraries/AiKit_UI_img/1.png) 
+![img](./libraries/AiKit_UI_img/1.png) 
 
 #### **Features**
 

@@ -1,0 +1,9 @@
+numpy==1.26.1
+opencv-contrib-python==4.6.0.66
+opencv-python==4.6.0.66
+pipdeptree==2.13.0
+pymycobot==3.2.7
+PyQt5==5.15.10
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.13.0
+pyserial==3.5
