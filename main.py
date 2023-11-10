@@ -135,8 +135,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         # Used to calculate the coordinates between the cube and myarm
         self.sum_x1 = self.sum_x2 = self.sum_y2 = self.sum_y1 = 0
         # Grab the coordinates of the center point relative to myarm
-        self.camera_x, self.camera_y = 165, 5
+        self.camera_x, self.camera_y = 165, 0
         self.camera_z = 110
+        # display real img coord
+        self.pos_x, self.pos_y, self.pos_z = 0, 0, 0
         # The coordinates of the cube relative to myarm
         self.c_x, self.c_y = 0, 0
         # The ratio of pixels to actual values
@@ -580,6 +582,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 self.open_camera_btn.setText('关闭')
             self.btn_color(self.open_camera_btn, 'red')
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error('Unable to open camera' + str(e))
             self.camera_status = False
             self.camera_edit.setEnabled(True)
@@ -612,6 +615,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.buad_choose()
             self.prompts_lab.clear()
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error('camera off exception' + str(e))
 
     def camera_checked(self):
@@ -867,6 +871,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                                      QtGui.QImage.Format_RGB888)
                             self.show_camera_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
                     except Exception as e:
+                        e = traceback.format_exc()
                         self.loger.error('Abnormal image recognition：' + str(e))
                 elif func == 'QR code recognition' or func == '二维码识别':
                     try:
@@ -911,6 +916,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                                      QtGui.QImage.Format_RGB888)
                             self.show_camera_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
                     except Exception as e:
+                        e = traceback.format_exc()
                         self.loger.error('abnormal' + str(e))
                 elif func == 'yolov5':
                     try:
@@ -1088,9 +1094,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
                                             self.num = self.real_sx = self.real_sy = 0
                                 except Exception as e:
+                                    e = traceback.format_exc()
                                     self.loger.error('yolov5 Exception:' + str(e))
                             # is_release = False
                     except Exception as e:
+                        e = traceback.format_exc()
                         self.loger.error('yolov5 Exception:' + str(e))
                 else:
                     try:
@@ -1640,22 +1648,31 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 QApplication.processEvents()
                 # send Angle to move myarm
                 device = self.comboBox_device.currentText()
+                func = self.comboBox_function.currentText()
+                if func == 'QR code recognition' or func == '二维码识别':
+                    self.pos_x, self.pos_y, self.pos_z = round(self.home_coords[0] + x, 2), round(
+                        self.home_coords[1] + y, 2), self.camera_z
+                    self.prompts(f'X:{self.pos_x}  Y:{self.pos_y}  Z:{self.pos_z}')
+                else:
+                    self.pos_x, self.pos_y, self.pos_z = round(x, 2), round(y, 2), self.camera_z
+                    self.prompts(f'X:{self.pos_x}  Y:{self.pos_y}  Z:{self.pos_z}')
                 if self.is_crawl:
                     if self.crawl_status:
                         self.is_crawl = False
                         if device == 'myArm 300 for Pi':
                             self.myCobot.send_angles(self.move_angles[1], 35)
                         self.stop_wait(3)
-                        func = self.comboBox_function.currentText()
                         # send coordinates to move myarm
                         if func == 'QR code recognition' or func == '二维码识别':
+                            self.prompts(f'X:{self.home_coords[0] + x} Y:{self.home_coords[1] + y} Z:{self.camera_z}')
                             if device == 'myArm 300 for Pi':
                                 self.myCobot.send_coords(
                                     [self.home_coords[0] + x, self.home_coords[1] + y, 190.5, -179.72, 6.5, -179.43],
                                     40, 1)
                                 self.stop_wait(2.5)
                                 self.myCobot.send_coords(
-                                    [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, -179.72, 6.5, -179.43], 40,
+                                    [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, -179.72, 6.5,
+                                     -179.43], 40,
                                     1)
                                 self.stop_wait(2.5)
                         elif func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
@@ -1680,7 +1697,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 tmp = self.myCobot.get_angles()
                             else:
                                 break
-                        if device == 'mechArm 270 for Pi':
+                        if device == 'myArm 300 for Pi':
                             self.myCobot.send_angles([tmp[0], 0, 0, -90, -0.79, -83, tmp[6]], 35)
                             self.stop_wait(3)
 
@@ -1761,6 +1778,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     restore.append(cv2.imread(path + '/{}'.format(l)))
             return restore
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(str(e))
 
     def add_img(self):
@@ -1859,6 +1877,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         showImage = showImage.scaled(new_width, new_height, Qt.KeepAspectRatio)
                         self.show_cutimg_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
                     except Exception as e:
+                        e = traceback.format_exc()
                         self.loger.info(e)
 
                     x, y, w, h = roi
@@ -2009,7 +2028,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     offset = f.read().splitlines()
                 # self.loger.info(offset)
                 self.camera_x, self.camera_y, self.camera_z = int(eval(offset[0])[0]), int(eval(offset[0])[1]), int(
-                    eval(offset[0][2]))
+                    eval(offset[0])[2])
 
             self.xoffset_edit.clear()
             self.yoffset_edit.clear()
@@ -2067,12 +2086,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         try:
             value = self.comboBox_device.currentText()
             if value in self.Pi:
-            #     os.startfile(libraries_path)
-            # else:
+                #     os.startfile(libraries_path)
+                # else:
                 os.system('xdg-open ' + libraries_path)
             # self.file_window = fileWindow()
             # self.file_window.show()
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.info(str(e))
 
     def get_img_coord(self):
@@ -2083,6 +2103,18 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         else:
             self.img_coord_status = True
             self.btn_color(self.image_coord_btn, 'red')
+            self.get_real_img_coord()
+
+    def get_real_img_coord(self):
+        try:
+            if self.auto_mode_status or self.crawl_status:
+                self.img_coord_lab.clear()
+                self.img_coord_lab.setText(f'X:{self.pos_x}  Y:{self.pos_y}  Z:{self.pos_z}')
+            else:
+                pass
+        except Exception as e:
+            e = traceback.format_exc()
+            self.loger.error(str(e))
 
     def get_current_coord_btnClick(self):
         if not self.has_mycobot():
@@ -2273,6 +2305,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.yolov5_cut_btn.setText(_translate("AiKit_UI", "剪切"))
 
     '''绘制类别'''
+
     def draw_label(self, img, label, x, y):
         text_size = cv2.getTextSize(label, self.FONT_FACE, self.FONT_SCALE, self.THICKNESS)
         dim, baseline = text_size[0], text_size[1]
@@ -2347,6 +2380,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 # cv2.imshow("nput_frame",input_image)
         # return input_image
         except Exception as e:
+            e = traceback.format_exc()
             self.loger.error(e)
 
         if cx + cy > 0:
@@ -2390,7 +2424,7 @@ if __name__ == '__main__':
     try:
         libraries_path = resource_path('libraries')
         libraries_path = libraries_path.replace("\\", "/")
-        print(libraries_path)
+        # print(libraries_path)
         app = QApplication(sys.argv)
         AiKit_window = AiKit_APP()
         AiKit_window.show()

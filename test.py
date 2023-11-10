@@ -21,3 +21,10 @@ mapping = {
 if func in mapping:
     offset_file = f'/offset/{device}_{mapping[func]}.txt'
     print(offset_file)
+    with open('./libraries' + offset_file, "r", encoding="utf-8") as f:
+        offset = f.read().splitlines()
+    # self.loger.info(offset)
+    print(offset)
+    camera_x, camera_y, camera_z = int(eval(offset[0])[0]), int(eval(offset[0])[1]), int(
+        eval(offset[0])[2])
+    print(camera_x, camera_y, camera_z)
