@@ -1995,6 +1995,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.btn_color(self.auto_btn, 'green')
             for b in btn:
                 self.btn_color(b, 'blue')
+            self.img_coord_lab.clear()
         else:
             self.auto_mode_status = True
             self.discern_status = True
