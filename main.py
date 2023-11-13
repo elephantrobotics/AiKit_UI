@@ -2077,7 +2077,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             else:
                 if self.language == 1:
                     msg_box = QMessageBox(QMessageBox.Warning, 'Warning',
-                                          'The offset setting can only enter numbers！\nZ-axis input range is 60 to 130!')
+                                          'The offset setting can only enter numbers！\nZ-axis input range is 60 to 130！')
                 else:
                     msg_box = QMessageBox(QMessageBox.Warning, '警告', '偏移量只允许输入整数！\nZ轴输入范围为60到130 ！')
                 msg_box.exec_()
