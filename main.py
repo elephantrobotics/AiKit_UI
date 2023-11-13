@@ -16,9 +16,6 @@ from PyQt5.QtCore import QPoint
 from PyQt5.QtCore import pyqtSlot, Qt, QCoreApplication
 from PyQt5.QtGui import QEnterEvent, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QInputDialog, QWidget, QMessageBox
-from pymycobot.mycobot import MyCobot
-from pymycobot.mypalletizer import MyPalletizer
-from pymycobot.ultraArm import ultraArm
 from pymycobot.myarm import MyArm
 
 from libraries.log import logfile
@@ -2064,7 +2061,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 '特征点识别': 'feature',
                 'yolov5': 'yolov5'
             }
-            if x and x.lstrip('-').isdigit() and y and y.lstrip('-').isdigit() and z and z.lstrip('-').isdigit():
+            if x and x.lstrip('-').isdigit() and y and y.lstrip('-').isdigit() and z and z.lstrip(
+                    '-').isdigit() and 60 <= int(z) <= 130:
                 offset = [x, y, z]
                 if func in mapping:
                     offset_file = f'/offset/{device}_{mapping[func]}.txt'
@@ -2078,9 +2076,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 msg_box.exec_()
             else:
                 if self.language == 1:
-                    msg_box = QMessageBox(QMessageBox.Warning, 'Warning', 'The offset setting can only enter numbers！')
+                    msg_box = QMessageBox(QMessageBox.Warning, 'Warning',
+                                          'The offset setting can only enter numbers！\nZ-axis input range is 60 to 130!')
                 else:
-                    msg_box = QMessageBox(QMessageBox.Warning, '警告', '偏移量只允许输入整数！')
+                    msg_box = QMessageBox(QMessageBox.Warning, '警告', '偏移量只允许输入整数！\nZ轴输入范围为60到130 ！')
                 msg_box.exec_()
         except Exception as e:
             e = traceback.format_exc()
