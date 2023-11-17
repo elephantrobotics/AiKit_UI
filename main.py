@@ -146,6 +146,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self.sum_x1 = self.sum_x2 = self.sum_y2 = self.sum_y1 = 0
         # Grab the coordinates of the center point relative to mycobot
         self.camera_x, self.camera_y = 165, 5
+        self.camera_z = 150
+        # display real img coord
+        self.pos_x, self.pos_y, self.pos_z = 0, 0, 0
         # The coordinates of the cube relative to mycobot
         self.c_x, self.c_y = 0, 0
         # The ratio of pixels to actual values
@@ -231,10 +234,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         if self.language == 1:
             self.func_lab_6.setToolTip(
                 'Adjust the suction position of the end, add X forward,'
-                ' subtract X backward, add Y to the left, and subtract Y to the right.')
+                ' subtract X backward, add Y to the left, and subtract Y to the right, and Upward Z increases, downward Z decreases')
         else:
             self.func_lab_6.setToolTip(
-                '调整末端吸取位置，向前X加，向后X减，向左Y加，向右Y减。')
+                '调整末端吸取位置，向前X加，向后X减，向左Y加，向右Y减，向上Z加，向下Z减')
 
     @pyqtSlot()
     def min_clicked(self):
@@ -489,6 +492,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.img_coord_status = False
             self.current_coord_status = False
             self.is_pick = False
+            self.img_coord_lab.clear()
+            self.prompts_lab.clear()
+            self.cuttent_coord_lab.clear()
         except AttributeError:
             self.loger.info("Not yet connected to mycobot！！！")
 
@@ -550,9 +556,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.camera_edit.setEnabled(False)
             # 获取摄像头序号
             camera_index = int(self.camera_edit.text())
-            print('index:', camera_index)
             flag = self.cap.open(camera_index)  # Get the serial number of the camera to open
-            print('flag:', flag)
             if not flag:  # Flag indicates whether the camera is successfully opened
                 if self.language == 1:
                     self.prompts(
@@ -604,6 +608,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self._init_variable()
             self.buad_choose()
             self.prompts_lab.clear()
+            self.img_coord_lab.clear()
         except Exception as e:
             e = traceback.format_exc()
             self.loger.error('camera off exception' + str(e))
@@ -652,6 +657,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             while self.camera_status:
                 func = self.comboBox_function.currentText()
                 if func == 'Color recognition' or func == '颜色识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
+                    self.prompts_lab.clear()
                     # read camera
                     _, frame = self.cap.read()
                     print('frame1-frame:', frame)
@@ -765,6 +771,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         res_queue[2] = self.parse_folder('res/A')
                         res_queue[3] = self.parse_folder('res/B')
                         QApplication.processEvents()
+                        self.prompts_lab.clear()
                         # read camera
                         _, frame = self.cap.read()
                         # deal img
@@ -871,6 +878,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     yaw_degrees = 0
                     try:
                         QApplication.processEvents()
+                        self.prompts_lab.clear()
                         success, img = self.cap.read()
                         if not success:
                             break
@@ -929,8 +937,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         self.loger.error('abnormal' + str(e))
                 elif func == 'yolov5':
                     try:
-                        # print(self.yolov5_count)
-                        # print(is_release)
                         if self.yolov5_count and is_release:
                             self.open_camera()
                             self.comboBox_function.setEnabled(True)
@@ -1103,6 +1109,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 else:
                     try:
                         QApplication.processEvents()
+                        self.prompts_lab.clear()
                         # read camera
                         _, frame = self.cap.read()
                         # deal img
@@ -1632,17 +1639,30 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
     def moved(self, x, y, yaw_degrees):
         global func
         try:
-            print('x', x)
-            print('y', y)
+            # print('x', x)
+            # print('y', y)
             self.is_crawl = True
             while self.is_pick:
                 QApplication.processEvents()
                 # send Angle to move mycobot
+                func = self.comboBox_function.currentText()
+                if func == 'QR code recognition' or func == '二维码识别':
+                    self.pos_x, self.pos_y, self.pos_z = round(self.home_coords[0] + x, 2), round(
+                        self.home_coords[1] + y, 2), self.camera_z
+                    self.prompts(f'X:{self.pos_x}  Y:{self.pos_y}  Z:{self.pos_z}')
+                elif func == 'Intelligent gripping' or func == '智能夹取':
+                    self.pos_x, self.pos_y, self.pos_z = round(self.home_coords[0] + x, 2), round(
+                        self.home_coords[1] + y, 2), self.camera_z
+                    self.prompts(f'X:{self.pos_x}  Y:{self.pos_y}  Z:{self.pos_z}  yaw_degrees:{yaw_degrees}')
+                else:
+                    self.pos_x, self.pos_y, self.pos_z = round(x, 2), round(y, 2), self.camera_z
+                    self.prompts(f'X:{self.pos_x}  Y:{self.pos_y}  Z:{self.pos_z}')
                 if self.is_crawl:
                     if self.crawl_status:
                         self.is_crawl = False
-                        func = self.comboBox_function.currentText()
                         if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪':
+                            self.myCobot.set_gripper_mode(0)
+                            self.stop_wait(0.5)
                             self.myCobot.send_angles(self.move_angles[3], 25)
                             self.stop_wait(3)
                         else:
@@ -1662,7 +1682,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 1)
                             time.sleep(2)
                             self.myCobot.send_coords(
-                                [self.home_coords[0] + x, self.home_coords[1] + y, 100.5, 178.99, -3.78, -62.9],
+                                [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_y, 178.99, -3.78, -62.9],
                                 100, 1)
                             time.sleep(2.5)
                         elif func == 'Intelligent gripping' or func == '智能夹取':
@@ -1688,6 +1708,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             else:
                                 yaw_degrees_opt = yaw_degrees_opt
                             print('yaw_degrees_opt:', yaw_degrees_opt)
+                            self.myCobot.set_gripper_mode(0)
+                            time.sleep(0.5)
                             self.myCobot.send_angle(6, yaw_degrees_opt, 80)
                             time.sleep(3)
                             # open gripper
@@ -1705,7 +1727,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                  tmp_coords[5]], 100, 1)
                             time.sleep(2.5)
                             self.myCobot.send_coords(
-                                [self.home_coords[0] + x, self.home_coords[1] + y, 203, tmp_coords[3], tmp_coords[4],
+                                [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, tmp_coords[3],
+                                 tmp_coords[4],
                                  tmp_coords[5]], 100, 1)
                             time.sleep(3)
                             # close gripper
@@ -1719,11 +1742,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [244.5, 193.2, 330.3, -160.54, 17.35, -74.59],  # A Sorting area
                                 [33.2, 205.3, 322.5, -170.22, -13.93, 92.28],  # B Sorting area
                             ]
+                            self.myCobot.set_gripper_mode(0)
+                            time.sleep(0.5)
                             # open gripper
                             self.gripper_on()
                             self.myCobot.send_coords([x, y, 250, -174.51, 0.86, -85.93], 100, 1)
                             time.sleep(2.5)
-                            self.myCobot.send_coords([x, y, 203, -174.51, 0.86, -85.93], 100, 1)
+                            self.myCobot.send_coords([x, y, self.camera_z, -174.51, 0.86, -85.93], 100, 1)
                             time.sleep(3)
                             # close gripper
                             self.gripper_off()
@@ -1736,7 +1761,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             ]
                             self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
                             time.sleep(2.5)
-                            self.myCobot.send_coords([x, y, 100, -173.84, -0.14, -74.37], 100, 1)  #
+                            self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100, 1)  #
                             time.sleep(3)
                         else:
                             self.move_coords = [
@@ -1747,7 +1772,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             ]
                             self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
                             time.sleep(2.5)
-                            self.myCobot.send_coords([x, y, 150, -173.84, -0.14, -74.37], 100, 1)  # origin z : 100
+                            self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100,
+                                                     1)  # origin z : 100
                             time.sleep(3)
 
                         # open pump
@@ -1794,12 +1820,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     if func == 'object recognition' or func == '物体识别' or func == 'Color recognition grip' or func == '颜色识别 夹爪' or func == 'Intelligent gripping' or func == '智能夹取':
                         self.gripper_off()
                         time.sleep(1)
-                        self.myCobot.send_angles(self.move_angles[0], 25)
-                        time.sleep(4.5)
-
+                        self.myCobot.send_angles(self.move_angles[0], 40)
+                        time.sleep(4)
                     else:
-                        self.myCobot.send_angles(self.move_angles[0], 25)
-                        time.sleep(4.5)
+                        self.myCobot.send_angles(self.move_angles[0], 40)
+                        time.sleep(4)
                     if not self.auto_mode_status:
                         self.place_status = False
                         self.btn_color(self.place_btn, 'blue')
@@ -2058,6 +2083,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.crawl_status = False
             self.place_status = False
             self.is_pick = False
+            self.prompts_lab.clear()
             self.btn_color(self.auto_btn, 'green')
             for b in btn:
                 self.btn_color(b, 'blue')
@@ -2076,19 +2102,38 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             """Get the offset according to the device"""
 
             func = self.comboBox_function.currentText()
-            if func == 'QR code recognition' or func == '二维码识别' or func == 'Intelligent gripping' or func == '智能夹取':
-                with open(libraries_path + f'/offset/{self.comboBox_device.currentText()}_encode.txt', "r",
-                          encoding="utf-8") as f:
+            device = self.comboBox_device.currentText()
+            mapping = {
+                'QR code recognition': 'encode',
+                '二维码识别': 'encode',
+                'shape recognition': 'shape',
+                '形状识别': 'shape',
+                'Color recognition': 'color',
+                '颜色识别': 'color',
+                'Keypoints': 'feature',
+                '特征点识别': 'feature',
+                'yolov5': 'yolov5',
+                'Color recognition grip': 'color_gripper',
+                '颜色识别 夹爪': 'color_gripper',
+                'object recognition': 'object_gripper',
+                '物体识别': 'object_gripper',
+                'Intelligent gripping': 'smart_gripper',
+                '智能夹取': 'smart_gripper'
+            }
+            if func in mapping:
+                offset_file = f'/offset/{device}_{mapping[func]}.txt'
+                with open(libraries_path + offset_file, "r", encoding="utf-8") as f:
                     offset = f.read().splitlines()
-            else:
-                with open(libraries_path + f'/offset/{self.comboBox_device.currentText()}.txt', "r",
-                          encoding="utf-8") as f:
-                    offset = f.read().splitlines()
-                self.camera_x, self.camera_y = int(eval(offset[0])[0]), int(eval(offset[0])[1])
+                # self.loger.info(offset)
+                self.camera_x, self.camera_y, self.camera_z = int(eval(offset[0])[0]), int(eval(offset[0])[1]), int(
+                    eval(offset[0])[2])
+
             self.xoffset_edit.clear()
             self.yoffset_edit.clear()
+            self.zoffset_edit.clear()
             self.xoffset_edit.insert(f'{eval(offset[0])[0]}')
             self.yoffset_edit.insert(f'{eval(offset[0])[1]}')
+            self.zoffset_edit.insert(f'{eval(offset[0])[2]}')
         except Exception as e:
             e = traceback.format_exc()
             self.loger.error(str(e))
@@ -2097,21 +2142,35 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         """write offset"""
         try:
             func = self.comboBox_function.currentText()
+            device = self.comboBox_device.currentText()
             x = self.xoffset_edit.text()
             y = self.yoffset_edit.text()
-            if x is not None and (x.startswith('-') and x[1:] or x).isdigit() and y is not None and (
-                    y.startswith('-') and y[1:] or y).isdigit():
-                offset = [x, y]
-                if func == 'QR code recognition' or func == '二维码识别' or func == 'Intelligent gripping' or func == '智能夹取':
-                    with open(rf'{libraries_path}/offset/{self.comboBox_device.currentText()}_encode.txt', "w",
-                              encoding="utf-8") as file:
+            z = self.zoffset_edit.text()
+            mapping = {
+                'QR code recognition': 'encode',
+                '二维码识别': 'encode',
+                'shape recognition': 'shape',
+                '形状识别': 'shape',
+                'Color recognition': 'color',
+                '颜色识别': 'color',
+                'Keypoints': 'feature',
+                '特征点识别': 'feature',
+                'yolov5': 'yolov5',
+                'Color recognition grip': 'color_gripper',
+                '颜色识别 夹爪': 'color_gripper',
+                'object recognition': 'object_gripper',
+                '物体识别': 'object_gripper',
+                'Intelligent gripping': 'smart_gripper',
+                '智能夹取': 'smart_gripper'
+            }
+            if x and x.lstrip('-').isdigit() and y and y.lstrip('-').isdigit() and z and z.lstrip(
+                    '-').isdigit() and 90 <= int(z) <= 220:
+                offset = [x, y, z]
+                if func in mapping:
+                    offset_file = f'/offset/{device}_{mapping[func]}.txt'
+                    with open(libraries_path + offset_file, "w", encoding="utf-8") as file:
                         file.write(str(offset))
-                else:
-                    with open(rf'{libraries_path}/offset/{self.comboBox_device.currentText()}.txt', "w",
-                              encoding="utf-8") as file:
-                        file.write(str(offset))
-                    self.camera_x = int(x)
-                    self.camera_y = int(y)
+                    self.camera_x, self.camera_y, self.camera_z = int(x), int(y), int(z)
                 if self.language == 1:
                     msg_box = QMessageBox(QMessageBox.Information, 'prompt', 'Successfully saved！')
                 else:
@@ -2119,9 +2178,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                 msg_box.exec_()
             else:
                 if self.language == 1:
-                    msg_box = QMessageBox(QMessageBox.Warning, 'Warning', 'The offset setting can only enter numbers！')
+                    msg_box = QMessageBox(QMessageBox.Warning, 'Warning',
+                                          'The offset setting can only enter numbers！\nZ-axis input range is 90 to 220！')
                 else:
-                    msg_box = QMessageBox(QMessageBox.Warning, '警告', '偏移量只允许输入整数！')
+                    msg_box = QMessageBox(QMessageBox.Warning, '警告', '偏移量只允许输入整数！\nZ轴输入范围为90到220 ！')
                 msg_box.exec_()
         except Exception as e:
             e = traceback.format_exc()
@@ -2149,6 +2209,18 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         else:
             self.img_coord_status = True
             self.btn_color(self.image_coord_btn, 'red')
+            self.get_real_img_coord()
+
+    def get_real_img_coord(self):
+        try:
+            if self.auto_mode_status or self.crawl_status:
+                self.img_coord_lab.clear()
+                self.img_coord_lab.setText(f'X:{self.pos_x}  Y:{self.pos_y}  Z:{self.pos_z}')
+            else:
+                self.img_coord_lab.clear()
+        except Exception as e:
+            e = traceback.format_exc()
+            self.loger.error(str(e))
 
     def get_current_coord_btnClick(self):
         if not self.has_mycobot():
@@ -2266,10 +2338,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             else:
                 self.add_img_btn.setText(_translate("AiKit_UI", "Cut"))
             self.exit_add_btn.setText(_translate("AiKit_UI", "Exit"))
-            self.func_lab_6.setText(_translate("AiKit_UI", "XY Offsets"))
+            self.func_lab_6.setText(_translate("AiKit_UI", "XYZ Offsets"))
             self.offset_save_btn.setText(_translate("AiKit_UI", "Save"))
-            self.func_lab_12.setText(_translate("AiKit_UI", "X offset:"))
-            self.func_lab_13.setText(_translate("AiKit_UI", " Y offset:"))
+            self.func_lab_12.setText(_translate("AiKit_UI", "X:"))
+            self.func_lab_13.setText(_translate("AiKit_UI", " Y:"))
+            self.func_lab_14.setText(_translate("AiKit_UI", " Z:"))
             self.connect_lab_3.setText(_translate("AiKit_UI", "Display"))
             self.current_coord_btn.setText(_translate("AiKit_UI", "  current coordinates"))
             self.image_coord_btn.setText(_translate("AiKit_UI", "  image coordinates"))
@@ -2326,10 +2399,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             else:
                 self.add_img_btn.setText(_translate("AiKit_UI", "添加"))
             self.exit_add_btn.setText(_translate("AiKit_UI", "退出"))
-            self.func_lab_6.setText(_translate("AiKit_UI", "XY 坐标偏移"))
+            self.func_lab_6.setText(_translate("AiKit_UI", "XYZ 坐标偏移"))
             self.offset_save_btn.setText(_translate("AiKit_UI", "保存"))
-            self.func_lab_12.setText(_translate("AiKit_UI", "X 偏移量:"))
-            self.func_lab_13.setText(_translate("AiKit_UI", " Y 偏移量:"))
+            self.func_lab_12.setText(_translate("AiKit_UI", " X:"))
+            self.func_lab_13.setText(_translate("AiKit_UI", " Y:"))
+            self.func_lab_14.setText(_translate("AiKit_UI", " Z:"))
             self.connect_lab_3.setText(_translate("AiKit_UI", "坐标显示"))
             self.current_coord_btn.setText(_translate("AiKit_UI", "  实时坐标"))
             self.image_coord_btn.setText(_translate("AiKit_UI", "  定位坐标"))
@@ -2456,6 +2530,6 @@ if __name__ == '__main__':
         AiKit_window.show()
     except Exception as e:
         e = traceback.format_exc()
-        with open("error.txt", "w") as f:
+        with open(libraries_path + '/log/logtimestr.txt', "a+", encoding='utf-8') as f:
             f.write(str(e))
     sys.exit(app.exec_())

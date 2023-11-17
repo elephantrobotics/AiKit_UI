@@ -30,7 +30,7 @@ class MyLogging:
         sh.setLevel(logging.INFO)  # 设置日志等级
         sh.setFormatter(formatter)  # 设置handler的格式对象
 
-        fh = logging.FileHandler(filename=filename)  # 向文件filename输出日志信息
+        fh = logging.FileHandler(filename=filename, encoding='utf-8')  # 向文件filename输出日志信息
         fh.setLevel(logging.INFO)  # 设置日志等级
         fh.setFormatter(formatter)  # 设置handler的格式对象
 

@@ -1,1 +1,0 @@
-module 'cv2.aruco' has no attribute 'Dictionary_get'
