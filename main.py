@@ -1771,10 +1771,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [37.8, 233, 251.4, -170.6, -6.75, 88.53],  # B Sorting area
                             ]
                             self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
-                            time.sleep(2.5)
+                            time.sleep(3)
                             self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100,
                                                      1)  # origin z : 100
-                            time.sleep(3)
+                            time.sleep(4.5)
 
                         # open pump
                         if func != 'object recognition' or func != '物体识别' or func != 'Color recognition grip' or func != '颜色识别 夹爪' or func != 'Intelligent gripping' or func != '智能夹取':
