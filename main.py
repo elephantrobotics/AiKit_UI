@@ -439,6 +439,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.myCobot = MyCobot(port, baud, timeout=0.2)
             self.stop_wait(0.5)
             self.loger.info("connection succeeded !")
+            self.myCobot.set_fresh_mode(0)
+            self.stop_wait(0.1)
+            self.loger.info("Set to interpolation mode !")
             self.btn_status(True)
             if self.language == 1:
                 self.connect_btn.setText('DISCONNECT')
