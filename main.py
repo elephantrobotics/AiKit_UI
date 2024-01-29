@@ -1675,17 +1675,19 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         # send coordinates to move mycobot
                         if func == 'QR code recognition' or func == '二维码识别':
                             self.move_coords = [
-                                [32, -228.3, 201.6, -168.07, -7.17, -92.56],  # D Sorting area
+                                # [32, -228.3, 201.6, -168.07, -7.17, -92.56],  # D Sorting area
+                                [26.8, -230.8, 229.3, -174.56, -8.33, -92.74],  # D Sorting area
                                 [266.5, -219.7, 209.3, -170, -3.64, -94.62],  # C Sorting area
                                 [253.8, 236.8, 224.6, -170, 6.87, -77.91],  # A Sorting area
-                                [35.9, 235.4, 211.8, -169.33, -9.27, 88.3],  # B Sorting area
+                                # [35.9, 235.4, 211.8, -169.33, -9.27, 88.3],  # B Sorting area
+                                [50.3, 237.1, 231.3, 178.18, -0.95, 87.9],  # B Sorting area
                             ]
                             self.myCobot.send_coords(
                                 [self.home_coords[0] + x, self.home_coords[1] + y, 240, 178.99, -3.78, -62.9], 100,
                                 1)
                             time.sleep(2)
                             self.myCobot.send_coords(
-                                [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_y, 178.99, -3.78, -62.9],
+                                [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, 178.99, -3.78, -62.9],
                                 100, 1)
                             time.sleep(2.5)
                         elif func == 'Intelligent gripping' or func == '智能夹取':
@@ -1757,10 +1759,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             self.gripper_off()
                         elif func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
                             self.move_coords = [
-                                [32, -228.3, 201.6, -168.07, -7.17, -92.56],  # D Sorting area
+                                # [32, -228.3, 201.6, -168.07, -7.17, -92.56],  # D Sorting area
+                                [26.8, -230.8, 229.3, -174.56, -8.33, -92.74],  # D Sorting area
                                 [266.5, -219.7, 209.3, -170, -3.64, -94.62],  # C Sorting area
                                 [253.8, 236.8, 224.6, -170, 6.87, -77.91],  # A Sorting area
-                                [35.9, 235.4, 211.8, -169.33, -9.27, 88.3],  # B Sorting area
+                                # [35.9, 235.4, 211.8, -169.33, -9.27, 88.3],  # B Sorting area
+                                [50.3, 237.1, 231.3, 178.18, -0.95, 87.9],  # B Sorting area
                             ]
                             self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
                             time.sleep(2.5)
