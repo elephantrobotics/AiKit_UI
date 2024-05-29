@@ -1676,7 +1676,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         # send coordinates to move mycobot
                         if func == 'QR code recognition' or func == '二维码识别':
                             self.move_coords_to_angles = [
-                                [-60.9, 1.75, -1098.45, 24.69, 90.17, -58.62],  # D Sorting area
+                                [-60.9, 1.75, -98.45, 24.69, 90.17, -58.62],  # D Sorting area
                                 [-24.69, -54.58, -36.65, 9.31, 90.35, -20.74],  # C Sorting area
                                 [58.178, -55.45, -28.74, 3.51, 87.8, 46.14],  # A Sorting area
                                 [99.58, -5.0, -92.9, 6.32, 87.89, -77.78],  # B Sorting area
@@ -1688,7 +1688,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             self.myCobot.send_coords(
                                 [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, 178.99, -3.78, -62.9],
                                 100, 1)
-                            time.sleep(2.5)
+                            time.sleep(6)
                         elif func == 'Intelligent gripping' or func == '智能夹取':
                             print('rotation angle:', yaw_degrees)
                             if yaw_degrees > 169:
@@ -1734,7 +1734,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, tmp_coords[3],
                                  tmp_coords[4],
                                  tmp_coords[5]], 100, 1)
-                            time.sleep(3)
+                            time.sleep(6)
                             # close gripper
                             self.gripper_off()
 
@@ -1753,12 +1753,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             self.myCobot.send_coords([x, y, 250, -174.51, 0.86, -85.93], 100, 1)
                             time.sleep(2.5)
                             self.myCobot.send_coords([x, y, self.camera_z, -174.51, 0.86, -85.93], 100, 1)
-                            time.sleep(3)
+                            time.sleep(6)
                             # close gripper
                             self.gripper_off()
                         elif func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
                             self.move_coords_to_angles = [
-                                [-60.9, 1.75, -1098.45, 24.69, 90.17, -58.62],  # D Sorting area
+                                [-60.9, 1.75, -98.45, 24.69, 90.17, -58.62],  # D Sorting area
                                 [-24.69, -54.58, -36.65, 9.31, 90.35, -20.74],  # C Sorting area
                                 [58.178, -55.45, -28.74, 3.51, 87.8, 46.14],  # A Sorting area
                                 [99.58, -5.0, -92.9, 6.32, 87.89, -77.78],  # B Sorting area
@@ -1766,7 +1766,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
                             time.sleep(2.5)
                             self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100, 1)  #
-                            time.sleep(3)
+                            time.sleep(6)
                         else:
                             self.move_coords_to_angles = [
                                 [-61.61, 3.6, -100.63, 12.91, 95.44, -59.06],  # D Sorting area
@@ -1778,7 +1778,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             time.sleep(3)
                             self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100,
                                                      1)  # origin z : 100
-                            time.sleep(4.5)
+                            time.sleep(6.5)
 
                         # open pump
                         if func != 'object recognition' or func != '物体识别' or func != 'Color recognition grip' or func != '颜色识别 夹爪' or func != 'Intelligent gripping' or func != '智能夹取':
