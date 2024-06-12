@@ -33,6 +33,9 @@ pip install pyqt5
 git clone -b 320 https://github.com/elephantrobotics/AiKit_UI.git
 ```
 
+>> **注意：** 二维码板子摆放位置已发生改变，如下摆放：
+![img](./libraries/AiKit_UI_img/aruco_positon.png) 
+
 #### **start method**
 
 path: Project file path
