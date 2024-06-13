@@ -508,7 +508,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         baud = self.comboBox_buad.currentText()
         baud = int(baud)
         try:
-            self.myCobot = MyCobot(self.port, baud, timeout=0.2)
+            self.myCobot = MyCobot(self.port, baud, timeout=0.2, thread_lock=True)
             self.stop_wait(0.5)
             self.loger.info("connection succeeded !")
             self.myCobot.set_fresh_mode(0)
@@ -1441,8 +1441,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
     # calculate the coords between cube and mycobot
     def get_position(self, x, y):
-        pot_x = ((y - self.c_y) * self.ratio + self.camera_x)
-        pot_y = ((x - self.c_x) * self.ratio + self.camera_y)
+        # 二维码板子摆放方向改变之前
+        # pot_x = ((y - self.c_y) * self.ratio + self.camera_x)
+        # pot_y = ((x - self.c_x) * self.ratio + self.camera_y)
+        # 二维码板子摆放方向改变之后
+        pot_x = ((y - self.c_y) * (-self.ratio) + self.camera_x)
+        pot_y = -((x - self.c_x) * self.ratio + self.camera_y)
         if self.img_coord_status:
             self.img_coord_lab.clear()
             self.img_coord_lab.setText(f'X:{int(pot_x)}  Y:{int(pot_y)}')
@@ -1465,12 +1469,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             frame = cv2.resize(frame, (0, 0), fx=fx, fy=fy,
                                interpolation=cv2.INTER_CUBIC)
             if self.x1 != self.x2:
-                # frame=frame[235:780, 488:1050]
-                # 只保留白色板子区域，裁剪参数，frame[x1:x2,y1:y2]，其中x1和x2是裁剪画面上下范围区域，y1和y2是裁剪画面左右范围区域，x1越大，越往下裁剪，x2越大,越往上裁剪，y1 y2越大，越往右裁剪，反之往左裁剪
-                frame = frame[245:760, 498:1020]
+                frame = frame[245:765, 510:1025]
+                # 只保留白色板子区域，裁剪参数，frame[x1:x2,y1:y2]，其中x1和x2是裁剪画面上下范围区域，y1和y2是裁剪画面左右范围区域，x1越大，越往下裁剪，x2越大,越往下裁剪，y1 y2越大，越往右裁剪，反之往左裁剪
+                # frame = frame[245:760, 498:1020]
                 # the cutting ratio here is adjusted according to the actual situation
-                # frame = frame[int(self.y2 * 0.66):int(self.y1 * 1.14),  # 0.78 1.1
-                #         int(self.x1 * 0.88):int(self.x2 * 1.08)]  # 0.84 1.08
+                # frame = frame[int(self.y2 * 0.8):int(self.y1 * 1.08),  # 0.78 1.1
+                #         int(self.x1 * 0.89):int(self.x2 * 1.06)]  # 0.84 1.08
             return frame
         except Exception as e:
             self.loger.error('Interception failed' + str(e))
@@ -1719,7 +1723,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             # Adjust the suction position of the suction pump, increase y, move to the left;
             # decrease y, move to the right; increase x, move forward; decrease x, move backward
             if self.comboBox_function.currentText() == 'QR code recognition' or self.comboBox_function.currentText() == '二维码识别' or self.comboBox_function.currentText() == 'Intelligent gripping' or self.comboBox_function.currentText() == '智能夹取':
-                _moved = threading.Thread(target=self.moved(x + 265, y + 5, yaw_degrees))
+                _moved = threading.Thread(target=self.moved(x + 265, -y + 5, yaw_degrees))
                 _moved.start()
 
             else:
@@ -1732,6 +1736,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         try:
             # print('x', x)
             # print('y', y)
+            if x < 235:
+                self.camera_z -= 5
+            elif 235 < x < 239:
+                self.camera_z -= 3
+            else:
+                self.camera_z = self.camera_z
+
             self.is_crawl = True
             while self.is_pick:
                 QApplication.processEvents()
@@ -1805,8 +1816,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             self.myCobot.set_gripper_mode(0)
                             time.sleep(0.5)
                             self.myCobot.send_angle(6, yaw_degrees_opt, 80)
-                            # time.sleep(3)
-                            self.wait_until_position_reached(self.move_angles[6], id=0, timeout=5)
+                            time.sleep(3)
+                            # self.wait_until_position_reached(self.move_angles[6], id=0, timeout=5)
                             # open gripper
                             self.gripper_on()
                             time.sleep(2.5)
@@ -1848,7 +1859,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             time.sleep(2.5)
                             # self.wait_until_position_reached([x, y, 250, -174.51, 0.86, -85.93],id=1,timeout=5)
                             self.myCobot.send_coords([x, y, self.camera_z, -174.51, 0.86, -85.93], 100, 1)
-                            time.sleep(6)
+                            time.sleep(6.5)
                             # self.wait_until_position_reached([x, y, self.camera_z, -174.51, 0.86, -85.93], id=1,
                             #                                  timeout=6)
                             # close gripper
@@ -1941,12 +1952,12 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         self.gripper_off()
                         time.sleep(1)
                         self.myCobot.send_angles(self.move_angles[0], 40)
-                        self.wait_until_position_reached(self.move_angles[0], id=0, timeout=5)
+                        # self.wait_until_position_reached(self.move_angles[0], id=0, timeout=5)
                         # time.sleep(4)
 
                     else:
                         self.myCobot.send_angles(self.move_angles[0], 40)
-                        self.wait_until_position_reached(self.move_angles[0], id=0, timeout=5)
+                        # self.wait_until_position_reached(self.move_angles[0], id=0, timeout=5)
                         # time.sleep(4)
 
                     if not self.auto_mode_status:
@@ -2239,7 +2250,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.btn_color(self.auto_btn, 'red')
             for b in btn:
                 self.btn_color(b, 'red')
-            self.to_origin_func()
+            if self.myCobot.is_in_position(self.move_angles[0], 0) == 1:
+                return
+            else:
+                self.to_origin_func()
 
     def offset_change(self):
         try:
