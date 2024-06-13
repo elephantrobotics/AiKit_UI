@@ -1736,10 +1736,14 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         try:
             # print('x', x)
             # print('y', y)
-            if x < 235:
+            if 200 < x < 235:
                 self.camera_z -= 5
             elif 235 < x < 239:
                 self.camera_z -= 3
+            elif x > 278:
+                self.camera_z += 3
+            elif x < 200:
+                return
             else:
                 self.camera_z = self.camera_z
 
@@ -1898,6 +1902,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         # open pump
                         if func != 'object recognition' or func != '物体识别' or func != 'Color recognition grip' or func != '颜色识别 夹爪' or func != 'Intelligent gripping' or func != '智能夹取':
                             self.pump_on()
+
                         time.sleep(1.5)
                         tmp = []
                         while True:
@@ -1905,6 +1910,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 tmp = self.myCobot.get_angles()
                             else:
                                 break
+                            time.sleep(0.05)
+                        time.sleep(0.5)
                         self.myCobot.send_angles([tmp[0], -0.71, -54.49, -23.02, 89.56, tmp[5]],
                                                  25)  # [18.8, -7.91, -54.49, -23.02, -0.79, -14.76]
                         time.sleep(2)
@@ -1929,7 +1936,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         delay_time = 4
                     else:
                         color = 0
-                        delay_time = 3.5
+                        delay_time = 4
                     if func in ['特征点识别', 'Keypoints'] and self.radioButton_auto.isChecked():
                         print('position index:', pos_index)
                         self.myCobot.send_angles(self.move_coords_to_angles[pos_index], 30)
