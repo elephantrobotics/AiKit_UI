@@ -60,7 +60,6 @@
           <font>
            <family>Arial</family>
            <pointsize>18</pointsize>
-           <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>
@@ -320,7 +319,6 @@ color: rgb(255, 255, 255);</string>
                     <font>
                      <family>Arial</family>
                      <pointsize>14</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -346,7 +344,6 @@ color: rgb(255, 255, 255);</string>
                    <property name="font">
                     <font>
                      <family>Segoe UI</family>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -403,7 +400,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>50</weight>
                         <bold>false</bold>
                        </font>
                       </property>
@@ -420,7 +416,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>50</weight>
                         <bold>false</bold>
                        </font>
                       </property>
@@ -437,7 +432,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>50</weight>
                         <bold>false</bold>
                        </font>
                       </property>
@@ -460,7 +454,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>50</weight>
                         <bold>false</bold>
                        </font>
                       </property>
@@ -471,7 +464,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>50</weight>
                         <bold>false</bold>
                        </font>
                       </property>
@@ -522,7 +514,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>50</weight>
                         <bold>false</bold>
                        </font>
                       </property>
@@ -565,7 +556,6 @@ border-style: outset;</string>
                     <font>
                      <family>Arial</family>
                      <pointsize>14</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -585,7 +575,6 @@ border-style: outset;</string>
                    <property name="font">
                     <font>
                      <family>Arial</family>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -631,7 +620,6 @@ border-style: outset;</string>
                     <font>
                      <family>Arial</family>
                      <pointsize>11</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -651,7 +639,6 @@ border-style: outset;</string>
                    <property name="font">
                     <font>
                      <family>Arial</family>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -712,7 +699,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>11</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -732,7 +718,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -775,7 +760,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>8</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -793,7 +777,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>8</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -836,7 +819,6 @@ background-color: rgb(243, 243, 243,200);</string>
                     <font>
                      <family>Arial</family>
                      <pointsize>11</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -856,7 +838,6 @@ background-color: rgb(243, 243, 243,200);</string>
                    <property name="font">
                     <font>
                      <family>Arial</family>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -917,7 +898,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>11</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -937,7 +917,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1022,6 +1001,18 @@ border-style: outset;</string>
                       </property>
                      </widget>
                     </item>
+                    <item>
+                     <widget class="QRadioButton" name="radioButton_auto">
+                      <property name="font">
+                       <font>
+                        <family>Arial</family>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Auto</string>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -1083,7 +1074,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>11</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1103,7 +1093,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1134,7 +1123,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>10</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1164,7 +1152,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>10</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1194,7 +1181,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>10</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1248,7 +1234,6 @@ border-style: outset;</string>
                     <font>
                      <family>Arial</family>
                      <pointsize>14</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1268,7 +1253,6 @@ border-style: outset;</string>
                    <property name="font">
                     <font>
                      <family>Arial</family>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1314,7 +1298,6 @@ border-style: outset;</string>
                     <font>
                      <family>Arial</family>
                      <pointsize>11</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1333,7 +1316,6 @@ border-style: outset;</string>
                    </property>
                    <property name="font">
                     <font>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1389,7 +1371,6 @@ border-style: outset;</string>
                   <widget class="QLabel" name="show_cutimg_lab">
                    <property name="font">
                     <font>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1419,7 +1400,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>8</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1438,7 +1418,6 @@ border-style: outset;</string>
                       </property>
                       <property name="font">
                        <font>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1466,7 +1445,6 @@ border: 2px groove gray;</string>
                       </property>
                       <property name="font">
                        <font>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1532,7 +1510,6 @@ border: 2px groove gray;</string>
                     <font>
                      <family>Arial</family>
                      <pointsize>14</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1562,7 +1539,6 @@ border: 2px groove gray;</string>
                    <property name="font">
                     <font>
                      <family>Arial</family>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1592,7 +1568,6 @@ border-style: outset;</string>
                    <property name="font">
                     <font>
                      <family>Arial</family>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1625,7 +1600,6 @@ border-style: outset;</string>
                    <property name="font">
                     <font>
                      <family>Arial</family>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1658,7 +1632,6 @@ border-style: outset;</string>
                 <property name="font">
                  <font>
                   <pointsize>14</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -1708,7 +1681,6 @@ border-style: outset;</string>
                    </property>
                    <property name="font">
                     <font>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1769,7 +1741,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>11</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1810,7 +1781,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1835,7 +1805,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>10</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1876,7 +1845,6 @@ border-style: outset;</string>
                       <property name="font">
                        <font>
                         <family>Arial</family>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -1901,7 +1869,6 @@ border-style: outset;</string>
                        <font>
                         <family>Arial</family>
                         <pointsize>15</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>

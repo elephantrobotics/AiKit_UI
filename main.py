@@ -2,6 +2,7 @@
 # encoding:utf-8
 import math
 import os
+import random
 import sys
 import threading
 import time
@@ -114,6 +115,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                        2.57018000e+00]]))
 
         self.color = 0
+        # 位置索引
+        self.pos_index = 0
         # parameters to calculate camera clipping parameters 计算相机裁剪参数的参数
         self.x1 = self.x2 = self.y1 = self.y2 = 0
         # set cache of real coord 设置真实坐标的缓存
@@ -220,9 +223,19 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             self.func_lab_6.setToolTip(
                 'Adjust the suction position of the end, add X forward,'
                 ' subtract X backward, add Y to the left, \nand subtract Y to the right, and Upward Z increases, downward Z decreases.')
+            self.radioButton_A.setToolTip('Place the recognizable object into area A')
+            self.radioButton_B.setToolTip('Place the recognizable object into area B')
+            self.radioButton_C.setToolTip('Place the recognizable object into area C')
+            self.radioButton_D.setToolTip('Place the recognizable object into area D')
+            self.radioButton_auto.setToolTip('Automatically placed in the corresponding area, except yolov5')
         else:
             self.func_lab_6.setToolTip(
                 '调整末端吸取位置，向前X加，向后X减，向左Y加，向右Y减，向上Z加，向下Z减。')
+            self.radioButton_A.setToolTip('将可识别物体投放到A区域')
+            self.radioButton_B.setToolTip('将可识别物体投放到B区域')
+            self.radioButton_C.setToolTip('将可识别物体投放到C区域')
+            self.radioButton_D.setToolTip('将可识别物体投放到D区域')
+            self.radioButton_auto.setToolTip('自动投放到对应区域,除了yolov5')
 
     @pyqtSlot()
     def min_clicked(self):
@@ -944,6 +957,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 x, y = detect_result
                                 # calculate real coord between cube and mycobot
                                 self.real_x, self.real_y = self.get_position(x, y)
+                                self.pos_index = i
                                 if self.num == 5:
                                     # self.color = i
                                     # self.pub_marker(self.real_sx / 5.0 / 1000.0,
@@ -976,6 +990,16 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             corners, ids, rejectImaPoint = cv2.aruco.detectMarkers(
                                 gray, self.aruco_dict, parameters=self.aruco_params
                             )
+                            # Determine the placement point of the QR code
+                            if ids == np.array([[1]]):
+                                self.pos_index = 0
+                            elif ids == np.array([[2]]):
+                                self.pos_index = 1
+                            elif ids == np.array([[3]]):
+                                self.pos_index = 2
+                            elif ids == np.array([[4]]):
+                                self.pos_index = 3
+
                             if len(corners) > 0:
                                 if ids is not None:
                                     ret = cv2.aruco.estimatePoseSingleMarkers(
@@ -1175,6 +1199,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                         self.show_camera_lab.setPixmap(QtGui.QPixmap.fromImage(showImage))
                                         QApplication.processEvents()
                                         if self.crawl_status:
+                                            # Random Generation pos index 0-3
+                                            self.pos_index = random.randint(0, 3)
                                             self.decide_move(self.real_x, self.real_y,
                                                              self.color)
                                             show = cv2.cvtColor(input_img, cv2.COLOR_BGR2RGB)
@@ -1529,21 +1555,26 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     if mycolor == "yellow":
 
                         self.color = 3
+                        self.pos_index = 3
                         break
 
                     elif mycolor == "red":
                         self.color = 0
+                        self.pos_index = 0
                         break
 
                     elif mycolor == "cyan":
                         self.color = 2
+                        self.pos_index = 2
                         break
 
                     elif mycolor == "blue":
                         self.color = 2
+                        self.pos_index = 2
                         break
                     elif mycolor == "green":
                         self.color = 1
+                        self.pos_index = 1
                         break
 
         # Judging whether it is recognized normally
@@ -1683,6 +1714,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     if objCor == 3:
                         objectType = ["Triangle", "三角形"]
                         self.color = 3
+                        self.pos_index = 3
                         cv2.drawContours(img, [cnt], 0, (0, 0, 255), 3)
 
                     elif objCor == 4:
@@ -1695,13 +1727,16 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             objectType = ["Square", "正方形"]
                             cv2.drawContours(img, [cnt], 0, (0, 0, 255), 3)
                             self.color = 1
+                            self.pos_index = 1
                         else:
                             objectType = ["Rectangle", "长方形"]
                             cv2.drawContours(img, [cnt], 0, (0, 0, 255), 3)
                             self.color = 2
+                            self.pos_index = 2
                     elif objCor >= 5:
                         objectType = ["Circle", "圆形"]
                         self.color = 0
+                        self.pos_index = 0
                         cv2.drawContours(img, [cnt], 0, (0, 0, 255), 3)
                     else:
                         pass
@@ -1937,6 +1972,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         color = 0
                     if device == 'ultraArm P340':
                         self.myCobot.set_coords(self.move_coords[color], 40)
+
+                    if device in ['myCobot 280 for Pi', 'myCobot 280 for M5'] and self.radioButton_auto.isChecked():
+                        self.myCobot.send_coords(self.move_coords[self.pos_index], 40, 0)
                     else:
                         self.myCobot.send_coords(self.move_coords[color], 40, 0)
                     # self.pub_marker(self.move_coords[color][0]/1000.0, self.move_coords[color]
