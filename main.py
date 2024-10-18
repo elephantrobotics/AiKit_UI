@@ -17,7 +17,8 @@ from PyQt5.QtCore import QPoint
 from PyQt5.QtCore import pyqtSlot, Qt, QCoreApplication
 from PyQt5.QtGui import QEnterEvent, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QInputDialog, QWidget, QMessageBox, QPushButton, QComboBox
-from pymycobot.mycobot import MyCobot
+# from pymycobot.mycobot import MyCobot
+from pymycobot.mycobot320 import MyCobot320
 from PyQt5.QtCore import QTimer
 from libraries.log import logfile
 from libraries.pyqtFile.AiKit_auto import Ui_AiKit_UI as AiKit_window
@@ -508,7 +509,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         baud = self.comboBox_buad.currentText()
         baud = int(baud)
         try:
-            self.myCobot = MyCobot(self.port, baud, timeout=0.2, thread_lock=True)
+            self.myCobot = MyCobot320(self.port, baud, timeout=0.2)
             self.stop_wait(0.5)
             self.loger.info("connection succeeded !")
             self.myCobot.set_fresh_mode(0)
