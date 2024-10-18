@@ -17,8 +17,11 @@ from PyQt5.QtCore import QPoint, QRegularExpression
 from PyQt5.QtCore import pyqtSlot, Qt, QCoreApplication
 from PyQt5.QtGui import QEnterEvent, QPixmap, QIntValidator, QRegularExpressionValidator
 from PyQt5.QtWidgets import QMainWindow, QApplication, QInputDialog, QWidget, QMessageBox
-from pymycobot.mycobot import MyCobot
-from pymycobot.mypalletizer import MyPalletizer
+# from pymycobot.mycobot import MyCobot
+# from pymycobot.mypalletizer import MyPalletizer
+from pymycobot.mycobot280 import MyCobot280
+from pymycobot.mypalletizer260 import MyPalletizer260
+from pymycobot.mecharm270 import MechArm270
 from pymycobot.ultraArm import ultraArm
 
 from libraries.log import logfile
@@ -534,7 +537,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
         try:
             if device == 'myPalletizer 260 for M5' or device == 'myPalletizer 260 for Pi':
-                self.myCobot = MyPalletizer(port, baud, timeout=0.2)
+                self.myCobot = MyPalletizer260(port, baud, timeout=0.2)
             elif device == 'ultraArm P340':
                 self.myCobot = ultraArm(port, baud, timeout=0.2)
                 self.stop_wait(0.1)
@@ -546,8 +549,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     self.prompts('正在进行回零校正，请耐心等待......')
                 self.btn_status(False)
                 self.connect_btn.setEnabled(False)
+            elif device == 'mechArm 270 for Pi' or device == 'mechArm 270 for M5':
+                self.myCobot = MechArm270(port, baud, timeout=0.2)
             else:
-                self.myCobot = MyCobot(port, baud, timeout=0.2)
+                self.myCobot = MyCobot280(port, baud, timeout=0.2)
             self.stop_wait(0.5)
             self.loger.info("connection succeeded !")
             if device != 'ultraArm P340':
