@@ -16,10 +16,24 @@ from PyQt5.QtCore import QPoint
 from PyQt5.QtCore import pyqtSlot, Qt, QCoreApplication
 from PyQt5.QtGui import QEnterEvent, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QInputDialog, QWidget, QMessageBox
-from pymycobot.myarm import MyArm
 
 from libraries.log import logfile
 from libraries.pyqtFile.AiKit_auto import Ui_AiKit_UI as AiKit_window
+import pymycobot
+from packaging import version
+
+# min low version require
+MIN_REQUIRE_VERSION = '3.6.0'
+
+current_verison = pymycobot.__version__
+print('current pymycobot library version: {}'.format(current_verison))
+if version.parse(current_verison) < version.parse(MIN_REQUIRE_VERSION):
+    raise RuntimeError(
+        '{}The version of pymycobot library must be greater than {} or higher. The current version is {}. Please upgrade the library version.'.format(
+            MIN_REQUIRE_VERSION, current_verison))
+else:
+    print('pymycobot library version meets the requirements!')
+    from pymycobot.myarm import MyArm
 
 
 class AiKit_APP(AiKit_window, QMainWindow, QWidget):
@@ -1747,25 +1761,28 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         """Start the suction pump"""
         if self.comboBox_device.currentText() in self.Pi:
             import RPi.GPIO as GPIO
-            GPIO.setwarnings(False)
             self.GPIO = GPIO
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(20, GPIO.OUT)
             GPIO.setup(21, GPIO.OUT)
             self.GPIO.output(20, 0)
-            self.GPIO.output(21, 0)
 
     def pump_off(self):
         """stop suction pump"""
         if self.comboBox_device.currentText() in self.Pi:
             import RPi.GPIO as GPIO
-            GPIO.setwarnings(False)
             self.GPIO = GPIO
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(20, GPIO.OUT)
             GPIO.setup(21, GPIO.OUT)
+            # 关闭电磁阀
             self.GPIO.output(20, 1)
+            time.sleep(0.05)
+            # 打开泄气阀门
+            self.GPIO.output(21, 0)
+            time.sleep(1)
             self.GPIO.output(21, 1)
+            time.sleep(0.05)
 
     # The path to save the image folder
     def parse_folder(self, folder):
