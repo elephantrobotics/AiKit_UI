@@ -1317,6 +1317,21 @@ border-style: outset;</string>
                      <string>Intelligent gripping</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>Color recognition force grip</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Object recognition force grip</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Intelligent force gripping</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                 </layout>
