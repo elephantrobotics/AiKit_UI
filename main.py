@@ -1830,8 +1830,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
     def moved(self, x, y, yaw_degrees, pos_index=None):
         global func
         try:
-            print('x', x)
-            print('y', y)
+            # print('x', x)
+            # print('y', y)
             if 200 < x < 235:
                 self.camera_z -= 5
             elif 235 < x < 239:
@@ -1901,9 +1901,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             data = [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, 178.99, -3.78,
                                     -62.9]
                             self.check_position(data, 1)
-                            # self.wait_until_position_reached(
-                            #     [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, 178.99, -3.78, -62.9],
-                            #     id=1, timeout=6)
                         elif func == 'Intelligent gripping' or func == '智能夹取':
                             print('rotation angle:', yaw_degrees)
                             if yaw_degrees > 169:
@@ -1931,7 +1928,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             time.sleep(0.5)
                             self.myCobot.send_angle(6, yaw_degrees_opt, 80)
                             time.sleep(3)
-                            # self.wait_until_position_reached(self.move_angles[6], id=0, timeout=5)
                             # open gripper
                             self.gripper_on()
                             time.sleep(2.5)
@@ -1953,9 +1949,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             data = [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, tmp_coords[3],
                                     tmp_coords[4], tmp_coords[5]]
                             self.check_position(data, 1)
-                            # self.wait_until_position_reached(
-                            #     [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, tmp_coords[3],
-                            #      tmp_coords[4], tmp_coords[5]], id=1, timeout=6)
                             # close gripper
                             self.gripper_off()
 
@@ -2009,12 +2002,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             self.gripper_on()
                             self.myCobot.send_coords([x, y, 250, -174.51, 0.86, -85.93], 100, 1)
                             # time.sleep(2.5)
-                            # self.wait_until_position_reached([x, y, 250, -174.51, 0.86, -85.93],id=1,timeout=5)
                             self.myCobot.send_coords([x, y, self.camera_z, -174.51, 0.86, -85.93], 100, 1)
                             # time.sleep(6.5)
                             self.check_position([x, y, self.camera_z, -174.51, 0.86, -85.93], 1)
-                            # self.wait_until_position_reached([x, y, self.camera_z, -174.51, 0.86, -85.93], id=1,
-                            #                                  timeout=6)
                             # close gripper
                             self.gripper_off()
 
@@ -2034,8 +2024,6 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             self.myCobot.send_coords([x, y, self.camera_z, 176.53, -4.21, 53.28], 100, 1)
                             # time.sleep(6.5)
                             self.check_position([x, y, self.camera_z, 176.53, -4.21, 53.28], 1)
-                            # self.wait_until_position_reached([x, y, self.camera_z, -174.51, 0.86, -85.93], id=1,
-                            #                                  timeout=6)
                             # close gripper
                             self.gripper_off()
                         elif func == 'shape recognition' or func == 'Keypoints' or func == '形状识别' or func == '特征点识别' or func == 'yolov5':
@@ -2046,13 +2034,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [99.58, -5.0, -92.9, 6.32, 87.89, -77.78],  # B Sorting area
                             ]
                             self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
-                            # time.sleep(2.5)
-                            # self.wait_until_position_reached([x, y, 230, -173.84, -0.14, -74.37] , id=1 , timeout=5)
                             self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100, 1)  #
                             # time.sleep(7)
                             self.check_position([x, y, self.camera_z, -173.84, -0.14, -74.37], 1)
-                            # self.wait_until_position_reached([x, y, self.camera_z, -173.84, -0.14, -74.37], id=1,
-                            #                                  timeout=5)
 
                         else:
                             self.move_coords_to_angles = [
@@ -2062,14 +2046,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [100.1, -0.17, -95.0, 11.77, 97.64, -77.87],  # B Sorting area
                             ]
                             self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
-                            # time.sleep(3)
-                            # self.wait_until_position_reached([x, y, 230, -173.84, -0.14, -74.37],id=1,timeout=5)
                             self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100,
                                                      1)  # origin z : 100
                             # time.sleep(5.5)
                             self.check_position([x, y, self.camera_z, -173.84, -0.14, -74.37], 1)
-                            # self.wait_until_position_reached([x, y, self.camera_z, -173.84, -0.14, -74.37], id=1,
-                            #                                  timeout=6)
 
                         # open pump
                         if func not in ['object recognition', '物体识别', 'Color recognition grip', '颜色识别 夹爪',
@@ -2118,13 +2098,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                     if func in ['特征点识别', 'Keypoints'] and self.radioButton_auto.isChecked():
                         print('position index:', pos_index)
                         self.myCobot.send_angles(self.move_coords_to_angles[pos_index], 30)
-                        # self.wait_until_position_reached(self.move_coords_to_angles[color],id=0,timeout=5)
-                        # time.sleep(4)
                         self.check_position(self.move_coords_to_angles[pos_index], 0)
                     else:
                         self.myCobot.send_angles(self.move_coords_to_angles[color], 30)
-                        # self.wait_until_position_reached(self.move_coords_to_angles[color],id=0,timeout=5)
-                        # time.sleep(delay_time)
                         self.check_position(self.move_coords_to_angles[color], 0)
 
                     if func in ['object recognition', '物体识别', 'Color recognition grip', '颜色识别 夹爪',
@@ -2149,13 +2125,9 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             self.myCobot.send_angles(self.force_init_angles, 40)
                         else:
                             self.myCobot.send_angles(self.move_angles[0], 40)
-                        # self.wait_until_position_reached(self.move_angles[0], id=0, timeout=5)
-                        # time.sleep(4)
 
                     else:
                         self.myCobot.send_angles(self.move_angles[0], 40)
-                        # self.wait_until_position_reached(self.move_angles[0], id=0, timeout=5)
-                        # time.sleep(4)
 
                     if not self.auto_mode_status:
                         self.place_status = False
