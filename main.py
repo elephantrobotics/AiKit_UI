@@ -17,11 +17,24 @@ from PyQt5.QtCore import QPoint
 from PyQt5.QtCore import pyqtSlot, Qt, QCoreApplication
 from PyQt5.QtGui import QEnterEvent, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication, QInputDialog, QWidget, QMessageBox, QPushButton, QComboBox
-# from pymycobot.mycobot import MyCobot
-from pymycobot.mycobot320 import MyCobot320
 from PyQt5.QtCore import QTimer
 from libraries.log import logfile
 from libraries.pyqtFile.AiKit_auto import Ui_AiKit_UI as AiKit_window
+import pymycobot
+from packaging import version
+
+# min low version require
+MIN_REQUIRE_VERSION = '3.6.8'
+
+current_verison = pymycobot.__version__
+print('current pymycobot library version: {}'.format(current_verison))
+if version.parse(current_verison) < version.parse(MIN_REQUIRE_VERSION):
+    raise RuntimeError(
+        'The version of pymycobot library must be greater than {} or higher. The current version is {}. Please upgrade the library version.'.format(
+            MIN_REQUIRE_VERSION, current_verison))
+else:
+    print('pymycobot library version meets the requirements!')
+    from pymycobot.mycobot320 import MyCobot320
 
 
 class AiKit_APP(AiKit_window, QMainWindow, QWidget):
