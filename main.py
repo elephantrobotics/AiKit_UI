@@ -119,6 +119,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         # device
         self.M5 = ['myCobot 320 for M5']  # M5 robot
         self.Pi = ['myCobot 320 for Pi']  # Pi robot
+        self.RISCV = ['myCobot 320 for RISCV']  # RISCV robot
 
         self.pump_y = -55
         # x-axis offset
@@ -482,15 +483,18 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
     def buad_choose(self):
         try:
             """Switch the baud rate according to the device and initialize the corresponding variable"""
-            # self.btn_status(True)
             value = self.comboBox_device.currentText()
-            if value in self.Pi:
-                self.comboBox_buad.setCurrentIndex(1)
-            else:
-                self.comboBox_buad.setCurrentIndex(1)
+            # self.btn_status(True)
+            self.comboBox_buad.setCurrentIndex(1)
 
             self.offset_change()  # Get the corresponding offset of the device
             self.device_coord()  # Initialize the point of the corresponding device
+            if value in self.RISCV:
+                self.camera_edit.setText('20')
+            elif value in self.M5:
+                self.camera_edit.setText('1')
+            else:
+                self.camera_edit.setText('0')
         except Exception as e:
             e = traceback.format_exc()
             self.loger.error(str(e))
@@ -532,11 +536,11 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         baud = int(baud)
         try:
             self.myCobot = MyCobot320(self.port, baud, timeout=0.2)
-            self.stop_wait(0.5)
+            self.stop_wait(0.05)
             self.loger.info("connection succeeded !")
             if self.myCobot.get_fresh_mode() == 1:
                 self.myCobot.set_fresh_mode(0)
-                self.stop_wait(0.1)
+                self.stop_wait(0.05)
                 self.loger.info("Set to interpolation mode !")
             self.btn_status(True)
             if self.language == 1:
@@ -1635,7 +1639,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
     def obj_detect(self, img, goal):
         """Keypoints"""
         MIN_MATCH_COUNT = 5
-        sift = cv2.xfeatures2d.SIFT_create()
+        if self.comboBox_device.currentText() in self.RISCV:
+            sift = cv2.SIFT_create()
+        else:
+            sift = cv2.xfeatures2d.SIFT_create()
 
         # find the keypoints and descriptors with SIFT
         kp = []
@@ -2081,7 +2088,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             time.sleep(0.05)
                         time.sleep(0.5)
                         self.myCobot.send_angles([tmp[0], -0.71, -54.49, -23.02, 89.56, tmp[5]],
-                                                 25)  # [18.8, -7.91, -54.49, -23.02, -0.79, -14.76]
+                                                 35)  # [18.8, -7.91, -54.49, -23.02, -0.79, -14.76]
                         # time.sleep(2)
                         self.check_position([tmp[0], -0.71, -54.49, -23.02, 89.56, tmp[5]], 0)
                         if func in ['Intelligent force gripping', '智能夹取 力控夹爪']:
@@ -2110,10 +2117,10 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                         delay_time = 4
                     if func in ['特征点识别', 'Keypoints'] and self.radioButton_auto.isChecked():
                         print('position index:', pos_index)
-                        self.myCobot.send_angles(self.move_coords_to_angles[pos_index], 30)
+                        self.myCobot.send_angles(self.move_coords_to_angles[pos_index], 35)
                         self.check_position(self.move_coords_to_angles[pos_index], 0)
                     else:
-                        self.myCobot.send_angles(self.move_coords_to_angles[color], 30)
+                        self.myCobot.send_angles(self.move_coords_to_angles[color], 35)
                         self.check_position(self.move_coords_to_angles[color], 0)
 
                     if func in ['object recognition', '物体识别', 'Color recognition grip', '颜色识别 夹爪',
@@ -2165,13 +2172,43 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
     def pump_on(self):
         """Start the suction pump"""
-        self.myCobot.set_basic_output(1, 0)
-        self.myCobot.set_basic_output(2, 0)
+        if self.comboBox_device.currentText() in self.RISCV:
+            from gpiozero.pins.lgpio import LGPIOFactory
+            from gpiozero import Device, LED
+            Device.pin_factory = LGPIOFactory(chip=0)  # 显式指定/dev/gpiochip0
+            # 初始化 GPIO 控制的设备
+            pump = LED(71)  # 气泵
+            valve = LED(72)  # 阀门
+            pump.on()  # 关闭泵
+            time.sleep(0.05)
+            valve.on()  # 打开阀门
+            time.sleep(1)
+            valve.off()  # 关闭阀门
+            time.sleep(0.05)
+        else:
+            self.myCobot.set_basic_output(1, 0)
+            self.myCobot.set_basic_output(2, 0)
 
     def pump_off(self):
         """stop suction pump m5"""
-        self.myCobot.set_basic_output(1, 1)
-        self.myCobot.set_basic_output(2, 1)
+        if self.comboBox_device.currentText() in self.RISCV:
+            from gpiozero.pins.lgpio import LGPIOFactory
+            from gpiozero import Device, LED
+            Device.pin_factory = LGPIOFactory(chip=0)  # 显式指定/dev/gpiochip0
+            # 初始化 GPIO 控制的设备
+            pump = LED(71)  # 使用 LED 类控制 GPIO 70
+            valve = LED(72)  # 使用 LED 类控制 GPIO 70
+            # 关闭电磁阀
+            pump.off()
+            time.sleep(0.05)
+            # 打开泄气阀
+            valve.off()
+            time.sleep(1)
+            valve.on()
+            time.sleep(0.05)
+        else:
+            self.myCobot.set_basic_output(1, 1)
+            self.myCobot.set_basic_output(2, 1)
 
     # open gripper
     def gripper_on(self):
