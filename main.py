@@ -2144,7 +2144,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 data = [self.home_coords[0] + x, self.home_coords[1] + y, self.camera_z, 172.36, 5.36,
                                         125.58]
                                 self.check_position(data, 1)
-                            elif device == ['myCobot 280 for Pi', 'myCobot 280 for M5']:
+                            elif device in ['myCobot 280 for Pi', 'myCobot 280 for M5']:
                                 self.myCobot.send_coords([x, y, 108, 178.99, -3.78, -62.9], 70, 1)
                                 self.myCobot.send_coords([x, y, self.camera_z, 178.99, -3.78, -62.9], 70, 1)
                                 data = [x, y, self.camera_z, 178.99, -3.78, -62.9]
