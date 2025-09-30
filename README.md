@@ -11,13 +11,13 @@
   - myPalletizer 260 for Pi
   - myCobot 280 RISCV
 
-## 一、Requires environment
+## Requires environment
 
 Raspberry Pi Ubuntu20.04 system、Windows 10 or Windows 11、Jetson Nano Ubuntu20.04 system
 
-## python dependency package
+## Install Python dependency packages
 
-### 1. 普通机型设备
+### 1. Ordinary models
    - myPalletizer 260 for M5
    - myCobot 280 for M5
    - ultraArm P340
@@ -28,7 +28,7 @@ Raspberry Pi Ubuntu20.04 system、Windows 10 or Windows 11、Jetson Nano Ubuntu2
    - myPalletizer 260 for Pi
 
 
-使用前需确保系统已经安装以下第三方库，其中 `opencv-python`和 `opencv-contrib-python`必须指定安装 **4.6.0.66** 的版本，其他库原则上无需指定版本号。
+Before using, ensure the following third-party libraries are installed. For `opencv-python` and `opencv-contrib-python`, you must specify version **4.6.0.66**. For other libraries, you don't need to specify version numbers.
 
 ```bash
 opencv-python==4.6.0.66
@@ -37,7 +37,7 @@ pymycobot==3.6.3
 PyQt5==5.15.10
 ```
 
-如若未安装，请参考下面命令进行安装：
+If not installed, please follow the following command to install them:
 
 ```angular2html
 pip install pymycobot
@@ -47,16 +47,16 @@ pip install pyqt5
 
 ```
 
-#### Install
+#### Install Code
 
-```angular2html
+```bash
 git clone https://github.com/elephantrobotics/AiKit_UI.git
 ```
 
-### 2. RISCV机型
+### 2. RISCV models
    - myCobot 280 RISCV
 
-#### 创建虚拟环境
+#### Creating a virtual environment
 
 ```bash
 sudo apt install python3-virtualenv
@@ -64,19 +64,19 @@ virtualenv elephantics-venv
 source elephantics-venv/bin/activate
 ```
 
-#### 安装依赖项
+#### Installing dependencies
 
 ```bash
 sudo apt install libopenblas-dev
 ```
 
-#### 安装
+#### Installation Code
 
 ```bash
 git clone https://github.com/elephantrobotics/AiKit_UI.git
 ```
 
-#### 安装python依赖库
+#### Installing Python dependencies
 
 ```bash
 cd AiKit_UI/libraries/yolov8File
@@ -84,16 +84,16 @@ pip install -r requirements.txt
 ```
 
 
-## 二、start method
+## Start the program
 
-path: Project file path
+Enter the main program directory and run
 
 ```python
 cd AiKit_UI
 python main.py
 ```
 
->> **注意**： myCobot 280 RISCV机型的YOLO算法识别改用为YOLOv8，不再使用YOLOv5识别算法，当机型设备为RISCV时，算法下拉框列表只能选中yolov8,不可选中yolov5,yolov8的使用更加简单便捷，无需手动框选识别区域，可自动框选，使用方式与颜色识别一样。
+>> **Note**: The YOLO algorithm for myCobot 280 RISCV model has been changed to YOLOv8. YOLOv5 is no longer used. When the model device is RISCV, only YOLOv8 can be selected in the algorithm drop-down box, and YOLOv5 cannot be selected. YOLOv8 is simpler and more convenient to use. There is no need to manually select the recognition area. It can be automatically selected and is used in the same way as color recognition.
 
 After the startup is successful, as shown in the figure below:<br>
 
@@ -165,8 +165,17 @@ Click the button in the upper right corner of the window to switch between langu
    Put in the picture that needs to be recognized, and then click the Cut button<br>![image-20230202150221140](./libraries/AiKit_UI_img/30.png)<br>
    Intercept the whiteboard part of the QR code, press Enter to confirm (repeatable interception)<br>![image-20230202150752804](./libraries/AiKit_UI_img/31.png)<br>
    Then identify and grab.<br>
-   
-7. Add a picture for 'Keypoints' <br>
+
+7. **How to use Yolov5.**
+   After successfully connecting to the robotic arm, select 'Yolov5' for the algorithm.<br>
+   ![image-20230202145832134](./libraries/AiKit_UI_img/28.png)<br>
+   Then open the camera.<br>
+   ![image-20230202150049121](./libraries/AiKit_UI_img/29.png)<br>
+   Insert the image to be recognized and click the Cut button.<br> ![image-20230202150221140](./libraries/AiKit_UI_img/30.png)<br>
+   Capture the whiteboard portion of the QR code and press Enter to confirm (you can capture it repeatedly).<br>![image-20230202150752804](./libraries/AiKit_UI_img/31.png)<br>
+   Then recognize and capture it.<br>
+
+8. Add a picture for 'Keypoints' <br>
    ![img](./libraries/AiKit_UI_img/19.png)
    Click the 'Add' button, the camera will open and a prompt will appear. <br>
    ![img](./libraries/AiKit_UI_img/20.png)
