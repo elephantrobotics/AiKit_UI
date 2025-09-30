@@ -1,4 +1,4 @@
-# **Ai Kit UI Instructions**
+# AiKit UI Instructions
 
 - **Applicable models and devices:** myCobot 320 Pi、myCobot 320 M5
 
@@ -8,7 +8,7 @@ Raspberry Pi Ubuntu20.04 system、Windows 10 or Windows 11
 
 ## python dependency package
 
-使用前需确保系统已经安装以下第三方库，其中 `opencv-python`和 `opencv-contrib-python`必须指定安装 **4.6.0.66** 的版本，其他库原则上无需指定版本号。
+Before using, ensure the following third-party libraries are installed. For `opencv-python` and `opencv-contrib-python`, specify version **4.6.0.66**. For other libraries, specifying a version number is generally not necessary.
 
 ```bash
 opencv-python==4.6.0.66
@@ -17,9 +17,9 @@ pymycobot
 PyQt5
 ```
 
-如若未安装，请参考下面命令进行安装：
+If not installed, follow the following command to install them:
 
-```angular2html
+```bash
 pip install pymycobot
 pip install opencv-python==4.6.0.66
 pip install opencv-contrib-python==4.6.0.66
@@ -27,18 +27,19 @@ pip install pyqt5
 
 ```
 
-## Install
+## Install Code
 
 ```angular2html
 git clone -b 320 https://github.com/elephantrobotics/AiKit_UI.git
 ```
 
->> **注意：** 二维码板子摆放位置已发生改变，如下摆放：
+>> **Note:** The placement of the QR code board has changed and is now as follows:
+
 ![img](./libraries/AiKit_UI_img/aruco_positon.png) 
 
-#### **start method**
+## Start the program
 
-path: Project file path
+Enter the main program directory and run
 
 ```python
 cd AiKit_UI
@@ -49,14 +50,14 @@ After the startup is successful, as shown in the figure below:<br>
 
 ![img](./libraries/AiKit_UI_img/1.png) 
 
-#### **Features**
+### **Features**
 
-##### **language switch**
+#### **language switch**
 
 Click the button in the upper right corner of the window to switch between languages (Chinese, English).<br>
 ![img](./libraries/AiKit_UI_img/27.png)
 
-##### **device connection**
+#### **device connection**
 
 1. Select serial port, device, baud rate<br>![img](./libraries/AiKit_UI_img/2.png)
 2. Click the 'CONNECT' button to connect, after the connection is successful, the 'CONNECT' button will change to 'DISCONNECT'<br>
@@ -68,7 +69,7 @@ Click the button in the upper right corner of the window to switch between langu
 4. After the robotic arm is successfully connected, the gray button will be lit and become clickable.<br>
    ![img](./libraries/AiKit_UI_img/5.png)
 
-##### **Turn on the camera**
+#### **Turn on the camera**
 
 1. Set the camera serial number, the default serial number is 0, when Windows is used, the serial number is usually 1, and when Linux is used, the serial number is usually 0.<br>
    ![img](./libraries/AiKit_UI_img/6.png)
@@ -79,7 +80,7 @@ Click the button in the upper right corner of the window to switch between langu
 3. After successfully opening the camera, click the 'Close' button to close the camera<br>
    ![img](./libraries/AiKit_UI_img/8.png)
 
-##### **algorithm control**
+#### **algorithm control**
 
 1. Fully automatic mode, after clicking the 'Auto Mode' button, the recognition, grabbing, and placing will always be on; click the 'Auto Mode' button again to turn off the fully automatic mode.<br>
    ![img](./libraries/AiKit_UI_img/9.png)
@@ -135,7 +136,7 @@ Click the button in the upper right corner of the window to switch between langu
 8. Click the 'Exit' button to exit adding pictures. Note: If you start capturing, please exit after capturing. You can choose not to save the captured pictures.<br>
    ![img](./libraries/AiKit_UI_img/19.png)
 
-##### **coordinate display**
+#### **coordinate display**
 
 1. Real-time coordinate display of the robotic arm: click the 'current coordinates' button to open<br>![img](./libraries/AiKit_UI_img/25.png)
 
