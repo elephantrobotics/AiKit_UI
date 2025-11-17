@@ -1840,6 +1840,30 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
 
         return j6_angle
 
+    def clamp(self, value, low, high):
+        return max(low, min(high, value))
+
+    def limit_coords(self, coords):
+        LIMITS = {
+            0: (-350, 350),  # x
+            1: (-350, 350),  # y
+            2: (-41, 523.9),  # z
+            3: (-180, 180),  # rx
+            4: (-180, 180),  # ry
+            5: (-180, 180),  # rz
+        }
+
+        fixed = []
+        for i, v in enumerate(coords):
+            low, high = LIMITS[i]
+            nv = self.clamp(v, low, high)
+            fixed.append(nv)
+
+            if nv != v:
+                print(f"⚠️ 轴 {i} = {v} 超限，已限制到 {nv}")
+
+        return fixed
+
     def get_color_name(self):
         color_names = {
             1: {0: "Red", 1: "Green", 2: "Blue", 3: "Yellow"},
@@ -1912,9 +1936,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [58.178, -55.45, -28.74, 3.51, 87.8, 46.14],  # A Sorting area
                                 [99.58, -5.0, -92.9, 6.32, 87.89, -77.78],  # B Sorting area
                             ]
-                            self.myCobot.send_coords([x, y, 240, 178.99, -3.78, -62.9], 100, 1)
-                            self.myCobot.send_coords([x, y, self.camera_z, 178.99, -3.78, -62.9], 100, 1)
-                            data = [x, y, self.camera_z, 178.99, -3.78, -62.9]
+                            # self.myCobot.send_coords([x, y, 240, 178.99, -3.78, -62.9], 100, 1)
+                            target1 = self.limit_coords([x, y, 240, 178.99, -3.78, -62.9])
+                            self.myCobot.send_coords(target1, 100, 1)
+                            # self.myCobot.send_coords([x, y, self.camera_z, 178.99, -3.78, -62.9], 100, 1)
+                            target2 = self.limit_coords([x, y, self.camera_z, 178.99, -3.78, -62.9])
+                            self.myCobot.send_coords(target2, 100, 1)
+                            data = target2
                             self.check_position(data, 1, max_same_data_count=30)
                         elif func == 'Intelligent gripping' or func == '智能夹取':
                             # 移动角度
@@ -1937,9 +1965,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 else:
                                     break
                             time.sleep(0.1)
-                            self.myCobot.send_coords([x, y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
-                            self.myCobot.send_coords([x, y, self.camera_z, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
-                            data = [x, y, self.camera_z, tmp_coords[3], tmp_coords[4], tmp_coords[5]]
+                            # self.myCobot.send_coords([x, y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
+                            target1 = self.limit_coords([x, y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]])
+                            self.myCobot.send_coords(target1, 100, 1)
+                            # self.myCobot.send_coords([x, y, self.camera_z, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
+                            target2 = self.limit_coords([x, y, self.camera_z, tmp_coords[3], tmp_coords[4], tmp_coords[5]])
+                            self.myCobot.send_coords(target2, 100, 1)
+                            data = target2
                             self.check_position(data, 1, max_same_data_count=20)
                             # close gripper
                             self.gripper_off()
@@ -1966,9 +1998,16 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 else:
                                     break
                             time.sleep(0.1)
-                            self.myCobot.send_coords([x, y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
-                            self.myCobot.send_coords([x, y, self.camera_z, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
-                            data = [x, y, self.camera_z, tmp_coords[3], tmp_coords[4], tmp_coords[5]]
+                            # self.myCobot.send_coords([x, y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
+                            # self.myCobot.send_coords([x, y, self.camera_z, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
+                            # data = [x, y, self.camera_z, tmp_coords[3], tmp_coords[4], tmp_coords[5]]
+                            # self.myCobot.send_coords([x, y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
+                            target1 = self.limit_coords([x, y, 250, tmp_coords[3], tmp_coords[4], tmp_coords[5]])
+                            self.myCobot.send_coords(target1, 100, 1)
+                            # self.myCobot.send_coords([x, y, self.camera_z, tmp_coords[3], tmp_coords[4], tmp_coords[5]], 100, 1)
+                            target2 = self.limit_coords([x, y, self.camera_z, tmp_coords[3], tmp_coords[4], tmp_coords[5]])
+                            self.myCobot.send_coords(target2, 100, 1)
+                            data = target2
                             self.check_position(data, 1, max_same_data_count=20)
                             # close gripper
                             self.gripper_off()
@@ -1985,9 +2024,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                             time.sleep(0.5)
                             # open gripper
                             self.gripper_on()
-                            self.myCobot.send_coords([x, y, 250, -176.23, -1.27, -59.55], 100, 1)
-                            self.myCobot.send_coords([x, y, self.camera_z, -176.23, -1.27, -59.55], 100, 1)
-                            self.check_position([x, y, self.camera_z, -176.23, -1.27, -59.55], 1, max_same_data_count=20)
+                            # self.myCobot.send_coords([x, y, 250, -176.23, -1.27, -59.55], 100, 1)
+                            target1 = self.limit_coords([x, y, 250, -176.23, -1.27, -59.55])
+                            self.myCobot.send_coords(target1, 100, 1)
+                            # self.myCobot.send_coords([x, y, self.camera_z, -176.23, -1.27, -59.55], 100, 1)
+                            target2 = self.limit_coords([x, y, self.camera_z, -176.23, -1.27, -59.55])
+                            self.myCobot.send_coords(target2, 100, 1)
+                            self.check_position(target2, 1, max_same_data_count=20)
                             # close gripper
                             self.gripper_off()
 
@@ -2015,9 +2058,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [58.178, -55.45, -28.74, 3.51, 87.8, 46.14],  # A Sorting area
                                 [99.58, -5.0, -92.9, 6.32, 87.89, -77.78],  # B Sorting area
                             ]
-                            self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
-                            self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100, 1)
-                            self.check_position([x, y, self.camera_z, -173.84, -0.14, -74.37], 1, max_same_data_count=30)
+                            # self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
+                            target1 = self.limit_coords([x, y,  230, -173.84, -0.14, -74.37])
+                            self.myCobot.send_coords(target1, 100, 1)
+                            # self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100, 1)
+                            target2 = self.limit_coords([x, y, self.camera_z, -173.84, -0.14, -74.37])
+                            self.myCobot.send_coords(target2, 100, 1)
+                            self.check_position(target2, 1, max_same_data_count=30)
 
                         else:
                             # 颜色识别-吸泵
@@ -2027,10 +2074,13 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
                                 [58.18, -42.89, -32.69, -1.31, 89.38, 45.52],  # A Sorting area
                                 [100.1, -0.17, -95.0, 11.77, 97.64, -77.87],  # B Sorting area
                             ]
-                            self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
-                            self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100,
-                                                     1)  # origin z : 100
-                            self.check_position([x, y, self.camera_z, -173.84, -0.14, -74.37], 1, max_same_data_count=20)
+                            # self.myCobot.send_coords([x, y, 230, -173.84, -0.14, -74.37], 100, 1)
+                            target1 = self.limit_coords([x, y, 230, -173.84, -0.14, -74.37])
+                            self.myCobot.send_coords(target1, 100, 1)
+                            # self.myCobot.send_coords([x, y, self.camera_z, -173.84, -0.14, -74.37], 100, 1)  # origin z : 100
+                            target2 = self.limit_coords([x, y, self.camera_z, -173.84, -0.14, -74.37])
+                            self.myCobot.send_coords(target2, 100, 1)
+                            self.check_position(target2, 1, max_same_data_count=20)
                         # open pump
                         if func not in ['object recognition', '物体识别', 'Color recognition grip', '颜色识别 夹爪',
                                         'Intelligent gripping', '智能夹取', 'Object recognition force grip', '物体识别 力控夹爪',
