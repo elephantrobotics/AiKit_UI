@@ -1877,6 +1877,7 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         try:
             # print('x', x)
             # print('y', y)
+            func = self.comboBox_function.currentText()
             if 200 < x < 235:
                 self.camera_z -= 5
             elif 235 < x < 239:
@@ -1888,6 +1889,60 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
             else:
                 self.camera_z = self.camera_z
 
+            if func in ['Color recognition', '颜色识别']:
+                if x < 205:
+                    if self.language == 1:
+                        msg_box = QMessageBox(QMessageBox.Warning, 'waring',
+                                              'target point is a self-interference critical point and cannot be reached. Please change the object location！')
+                    else:
+                        msg_box = QMessageBox(QMessageBox.Warning, '警告',
+                                              '目标点位是自干涉临界点，无法到达，请更换识别物体位置！')
+                    msg_box.exec_()
+                    return
+                if y < -30:
+                    y += 5
+                    self.camera_z -= 5
+
+                if x > 300:
+                    x -= 10
+                    y += 5
+            elif func in ['shape recognition', 'Keypoints', '形状识别', '特征点识别']:
+                if x < 215:
+                    if self.language == 1:
+                        msg_box = QMessageBox(QMessageBox.Warning, 'waring',
+                                              'target point is a self-interference critical point and cannot be reached. Please change the object location！')
+                    else:
+                        msg_box = QMessageBox(QMessageBox.Warning, '警告',
+                                              '目标点位是自干涉临界点，无法到达，请更换识别物体位置！')
+                    msg_box.exec_()
+                    return
+                if y > 60:
+                    y -= 5
+                if y < -27:
+                    y += 10
+                if x > 320:
+                    y += 5
+                    x -= 3
+            elif func in ['QR code recognition', '二维码识别']:
+                if x < 215:
+                    if self.language == 1:
+                        msg_box = QMessageBox(QMessageBox.Warning, 'waring',
+                                              'target point is a self-interference critical point and cannot be reached. Please change the object location！')
+                    else:
+                        msg_box = QMessageBox(QMessageBox.Warning, '警告',
+                                              '目标点位是自干涉临界点，无法到达，请更换识别物体位置！')
+                    msg_box.exec_()
+                    return
+            elif func in ['yolov5']:
+                if x < 215:
+                    if self.language == 1:
+                        msg_box = QMessageBox(QMessageBox.Warning, 'waring',
+                                              'target point is a self-interference critical point and cannot be reached. Please change the object location！')
+                    else:
+                        msg_box = QMessageBox(QMessageBox.Warning, '警告',
+                                              '目标点位是自干涉临界点，无法到达，请更换识别物体位置！')
+                    msg_box.exec_()
+                    return
             self.is_crawl = True
             while self.is_pick:
                 QApplication.processEvents()
