@@ -107,6 +107,8 @@ class AiKit_APP(AiKit_window, QMainWindow, QWidget):
         self.update_serial_ports_timer = QTimer(self)
         self.update_serial_ports_timer.timeout.connect(self.get_serial_port_list)
         self.update_serial_ports_timer.start(1000)  # 每隔1秒检查一次串口
+        # default PI
+        self.comboBox_device.setCurrentIndex(1)
 
     def camera_index_value(self):
         if platform.system() == 'Windows':
